@@ -7,15 +7,13 @@ import {ProjectService} from "../../services/project.service";
   templateUrl: './project.template.html'
 })
 export class ProjectComponent implements OnInit {
-  state: any;
+  pages: any;
 
   constructor(private project: ProjectService) {
 
   }
 
   ngOnInit(): void {
-    this.project.getState().subscribe(state => {
-      this.state = state;
-    })
+    this.pages = this.project.getPages();
   }
 }
