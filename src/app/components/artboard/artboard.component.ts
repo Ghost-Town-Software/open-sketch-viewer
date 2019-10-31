@@ -9,7 +9,7 @@ import {tap} from 'rxjs/operators';
 })
 export class ArtboardComponent implements OnInit {
 
-  page: any;
+  artboard: any;
 
   public constructor(private activatedRoute: ActivatedRoute) {}
 
@@ -18,6 +18,6 @@ export class ArtboardComponent implements OnInit {
       .pipe(
         tap(data => console.log(data))
       )
-      .subscribe(res => this.page = res.page);
+      .subscribe(res => this.artboard = res.artboard);
   }
 }
