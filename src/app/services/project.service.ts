@@ -25,6 +25,18 @@ export class ProjectService {
     return pages;
   }
 
+  public getPreview() {
+    return this.get('previews/preview.png');
+  }
+
+  public get(kind) {
+    if (kind in this.state$.value) {
+      return this.state$.value[kind];
+    }
+
+    return null;
+  }
+
   public getArtboards(pageId: string) {
     const page = this.getPage(pageId);
 
