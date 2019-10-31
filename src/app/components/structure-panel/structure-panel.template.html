@@ -1,2 +1,8 @@
 
-<p>Hello structure-panel</p>
+
+<div class="tree">
+  <div class="tree-item" *ngFor="let layer of layers">
+    <i class="fas fa-chevron-down" *ngIf="layer.layers"></i>
+    <span class="layer-name">{{ layer.name }}</span>
+  </div>
+</div>

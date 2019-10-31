@@ -11,7 +11,7 @@ export class StructurePanelComponent implements OnInit {
   layers: any[];
 
   ngOnInit(): void {
-    console.log('hello layers', this.layers);
+    console.log('layers', this.layers);
   }
 
 }

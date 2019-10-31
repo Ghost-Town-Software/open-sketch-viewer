@@ -24,7 +24,7 @@ import {ArtboardComponent} from './components/artboard/artboard.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
