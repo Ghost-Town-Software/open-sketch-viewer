@@ -42,7 +42,7 @@ export class LoaderService {
     return from(file.async('base64'))
       .pipe(
         map((content: string) =>
-          this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/' + extension + ';base64,' + content))
+          this.createFileResponse(file.name, 'data:image/' + extension + ';base64,' + content)
         )
       );
   }
