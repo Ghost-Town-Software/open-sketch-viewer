@@ -66,7 +66,7 @@ export class LoaderService {
     return of(...Object.values(zip.files));
   }
 
-  get handlers() {
+  private get handlers() {
     return {
       [FileType.IMAGE]: (file) => this.resolveImage(file),
       [FileType.JSON]: (file) => this.resolveJson(file),
