@@ -72,6 +72,6 @@ export class LoaderService {
       [FileType.JSON]: (file) => this.resolveJson(file),
       [FileType.PDF]: (file) => EMPTY,
       [FileType.UNKNOWN]: (file) => EMPTY,
-    }
+    };
   }
 }
