@@ -1,0 +1,42 @@
+@import '../../../assets/styles/variables';
+
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.artboard-main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.artboard-header {
+  width: 100%;
+  border-bottom: 1px solid $border-color;
+}
+
+.artboard-layers {
+  width: 200px;
+}
+
+.artboard-canvas {
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  flex-grow: 1;
+}
+
+.artboard-sidebar {
+  width: 200px;
+}
+
+.artboard-header,
+.artboard-layers,
+.artboard-sidebar {
+  padding: $grid-gutter-width / 2;
+}
+
