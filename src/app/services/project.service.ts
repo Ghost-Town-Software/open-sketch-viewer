@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LoaderService} from "./loader.service";
-import {BehaviorSubject, Subscription} from "rxjs";
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class ProjectService {
     const document = this.getDocument();
     const pages = [];
 
-    for(const page of document.pages) {
+    for (const page of document.pages) {
       pages.push(this.state$.value[page._ref + '.json']);
     }
 

@@ -1,3 +1,5 @@
+// tslint:disable:variable-name
+
 export class Document {
   readonly _class: string = 'document';
   assets: any[];

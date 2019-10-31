@@ -8,13 +8,19 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="card" *ngFor="let page of pages">
-        <div class="card-title">{{ page.name }}</div>
-        <div class="card-footer">
-          <a class="btn btn-primary" [routerLink]="['/page', page.do_objectID]">Go</a>
+      <div class="cards">
+        <div class="card-outer" *ngFor="let page of pages">
+          <div class="card card-page">
+            <div class="card-body">
+              <h3 class="card-title">{{ page.name }}</h3>
+            </div>
+
+            <div class="card-footer">
+              <a class="btn btn-primary" [routerLink]="['/page', page.do_objectID]">Go</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="card"></div>
     </div>
   </div>
 </div>

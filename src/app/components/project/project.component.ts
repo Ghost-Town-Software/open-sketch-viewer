@@ -1,5 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {ProjectService} from "../../services/project.service";
+import {Component, OnInit} from '@angular/core';
+import {ProjectService} from '../../services/project.service';
 
 @Component({
   selector: 'project',

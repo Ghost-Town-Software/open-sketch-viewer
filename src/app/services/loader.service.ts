@@ -4,8 +4,8 @@ import * as JSZip from 'jszip';
 import {map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
 import {EMPTY, from, noop, of} from 'rxjs';
-import {FileType} from "../enums/file.type";
-import {TypeResolver} from "../utils/type-resolver";
+import {FileType} from '../enums/file.type';
+import {TypeResolver} from '../utils/type-resolver';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +24,12 @@ export class LoaderService {
       observe: 'response',
       responseType: 'blob'
     })
-    .pipe(
-      switchMap((res) => this.loadZip(res)),
-      mergeMap((res) => this.getFiles(res)),
-      mergeMap((res) => this.resolveFile(res)),
-      reduce(Object.assign, {}),
-    );
+      .pipe(
+        switchMap((res) => this.loadZip(res)),
+        mergeMap((res) => this.getFiles(res)),
+        mergeMap((res) => this.resolveFile(res)),
+        reduce(Object.assign, {}),
+      );
   }
 
   private resolveFile(file) {
@@ -42,7 +42,7 @@ export class LoaderService {
     return from(file.async('base64'))
       .pipe(
         map((content: string) =>
-          this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/'+extension+';base64,' + content))
+          this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/' + extension + ';base64,' + content))
         )
       );
   }
