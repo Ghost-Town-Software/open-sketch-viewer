@@ -22,15 +22,15 @@
 
 .artboard-layers {
   width: 200px;
+  border-right: 1px solid $border-color;
 }
 
 .artboard-canvas {
-  border-left: 1px solid $border-color;
-  border-right: 1px solid $border-color;
   flex-grow: 1;
 }
 
 .artboard-sidebar {
+  border-left: 1px solid $border-color;
   width: 200px;
 }
 
