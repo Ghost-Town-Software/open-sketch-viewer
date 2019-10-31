@@ -3,7 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import * as JSZip from 'jszip';
 import {map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
-import {EMPTY, from, of} from 'rxjs';
+import {EMPTY, from, noop, of} from 'rxjs';
+import {FileType} from "../enums/file.type";
+import {TypeResolver} from "../utils/type-resolver";
 
 @Injectable({
   providedIn: 'root'
@@ -31,50 +33,29 @@ export class LoaderService {
   }
 
   private resolveFile(file) {
+    return this.handlers[TypeResolver.resolveType(file.name)](file);
+  }
+
+  private resolveImage(file) {
     const extension = file.name.split('.').pop();
 
-    switch (extension) {
-      case 'json':
-        return from(file.async('string'))
-        .pipe(
-          map((content: string) => this.createFileResponse(file.name, JSON.parse(content)))
-        );
-      case 'png':
-        return from(file.async('base64'))
-        .pipe(
-          map((content: string) =>
-            this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + content))
-          )
-        );
-      case 'jpg':
-      case 'jpeg':
-        return from(file.async('base64'))
-        .pipe(
-          map((content: string) =>
-            this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + content))
-          )
-        );
-      case 'gif':
-        return from(file.async('base64'))
-        .pipe(
-          map((content: string) =>
-            this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/gif;base64,' + content))
-          )
-        );
-      case 'pdf': // ignore PDF
-        break;
-      default:
-        console.warn('Not supported file type:', file.name);
-        break;
-    }
+    return from(file.async('base64'))
+      .pipe(
+        map((content: string) =>
+          this.createFileResponse(file.name, this.sanitizer.bypassSecurityTrustUrl('data:image/'+extension+';base64,' + content))
+        )
+      );
+  }
 
-    return EMPTY;
+  private resolveJson(file) {
+    return from(file.async('string'))
+      .pipe(
+        map((content: string) => this.createFileResponse(file.name, JSON.parse(content)))
+      );
   }
 
   private createFileResponse(filename, content) {
-    const object = {};
-    object[filename] = content;
-    return object;
+    return {[filename]: content};
   }
 
   private loadZip(response) {
@@ -83,5 +64,14 @@ export class LoaderService {
 
   private getFiles(zip) {
     return of(...Object.values(zip.files));
+  }
+
+  get handlers() {
+    return {
+      [FileType.IMAGE]: (file) => this.resolveImage(file),
+      [FileType.JSON]: (file) => this.resolveJson(file),
+      [FileType.PDF]: (file) => EMPTY,
+      [FileType.UNKNOWN]: (file) => EMPTY,
+    }
   }
 }
