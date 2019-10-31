@@ -37,5 +37,6 @@
 .artboard-layers,
 .artboard-sidebar {
   padding: $grid-gutter-width / 2;
+  max-height: 100%;
 }
 
