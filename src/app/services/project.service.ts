@@ -25,8 +25,19 @@ export class ProjectService {
     return pages;
   }
 
+  public getArtboards(pageId: string) {
+    const page = this.getPage(pageId);
+
+    return page.layers.filter(layer => layer._class === 'artboard');
+  }
+
   public getPage(id) {
     return this.state$.value[`pages/${id}.json`];
+  }
+
+  public getArtboard(pageId: string, artboardId: string) {
+    const page = this.getPage(pageId);
+    return page.layers.find(layer => layer.do_objectID === artboardId);
   }
 
   public getDocument() {

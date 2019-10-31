@@ -9,6 +9,7 @@ import {WorkspaceComponent} from './components/workspace/workspace.component';
 import {AttributesPanelComponent} from './components/attributes-panel/attributes-panel.component';
 import {StructurePanelComponent} from './components/structure-panel/structure-panel.component';
 import {PageComponent} from './components/page/page.component';
+import {ArtboardComponent} from './components/artboard/artboard.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {PageComponent} from './components/page/page.component';
     WorkspaceComponent,
     AttributesPanelComponent,
     StructurePanelComponent,
-    PageComponent
+    PageComponent,
+    ArtboardComponent
   ],
   imports: [
     BrowserModule,

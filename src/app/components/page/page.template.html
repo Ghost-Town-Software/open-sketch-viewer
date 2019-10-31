@@ -1,6 +1,27 @@
 
-<p>Hello page</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="page-header">
+        <h1 class="page-title">Page {{ page.name }}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="cards">
+        <div class="card-outer" *ngFor="let artboard of artboards">
+          <div class="card card-page">
+            <div class="card-body">
+              <h3 class="card-title">{{ artboard.name }}</h3>
+            </div>
 
-<structure-panel></structure-panel>
-<workspace></workspace>
-<attributes-panel></attributes-panel>
+            <div class="card-footer">
+              <a class="btn btn-primary" [routerLink]="['/page', page.do_objectID, 'artboard', artboard.do_objectID]">Go</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
