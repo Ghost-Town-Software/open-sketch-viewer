@@ -9,18 +9,24 @@ import {PageResolver} from './components/page/page.resolver';
 const routes: Routes = [
   {
     path: '',
-    component: ProjectComponent,
     resolve: {
       state: ProjectResolver
-    }
-  },
-  {
-    path: 'page/:id',
-    component: PageComponent,
-    resolve: {
-      page: PageResolver
-    }
+    },
+    children: [
+      {
+        path: '',
+        component: ProjectComponent,
+      },
+      {
+        path: 'page/:id',
+        component: PageComponent,
+        resolve: {
+          page: PageResolver
+        }
+      }
+    ]
   }
+
 ];
 
 @NgModule({
