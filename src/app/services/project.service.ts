@@ -26,7 +26,7 @@ export class ProjectService {
   }
 
   public getPage(id) {
-    return this.state$.value[`page/${id}.json`];
+    return this.state$.value[`pages/${id}.json`];
   }
 
   public getDocument() {
