@@ -1,6 +1,6 @@
 {
   "_class": "oval",
-  "do_objectID": "FE3F0AC4-E87C-4385-BA9D-48C0E92C9E15",
+  "do_objectID": "020BE86E-7F08-4FDD-A268-32FA6D39835D",
   "booleanOperation": -1,
   "isFixedToViewport": false,
   "isFlippedHorizontal": false,
@@ -9,7 +9,7 @@
   "isVisible": true,
   "layerListExpandedType": 0,
   "maintainScrollPosition": false,
-  "name": "Oval",
+  "name": "Oval Copy 6",
   "nameIsFixed": false,
   "resizingConstraint": 63,
   "resizingType": 0,
@@ -17,6 +17,7 @@
   "shouldBreakMaskChain": false,
   "exportOptions": {
     "_class": "exportOptions",
+    "do_objectID": "A8933E05-F6F1-408B-8010-03CA48958886",
     "includedLayerIds": [],
     "layerOptions": 0,
     "shouldTrim": false,
@@ -34,16 +35,18 @@
   },
   "frame": {
     "_class": "rect",
+    "do_objectID": "EFB0FD63-BC0B-440C-AA82-9D661F8B7944",
     "constrainProportions": true,
-    "height": 861,
-    "width": 861,
-    "x": 1034,
-    "y": -431
+    "height": 377,
+    "width": 377,
+    "x": 113,
+    "y": 1244
   },
   "clippingMaskMode": 0,
   "hasClippingMask": false,
   "style": {
     "_class": "style",
+    "do_objectID": "FBC8BACA-2AE1-4E87-B7DB-4EFFDF65D7AA",
     "endMarkerType": 0,
     "miterLimit": 10,
     "startMarkerType": 0,
@@ -126,6 +129,7 @@
     },
     "contextSettings": {
       "_class": "graphicsContextSettings",
+      "do_objectID": "29C11C86-AB16-4285-823B-0AA58F33E13C",
       "blendMode": 0,
       "opacity": 0.6320452008928571
     },

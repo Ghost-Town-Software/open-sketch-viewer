@@ -2,6 +2,8 @@ import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, Rende
 import Konva from 'konva';
 import {ProjectService} from '../../services/project.service';
 
+const SCALE_FACTOR = 1.1;
+
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.template.html',
@@ -21,6 +23,17 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     console.log('artboard', this.artboard);
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyup(event) {
+    if (event.key === '+') {
+      this.zoom(1);
+    }
+
+    if (event.key === '-') {
+      this.zoom(-1);
+    }
   }
 
   ngAfterViewInit() {
@@ -48,14 +61,6 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
       height: this.artboard.frame.height,
       fill: '#ddd'
     }));
-
-    // layer.add(new Konva.Circle({
-    //   x: 100,
-    //   y: 100,
-    //   radius: 50,
-    //   fill: 'red',
-    //   stroke: 'black'
-    // }));
 
     layer.draw();
 
@@ -87,12 +92,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
       this.stage.y(y);
       this.stage.x(x);
       this.stage.draw();
-      this.render();
     });
-  }
-
-  private getValueByPercent(point, long, percent) {
-    return point + (long * percent);
   }
 
   private render() {
@@ -101,70 +101,87 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
         continue;
       }
 
-      console.log('frame', item.frame);
+      if (item.name === 'Oval Copy 6') {
+        console.log(JSON.stringify(item));
+      }
+
       this.drawRect(item.frame);
 
-      const rect = this.stage.getClientRect({skipTransform: false});
-      const context = this.ovals.getContext();
-
       for (let i = 0; i < item.points.length; i++) {
-        const point = item.points[i];
+        const point1 = item.points[i];
+        let point2 = item.points[0];
 
-        const control1 = JSON.parse(point.curveFrom.replace('{', '[').replace('}', ']'));
-        const control2 = JSON.parse(point.curveTo.replace('{', '[').replace('}', ']'));
-        const from = JSON.parse(point.point.replace('{', '[').replace('}', ']'));
-
-        let toPoint = item.points[0];
         if (i + 1 < item.points.length) {
-          toPoint = item.points[i + 1];
+          point2 = item.points[i + 1];
         }
 
-        const to = JSON.parse(toPoint.point.replace('{', '[').replace('}', ']'));
+        this.ovals.add(this.drawOval(item, point1, point2));
+      }
+    }
+
+    this.stage.draw();
+  }
+
+  private applyStyles(shape, style) {
+    if (style.blur.isEnabled) {
+      console.log('Blur is not implemented yet.');
+    }
+
+    if (style.borderOptions.isEnabled) {
+    }
+
+    if (style.borders.length) {
+      for (const border of style.borders) {
+        if (!border.isEnabled) {
+          continue;
+        }
+
+        const red = border.color.red * 255;
+        const green = border.color.green * 255;
+        const blue = border.color.blue * 255;
+        const alpha = border.color.alpha;
+
+        shape.stroke(`rgba(${red}, ${green}, ${blue}, ${alpha})`);
+        shape.strokeWidth(border.thickness);
+      }
+    }
+  }
+
+  private drawOval(item, point1, point2) {
+    const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
+    const control2 = JSON.parse(point2.curveTo.replace('{', '[').replace('}', ']'));
+    const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
+    const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
+
+    const figure = new Konva.Shape({
+      x: item.frame.x,
+      y: item.frame.y,
+      stroke: '#00D2FF',
+      strokeWidth: 4,
+      width: item.frame.width,
+      height: item.frame.height,
+      sceneFunc: (context, shape) => {
+        const rect = this.stage.getClientRect({skipTransform: false});
 
         context.beginPath();
         context.moveTo(
-          50,
-          100
+          from[0] * shape.getAttr('width'), from[1] * shape.getAttr('height')
         );
-        context.quadraticCurveTo( 77,  22, 22, 77);
-        context.bezierCurveTo( 100,  22, 100, 77, 50, 0);
-        context.bezierCurveTo( 22,  0, 77, 0, 0, 50);
-        context.bezierCurveTo( 0,  77, 0, 22, 50, 100);
 
-        context.setAttr('strokeStyle', 'blue');
-        context.setAttr('lineWidth', 4);
-        context.stroke();
+        context.bezierCurveTo(
+          control1[0] * shape.getAttr('width'), control1[1] * shape.getAttr('height'),
+          control2[0] * shape.getAttr('width'), control2[1] * shape.getAttr('height'),
+          to[0] * shape.getAttr('width'), to[1] * shape.getAttr('height')
+        );
 
-        // context.moveTo(
-        //   this.getValueByPercent(item.frame.x, item.frame.width, from[0]) + rect.x,
-        //   this.getValueByPercent(item.frame.y, item.frame.height, from[1]) + rect.y
-        // );
-        //
-        // context.bezierCurveTo(
-        //   this.getValueByPercent(item.frame.x, item.frame.width, control1[0]) + rect.x,
-        //   this.getValueByPercent(item.frame.y, item.frame.height, control1[1]) + rect.y,
-        //   this.getValueByPercent(item.frame.x, item.frame.width, control2[0]) + rect.x,
-        //   this.getValueByPercent(item.frame.y, item.frame.height, control2[1]) + rect.y,
-        //   this.getValueByPercent(item.frame.x, item.frame.width, to[0]) + rect.x,
-        //   this.getValueByPercent(item.frame.y, item.frame.height, to[1]) + rect.y,
-        // );
-
-        // context.setAttr('strokeStyle', 'blue');
-        // context.setAttr('lineWidth', 4);
-        // context.stroke();
-
-        // this.drawCurves(this.ovals,
-        //   this.getValueByPercent(item.frame.x, item.frame.width, from[0]),
-        //   this.getValueByPercent(item.frame.y, item.frame.height, from[1]),
-        //   this.getValueByPercent(item.frame.x, item.frame.width, p[0]),
-        //   this.getValueByPercent(item.frame.y, item.frame.height, p[1]),
-        //   this.getValueByPercent(item.frame.x, item.frame.width, to[0]),
-        //   this.getValueByPercent(item.frame.y, item.frame.height, to[1])
-        // );
+        // Konva will apply styles from config
+        context.fillStrokeShape(shape);
       }
+    });
 
+    this.applyStyles(figure, item.style);
 
-    }
+    return figure;
   }
 
   private drawRect(frame) {
@@ -176,15 +193,89 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
     context.stroke();
   }
 
-  private drawCurves(layer, fromX, fromY, controlX, controlY, toX, toY) {
-
-  }
-
   @HostListener('window:resize')
   onWindowResize() {
     this.updateSize();
     this.stage.draw();
   }
+
+  private updateBoundaries(oldScale, scale) {
+    if (scale > 1.3) {
+      return;
+    }
+
+    const box = this.stage.getClientRect({skipTransform: true});
+    const stageSize = this.stage.getSize();
+    let position = this.stage.position();
+
+    if (isNaN(box.width) || isNaN(position.x)) {
+      return;
+    }
+
+    const scaleX = stageSize.width / box.width;
+    const scaleY = stageSize.height / box.height;
+    const scaleValue = Math.max(scaleX, scaleY);
+
+    if (scale < scaleValue) {
+      scale = scaleValue;
+    }
+
+    this.stage.scale({x: scale, y: scale});
+
+    const newWidth = box.width * scale;
+    const newHeight = box.height * scale;
+
+    console.log('position', position.x, stageSize.width, stageSize.width / 2);
+
+    const centerX = (stageSize.width / 2);
+    const centerY = (stageSize.height / 2);
+
+    const mousePointTo = {
+      x: centerX / oldScale - this.stage.x() / oldScale,
+      y: centerY / oldScale - this.stage.y() / oldScale
+    };
+
+    position = {
+      x: -(mousePointTo.x - centerX / scale) * scale,
+      y: -(mousePointTo.y - centerY / scale) * scale
+    };
+
+    console.log('after', position.x, centerX);
+
+    if (position.x > 0) {
+      position.x = 0;
+    }
+
+    if (position.y > 0) {
+      position.y = 0;
+    }
+
+    if (newHeight + position.y < stageSize.height) {
+      position.y = stageSize.height - newHeight;
+    }
+
+    if (newWidth + position.x < stageSize.width) {
+      position.x = stageSize.width - newWidth;
+    }
+
+    this.stage.position(position);
+    this.stage.batchDraw();
+  }
+
+  private zoom(direction) {
+    const originalScale = this.stage.scaleX();
+    let scale = originalScale;
+
+    if (direction > 0) {
+      scale *= SCALE_FACTOR;
+    } else {
+      scale /= SCALE_FACTOR;
+    }
+
+    console.log('original scale', originalScale, scale);
+    this.updateBoundaries(originalScale, scale);
+  }
+
 
   private updateSize() {
     const canvas = this.canvas.nativeElement;
