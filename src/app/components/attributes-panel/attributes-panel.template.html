@@ -1,2 +1,12 @@
-
-<p>Hello attributes-panel</p>
+<div class="form-group">
+  <label>Zoom</label>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <button role="button" class="btn btn-outline-secondary" (click)="zoomOut()">-</button>
+    </div>
+    <input type="text" class="form-control" readonly value="100%">
+    <div class="input-group-append">
+      <button role="button" class="btn btn-outline-secondary" (click)="zoomIn()">+</button>
+    </div>
+  </div>
+</div>

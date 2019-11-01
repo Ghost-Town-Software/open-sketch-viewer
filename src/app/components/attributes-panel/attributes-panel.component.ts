@@ -10,4 +10,12 @@ export class AttributesPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  zoomIn() {
+
+  }
+
+  zoomOut() {
+
+  }
 }

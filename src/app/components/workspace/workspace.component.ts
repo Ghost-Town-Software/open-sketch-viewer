@@ -15,7 +15,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
   @ViewChild('scroll', {static: true}) scroll;
 
   private stage;
-  private ovals;
+  private layer;
 
   constructor(private elementRef: ElementRef, private project: ProjectService, private renderer: Renderer2) {
 
@@ -45,53 +45,151 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
     this.stage = new Konva.Stage({
       container: this.canvas.nativeElement,
       width: this.elementRef.nativeElement.clientWidth,
-      height: this.elementRef.nativeElement.clientHeight
+      height: this.elementRef.nativeElement.clientHeight,
+      // draggable: true
     });
 
+    this.stage.clipWidth(this.artboard.frame.width);
+    this.stage.clipHeight(this.artboard.frame.height);
+
+    // this.stage.on('dragmove', (e) => {
+    //   const stage = e.target;
+    //   const y = stage.y();
+    //   const x = stage.x();
+    //   const rect = this.stage.getClientRect({skipTransform: false});
+    //
+    //   console.log('move', stage.position(), rect, stage.width(), stage.height());
+    //
+    //   if (y > 0) {
+    //     stage.y(0);
+    //   }
+    //
+    //   const maxY = (stage.height()) * -1;
+    //   if (y < maxY) {
+    //     stage.y(maxY);
+    //   }
+    //
+    //   if (x > 0) {
+    //     stage.x(0);
+    //     console.log('lock it');
+    //   }
+    //
+    //   const maxX = (stage.width()) * -1;
+    //   if (x < maxX) {
+    //     stage.x(maxX);
+    //   }
+    // });
+
     // add canvas element
-    const layer = new Konva.Layer();
-    this.stage.add(layer);
+    this.layer = new Konva.Layer();
+    this.stage.add(this.layer);
 
-    this.ovals = new Konva.Layer();
-    this.stage.add(this.ovals);
-    layer.add(new Konva.Rect({
-      x: 0,
-      y: 0,
-      width: this.artboard.frame.width,
-      height: this.artboard.frame.height,
-      fill: '#ddd'
-    }));
+    // this.stage.on('wheel', (e) => {
+    //   e.evt.preventDefault();
+    //
+    //   const rect = this.stage.getClientRect({skipTransform: false});
+    //   let y = this.stage.y() + e.evt.deltaY * -1;
+    //   let x = this.stage.x() + e.evt.deltaX * -1;
+    //
+    //   if (y > 0) {
+    //     y = 0;
+    //   }
+    //
+    //   const maxY = (rect.height - this.elementRef.nativeElement.clientHeight) * -1;
+    //   if (y < maxY) {
+    //     y = maxY;
+    //   }
+    //
+    //   if (x > 0) {
+    //     x = 0;
+    //   }
+    //
+    //   const maxX = (rect.width - this.elementRef.nativeElement.clientWidth) * -1;
+    //   if (x < maxX) {
+    //     x = maxX;
+    //   }
+    //
+    //   this.stage.y(y);
+    //   this.stage.x(x);
+    //   this.stage.draw();
+    // });
 
-    layer.draw();
+    this.scrollbars();
+  }
 
-    this.stage.on('wheel', (e) => {
-      e.evt.preventDefault();
+  private scrollbars() {
+    // now draw our bars
+    const stage = this.stage;
+    const layer = this.layer;
+    const frame = this.artboard.frame;
 
-      const rect = this.stage.getClientRect({skipTransform: false});
-      let y = this.stage.y() + e.evt.deltaY * -1;
-      let x = this.stage.x() + e.evt.deltaX * -1;
+    const scrollLayers = new Konva.Layer();
+    stage.add(scrollLayers);
 
-      if (y > 0) {
-        y = 0;
+    const PADDING = 5;
+
+    const verticalBar = new Konva.Rect({
+      width: 10,
+      height: 100,
+      fill: 'grey',
+      opacity: 0.8,
+      x: stage.width() - PADDING - 10,
+      y: PADDING,
+      draggable: true,
+      dragBoundFunc: function (pos) {
+        pos.x = stage.width() - PADDING - 10;
+        pos.y = Math.max(
+          Math.min(pos.y, stage.height() - this.height() - PADDING),
+          PADDING
+        );
+        return pos;
       }
+    });
+    scrollLayers.add(verticalBar);
+    scrollLayers.draw();
 
-      const maxY = (rect.height - this.elementRef.nativeElement.clientHeight) * -1;
-      if (y < maxY) {
-        y = maxY;
+    verticalBar.on('dragmove', function () {
+      // delta in %
+      const availableHeight =
+        stage.height() - PADDING * 2 - verticalBar.height();
+      var delta = (verticalBar.y() - PADDING) / availableHeight;
+
+      console.log('available height', availableHeight, frame.height, delta);
+      layer.y(-frame.height * delta);
+      layer.batchDraw();
+    });
+
+    const horizontalBar = new Konva.Rect({
+      width: 100,
+      height: 10,
+      fill: 'grey',
+      opacity: 0.8,
+      x: PADDING,
+      y: stage.height() - PADDING - 10,
+      draggable: true,
+      dragBoundFunc: function (pos) {
+        pos.x = Math.max(
+          Math.min(pos.x, stage.width() - this.width() - PADDING),
+          PADDING
+        );
+        pos.y = stage.height() - PADDING - 10;
+
+        return pos;
       }
+    });
+    scrollLayers.add(horizontalBar);
+    scrollLayers.draw();
 
-      if (x > 0) {
-        x = 0;
-      }
+    horizontalBar.on('dragmove', () => {
+      // delta in %
+      const width = frame.width - stage.width();
+      const availableWidth = stage.width() - PADDING * 2 - horizontalBar.width();
+      const delta = (horizontalBar.x() - PADDING) / availableWidth;
 
-      const maxX = (rect.width - this.elementRef.nativeElement.clientWidth) * -1;
-      if (x < maxX) {
-        x = maxX;
-      }
+      console.log('available width', availableWidth, frame.width - stage.width(), delta, -width * delta);
 
-      this.stage.y(y);
-      this.stage.x(x);
-      this.stage.draw();
+      layer.x(-width * delta);
+      layer.batchDraw();
     });
   }
 
@@ -115,7 +213,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
           point2 = item.points[i + 1];
         }
 
-        this.ovals.add(this.drawOval(item, point1, point2));
+        this.layer.add(this.drawOval(item, point1, point2));
       }
     }
 
@@ -144,6 +242,10 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
         shape.stroke(`rgba(${red}, ${green}, ${blue}, ${alpha})`);
         shape.strokeWidth(border.thickness);
       }
+    }
+
+    if (style.contextSettings.opacity) {
+      shape.opacity(style.contextSettings.opacity);
     }
   }
 
@@ -185,7 +287,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   private drawRect(frame) {
-    const context = this.ovals.getContext();
+    const context = this.layer.getContext();
     context.beginPath();
     context.rect(frame.x, frame.y, frame.width, frame.height);
     context.setAttr('strokeStyle', 'green');
