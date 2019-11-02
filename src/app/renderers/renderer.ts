@@ -10,6 +10,10 @@ export abstract class Renderer {
     }
 
     if (style.borders.length) {
+      if (style.borders.length > 1) {
+        console.warn('Item has more than one borders', shape, style);
+      }
+
       for (const border of style.borders) {
         if (!border.isEnabled) {
           continue;

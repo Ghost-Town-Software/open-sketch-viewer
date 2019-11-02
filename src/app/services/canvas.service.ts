@@ -99,14 +99,23 @@ export class CanvasService {
         continue;
       }
 
-      const result = sketch.render(item);
-      result.forEach((i) => layer.add(i));
+      const rect = sketch.render(item);
+
+      layer.add(rect);
+
+      this.bindClickToElement(rect, item);
     }
 
     this.clipArtboard();
     this.center();
 
     this.stage.draw();
+  }
+
+  private bindClickToElement(element, attrs) {
+    element.on('click', (e) => {
+      this.sketch.click(element, attrs);
+    });
   }
 
   public destroy() {
@@ -125,7 +134,8 @@ export class CanvasService {
       width: this.artboard.frame.width,
       height: this.artboard.frame.height,
       fill: '#ddd',
-      globalCompositeOperation: 'destination-in'
+      globalCompositeOperation: 'destination-in',
+      listening: false
     }));
   }
 
