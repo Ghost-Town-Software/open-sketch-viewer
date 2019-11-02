@@ -15,17 +15,57 @@ export class CanvasService {
   private stage;
   private artboard;
 
+  private spacePressed: boolean;
+
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private sketch: SketchService, rendererFactory: RendererFactory2) {
     this.htmlRenderer = rendererFactory.createRenderer(null, null);
   }
 
-  public destroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.stage.destroy();
-    this.stage = null;
+  public zoomIn() {
+    this.zoom(1);
+  }
+
+  public zoomOut() {
+    this.zoom(-1);
+  }
+
+  public fit() {
+    const layer = this.stage.findOne('#content');
+    const artboard = this.stage.findOne('#artboard');
+    const stageSize = this.stage.getSize();
+
+    const box = artboard.getClientRect({relativeTo: this.stage});
+    const scaleX = stageSize.width / box.width;
+    const scaleY = stageSize.height / box.height;
+    const scaleValue = Math.min(scaleX, scaleY) * .95;
+
+    layer.scale({
+      x: scaleValue,
+      y: scaleValue
+    });
+
+    this.center();
+  }
+
+  public draw() {
+    const layer = this.stage.findOne('#content');
+    layer.draw();
+  }
+
+  public center() {
+    const layer = this.stage.findOne('#content');
+    const artboard = this.stage.findOne('#artboard');
+    const box = artboard.getClientRect({skipTransform: false});
+
+    layer.x((this.stage.width() - box.width) / 2);
+
+    if (box.height < this.stage.height()) {
+      layer.y((this.stage.height() - box.height) / 2);
+    } else if (layer.y() > 0) {
+      layer.y(0);
+    }
   }
 
   public createArtboard(container, artboard) {
@@ -43,6 +83,7 @@ export class CanvasService {
 
     this.bindWheel();
     this.bindKeyboard();
+    this.bindMouse();
     this.bindResize();
 
     return this.stage;
@@ -63,7 +104,16 @@ export class CanvasService {
     }
 
     this.clipArtboard();
+    this.center();
+
     this.stage.draw();
+  }
+
+  public destroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.stage.destroy();
+    this.stage = null;
   }
 
   private clipArtboard() {
@@ -79,13 +129,31 @@ export class CanvasService {
     }));
   }
 
-  private bindKeyboard() {
+  private bindMouse() {
     const layer = this.stage.findOne('#content');
 
-    const keyup = fromEvent(document, 'keyup');
+    const mousedown = fromEvent(document, 'mousedown');
+    mousedown.pipe(takeUntil(this.destroy$)).subscribe((event: MouseEvent) => {
+      const target: any = event.composedPath()[0];
+      if (target.tagName !== 'CANVAS' || event.button !== 0) {
+        return;
+      }
 
+      if (this.spacePressed) {
+        layer.startDrag();
+      }
+    });
+
+    const mouseup = fromEvent(document, 'mouseup');
+    mouseup.pipe(takeUntil(this.destroy$)).subscribe((event: MouseEvent) => {
+      layer.stopDrag();
+    });
+  }
+
+  private bindKeyboard() {
+    const keyup = fromEvent(document, 'keyup');
     keyup.pipe(takeUntil(this.destroy$)).subscribe((event: KeyboardEvent) => {
-      layer.draggable(false);
+      this.spacePressed = false;
 
       if (event.key === '+') {
         this.zoom(1);
@@ -99,7 +167,7 @@ export class CanvasService {
     const keydown = fromEvent(document, 'keydown');
     keydown.pipe(takeUntil(this.destroy$)).subscribe((event: KeyboardEvent) => {
       if (event.key === ' ') {
-        layer.draggable(true);
+        this.spacePressed = true;
       }
     });
   }
@@ -150,7 +218,42 @@ export class CanvasService {
 
   private createContentLayer(width, height) {
     const layer = new Konva.Layer({
-      id: 'content'
+      id: 'content',
+      dragBoundFunc: (pos) => {
+        const artboard = this.stage.findOne('#artboard');
+        const box = artboard.getClientRect({skipTransform: false});
+
+        const paddingWidth = this.stage.width() / 4;
+        const paddingHeight = this.stage.height() / 4;
+
+        const spaceWidth = this.stage.width() - paddingWidth - paddingWidth;
+        const spaceHeight = this.stage.height() - paddingHeight - paddingHeight;
+
+        if (box.width > spaceWidth) {
+          if (pos.x > paddingWidth) {
+            pos.x = paddingWidth;
+          } else if (pos.x < -paddingWidth) {
+            pos.x = -paddingWidth;
+          }
+        } else {
+          if (pos.x < paddingWidth) {
+            pos.x = paddingWidth;
+          } else if (pos.x > this.stage.width() - paddingWidth - box.width) {
+            pos.x = this.stage.width() - paddingWidth - box.width;
+          }
+        }
+
+        if (box.height > spaceHeight) {
+          const bottom = (box.height - this.stage.height() + paddingHeight) * -1;
+          if (pos.y > paddingHeight) {
+            pos.y = paddingHeight;
+          } else if (pos.y < bottom) {
+            pos.y = bottom;
+          }
+        }
+
+        return pos;
+      }
     });
 
     layer.add(new Konva.Rect({
@@ -159,11 +262,12 @@ export class CanvasService {
       height,
       x: 0,
       y: 0,
-      fill: '#fff',
+      fill: '#fff'
     }));
 
     return layer;
   }
+
 
   private createBackgroundLayer(width, height) {
     const background = new Konva.Layer();
@@ -171,8 +275,8 @@ export class CanvasService {
       id: 'background',
       x: 0,
       y: 0,
-      width,
-      height,
+      width: width * 2,
+      height: height * 2,
       fill: '#f8f9fa',
     }));
 
@@ -181,8 +285,7 @@ export class CanvasService {
 
   private zoom(direction) {
     const layer = this.stage.findOne('#content');
-    const originalScale = layer.scaleX();
-    let scale = originalScale;
+    let scale = layer.scaleX();
 
     if (direction > 0) {
       scale *= SCALE_FACTOR;
@@ -196,7 +299,7 @@ export class CanvasService {
 
     const box = layer.getClientRect({skipTransform: true});
     const stageSize = layer.getSize();
-    let position = layer.position();
+    const position = layer.position();
 
     if (isNaN(box.width) || isNaN(position.x)) {
       return;
@@ -211,39 +314,7 @@ export class CanvasService {
     }
 
     layer.scale({x: scale, y: scale});
-
-    const newWidth = box.width * scale;
-    const newHeight = box.height * scale;
-    const centerX = (stageSize.width / 2);
-    const centerY = (stageSize.height / 2);
-
-    const mousePointTo = {
-      x: centerX / originalScale - layer.x() / originalScale,
-      y: centerY / originalScale - layer.y() / originalScale
-    };
-
-    position = {
-      x: -(mousePointTo.x - centerX / scale) * scale,
-      y: -(mousePointTo.y - centerY / scale) * scale
-    };
-
-    if (position.x > 0) {
-      position.x = 0;
-    }
-
-    if (position.y > 0) {
-      position.y = 0;
-    }
-
-    if (newHeight + position.y < stageSize.height) {
-      position.y = stageSize.height - newHeight;
-    }
-
-    if (newWidth + position.x < stageSize.width) {
-      position.x = stageSize.width - newWidth;
-    }
-
-    layer.position(position);
-    layer.batchDraw();
+    layer.draw();
   }
 }
+
