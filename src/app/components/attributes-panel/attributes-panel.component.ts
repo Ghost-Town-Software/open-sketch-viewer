@@ -12,6 +12,8 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('preview', {static: true}) previewEl;
   styles: string;
 
+  currentZoom: number;
+
   constructor(private canvas: CanvasService, private sketch: SketchService, private preview: PreviewService) {
 
   }
@@ -25,10 +27,14 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
       console.log('res', res);
 
       this.styles = this.getHumanStyles(res.attrs);
+      this.preview.clear();
       this.preview.render(res.attrs);
       this.preview.fit();
+
       this.preview.draw();
     });
+
+    this.currentZoom = 100.0;
   }
 
   private getHumanStyles(attrs) {
@@ -81,15 +87,21 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
   }
 
   zoomIn() {
-    this.canvas.zoomIn();
+    const zoom = this.canvas.zoomIn();
+    if (zoom) {
+      this.currentZoom = zoom;
+    }
   }
 
   zoomOut() {
-    this.canvas.zoomOut();
+    const zoom = this.canvas.zoomOut();
+    if (zoom) {
+      this.currentZoom = zoom;
+    }
   }
 
   fit() {
-    this.canvas.fit();
+    this.currentZoom = this.canvas.fit();
     this.canvas.draw();
   }
 

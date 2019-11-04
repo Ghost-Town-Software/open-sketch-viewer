@@ -15,14 +15,15 @@ export class PreviewService {
   constructor(private sketch: SketchService) {
   }
 
-  public fit() {
+  public fit(): number {
     const layer = this.stage.findOne('#preview1');
     const stageSize = this.stage.getSize();
 
     const box = layer.getClientRect({relativeTo: this.stage});
     const scaleX = stageSize.width / box.width;
     const scaleY = stageSize.height / box.height;
-    const scaleValue = Math.min(scaleX, scaleY) * .95;
+    const effectiveScale = Math.min(scaleX, scaleY);
+    const scaleValue = effectiveScale * .85;
 
     layer.scale({
       x: scaleValue,
@@ -30,6 +31,12 @@ export class PreviewService {
     });
 
     this.center();
+    return Math.floor(effectiveScale * 100);
+  }
+
+  public clear() {
+    const layer = this.stage.findOne('#preview1');
+    layer.destroyChildren();
   }
 
   public draw() {

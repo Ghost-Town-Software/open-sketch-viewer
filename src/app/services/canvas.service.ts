@@ -24,22 +24,17 @@ export class CanvasService {
   }
 
   public zoomIn() {
-    this.zoom(1);
+    return this.zoom(1);
   }
 
   public zoomOut() {
-    this.zoom(-1);
+    return this.zoom(-1);
   }
 
   public fit() {
     const layer = this.stage.findOne('#content');
-    const artboard = this.stage.findOne('#artboard');
-    const stageSize = this.stage.getSize();
-
-    const box = artboard.getClientRect({relativeTo: this.stage});
-    const scaleX = stageSize.width / box.width;
-    const scaleY = stageSize.height / box.height;
-    const scaleValue = Math.min(scaleX, scaleY) * .95;
+    const currentZoom = this.getCurrentZoom();
+    const scaleValue = currentZoom * .95;
 
     layer.scale({
       x: scaleValue,
@@ -47,6 +42,17 @@ export class CanvasService {
     });
 
     this.center();
+
+    return Math.floor(currentZoom * 100);
+  }
+
+  public getCurrentZoom() {
+    const artboard = this.stage.findOne('#artboard');
+    const box = artboard.getClientRect({relativeTo: this.stage});
+    const stageSize = this.stage.getSize();
+    const scaleX = stageSize.width / box.width;
+    const scaleY = stageSize.height / box.height;
+    return Math.min(scaleX, scaleY);
   }
 
   public draw() {
@@ -304,7 +310,7 @@ export class CanvasService {
     }
 
     if (scale > 1.3) {
-      return;
+      return null;
     }
 
     const box = layer.getClientRect({skipTransform: true});
@@ -312,7 +318,7 @@ export class CanvasService {
     const position = layer.position();
 
     if (isNaN(box.width) || isNaN(position.x)) {
-      return;
+      return null;
     }
 
     const scaleX = stageSize.width / box.width;
@@ -325,6 +331,8 @@ export class CanvasService {
 
     layer.scale({x: scale, y: scale});
     layer.draw();
+
+    return Math.floor(scale * 100);
   }
 }
 
