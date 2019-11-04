@@ -1,0 +1,33 @@
+
+.tree {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: dimgrey;
+
+  .tree-item {
+    margin-bottom: .3rem;
+    cursor: pointer;
+  }
+
+  .tree-item-header {
+    padding: 0 0.5rem;
+    &:hover {
+      background: whitesmoke;
+      color: #333;
+    }
+  }
+
+  .tree-children {
+    margin-top: .3rem;
+    margin-left: 1.5rem;
+
+    &.collapsed {
+      display: none;
+    }
+  }
+
+  i.fas {
+    margin-right: 5px;
+
+  }
+}

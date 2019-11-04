@@ -1,8 +1,15 @@
 
-
 <div class="tree">
-  <div class="tree-item" *ngFor="let layer of layers">
-    <i class="fas fa-chevron-down" *ngIf="layer.layers"></i>
-    <span class="layer-name">{{ layer.name }}</span>
-  </div>
+  <ng-template #recursiveList let-layers>
+    <div class="tree-item" *ngFor="let layer of layers">
+      <div class="tree-item-header">
+        <i (click)="toggleCollapse(layer)" class="fas" [class.fa-chevron-right]="!layer.collapsed" [class.fa-chevron-down]="!!layer.collapsed" *ngIf="layer.layers"></i>
+        <span class="layer-name">{{ layer.name }}</span>
+      </div>
+      <div class="tree-children" *ngIf="layer.layers" [class.collapsed]="!layer.collapsed">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: layer.layers }"></ng-container>
+      </div>
+    </div>
+  </ng-template>
+  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: layers }"></ng-container>
 </div>

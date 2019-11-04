@@ -14,4 +14,7 @@ export class StructurePanelComponent implements OnInit {
     console.log('layers', this.layers);
   }
 
+  toggleCollapse(layer: any) {
+    layer.collapsed = !layer.collapsed;
+  }
 }
