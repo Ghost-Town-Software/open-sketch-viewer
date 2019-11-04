@@ -20,17 +20,25 @@ export class TextRenderer extends Renderer {
 
     const fontAttributes = textAttributes.MSAttributedStringFontAttribute || this.defaultFontAttribute;
     const colorAttributes = textAttributes.MSAttributedStringColorAttribute;
+    const paragraphStyle = textAttributes.paragraphStyle || { maximumLineHeight: 24 };
 
     const fontColor = this.getFontColor(colorAttributes);
+    const lineHeight = this.getLineHeight(fontAttributes, paragraphStyle);
 
     group.add(new Konva.Text({
       text: textObj.string,
       fontFamily: fontAttributes.attributes.name,
       fontSize: fontAttributes.attributes.size,
-      fill: fontColor
+      fill: fontColor,
+      lineHeight
     }));
 
     return group;
+  }
+
+  private getLineHeight(fontAttributes, paragraphStyle) {
+      const fontSize = fontAttributes.attributes.size;
+      return paragraphStyle.maximumLineHeight / fontSize;
   }
 
   private getFontColor(colorAttributes) {
