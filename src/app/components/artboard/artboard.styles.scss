@@ -7,11 +7,13 @@
   height: 100%;
   width: 100%;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .artboard-main {
   display: flex;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .artboard-header {
@@ -20,15 +22,20 @@
 }
 
 .artboard-layers {
-  width: 200px;
+  width: 250px;
   border-right: 1px solid $border-color;
+  height: 100%;
+  overflow: auto;
 }
 
 .artboard-canvas {
   flex-grow: 1;
+  height: 100%;
 }
 
 .artboard-sidebar {
   border-left: 1px solid $border-color;
-  width: 200px;
+  width: 250px;
+  height: 100%;
+  overflow: auto;
 }
