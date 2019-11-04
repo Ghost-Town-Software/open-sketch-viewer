@@ -1,26 +1,36 @@
 
 .tree {
   margin-top: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: dimgrey;
 
+  @for $i from 2 through 9 {
+    .tree-depth-#{$i}  {
+      .tree-item-header {
+        padding-left: 0.5rem * $i;
+      }
+      &.tree-leaf {
+        .tree-item-header {
+          padding-left: 0.5rem + 0.5rem * $i;
+        }
+      }
+    }
+  }
+
   .tree-item {
-    margin-bottom: .3rem;
     cursor: pointer;
   }
 
   .tree-item-header {
-    padding: 0 0.5rem;
-    &:hover {
+    padding: 0.3rem 0.5rem;
+
+    &:hover, &.active {
       background: whitesmoke;
       color: #333;
     }
   }
 
   .tree-children {
-    margin-top: .3rem;
-    margin-left: 1.5rem;
-
     &.collapsed {
       display: none;
     }
@@ -28,6 +38,5 @@
 
   i.fas {
     margin-right: 5px;
-
   }
 }

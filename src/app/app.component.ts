@@ -16,7 +16,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.loader.loadDefault().subscribe((res) => {
-      console.log('finished', res);
       this.data = res;
     });
   }

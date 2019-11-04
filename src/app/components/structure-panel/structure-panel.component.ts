@@ -10,11 +10,24 @@ export class StructurePanelComponent implements OnInit {
   @Input()
   layers: any[];
 
+  activeLayer: any;
+
   ngOnInit(): void {
-    console.log('layers', this.layers);
   }
 
-  toggleCollapse(layer: any) {
+  toggleCollapse($event, layer: any) {
+    $event.stopPropagation();
     layer.collapsed = !layer.collapsed;
+  }
+
+  focusItem($event, layer: any) {
+    $event.stopPropagation();
+
+    if (this.activeLayer) {
+      this.activeLayer.active = false;
+    }
+
+    this.activeLayer = layer;
+    this.activeLayer.active = true;
   }
 }
