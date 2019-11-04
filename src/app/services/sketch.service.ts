@@ -3,6 +3,7 @@ import {OvalRenderer} from '../renderers/oval.renderer';
 import {Renderer} from '../renderers/renderer';
 import {Subject} from 'rxjs';
 import {TextRenderer} from '../renderers/text.renderer';
+import {RectangleRenderer} from '../renderers/rectangle.renderer';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import {TextRenderer} from '../renderers/text.renderer';
 export class SketchService {
   renderers = {
     oval: new OvalRenderer(),
-    text: new TextRenderer()
+    text: new TextRenderer(),
+    rectangle: new RectangleRenderer()
   };
 
   private click$: Subject<{shape, attrs}> = new Subject();

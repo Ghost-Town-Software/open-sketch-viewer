@@ -52,7 +52,7 @@ export abstract class Renderer {
     const rect = new Konva.Rect({
       width: item.frame.width,
       height: item.frame.height,
-      stroke: '#000',
+      stroke: '#333',
       strokeWidth: 1
     });
 

@@ -2,6 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {SketchService} from '../../services/sketch.service';
 import {PreviewService} from '../../services/preview.service';
+import {ColorUtils} from '../../utils/color-utils';
+import {StyleUtils} from '../../utils/style-utils';
 
 @Component({
   selector: 'attributes-panel',
@@ -55,19 +57,7 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
         console.warn('Item has more than one borders', attrs);
       }
 
-      for (const border of style.borders) {
-        if (!border.isEnabled) {
-          continue;
-        }
-
-        const red = Math.round(border.color.red * 255);
-        const green = Math.round(border.color.green * 255);
-        const blue = Math.round(border.color.blue * 255);
-        const alpha = border.color.alpha;
-
-
-        parts.border = `${border.thickness}px solid rgba(${red}, ${green}, ${blue}, ${alpha})`;
-      }
+      parts.border = StyleUtils.extractBorders(style);
     }
 
     if (style.contextSettings.opacity) {
