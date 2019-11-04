@@ -2,13 +2,15 @@ import {Injectable} from '@angular/core';
 import {OvalRenderer} from '../renderers/oval.renderer';
 import {Renderer} from '../renderers/renderer';
 import {Subject} from 'rxjs';
+import {TextRenderer} from '../renderers/text.renderer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SketchService {
   renderers = {
-    oval: new OvalRenderer()
+    oval: new OvalRenderer(),
+    text: new TextRenderer()
   };
 
   private click$: Subject<{shape, attrs}> = new Subject();
@@ -17,6 +19,8 @@ export class SketchService {
     if (clazz in this.renderers) {
       return this.renderers[clazz];
     }
+
+    console.warn('Not supported element with class %s', clazz);
 
     return null;
   }

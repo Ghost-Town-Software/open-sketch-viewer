@@ -1,3 +1,5 @@
+import Konva from 'konva';
+
 export abstract class Renderer {
   public abstract render(payload);
 
@@ -32,5 +34,43 @@ export abstract class Renderer {
     if (style.contextSettings.opacity) {
       shape.opacity(style.contextSettings.opacity);
     }
+  }
+
+  protected createBoundingRect(item: any) {
+    const group = new Konva.Group({
+      x: item.frame.x,
+      y: item.frame.y,
+      width: item.frame.width,
+      height: item.frame.height,
+    });
+
+    group.add(this.drawRect(item));
+    return group;
+  }
+
+  protected drawRect(item) {
+    const rect = new Konva.Rect({
+      width: item.frame.width,
+      height: item.frame.height,
+      stroke: '#000',
+      strokeWidth: 1
+    });
+
+    const style = item.style;
+
+    if (style.borders.length) {
+      for (const border of style.borders) {
+        if (!border.isEnabled) {
+          continue;
+        }
+
+        rect.x(-border.thickness / 2);
+        rect.y(-border.thickness / 2);
+        rect.width(item.frame.width + border.thickness);
+        rect.height(item.frame.height + border.thickness);
+      }
+    }
+
+    return rect;
   }
 }

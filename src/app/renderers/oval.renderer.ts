@@ -3,14 +3,8 @@ import Konva from 'konva';
 
 export class OvalRenderer extends Renderer {
   public render(item) {
-    const group = new Konva.Group({
-      x: item.frame.x,
-      y: item.frame.y,
-      width: item.frame.width,
-      height: item.frame.height,
-    });
 
-    group.add(this.drawRect(item));
+    const group = this.createBoundingRect(item);
 
     for (let i = 0; i < item.points.length; i++) {
       const point1 = item.points[i];
@@ -30,31 +24,7 @@ export class OvalRenderer extends Renderer {
     return group;
   }
 
-  private drawRect(item) {
-    const rect = new Konva.Rect({
-      width: item.frame.width,
-      height: item.frame.height,
-      stroke: '#000',
-      strokeWidth: 1
-    });
 
-    const style = item.style;
-
-    if (style.borders.length) {
-      for (const border of style.borders) {
-        if (!border.isEnabled) {
-          continue;
-        }
-
-        rect.x(-border.thickness / 2);
-        rect.y(-border.thickness / 2);
-        rect.width(item.frame.width + border.thickness);
-        rect.height(item.frame.height + border.thickness);
-      }
-    }
-
-    return rect;
-  }
 
   private drawOval(item, point1, point2) {
     const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
