@@ -1,9 +1,12 @@
-import {Renderer} from './renderer';
 import Konva from 'konva';
-import {ColorUtils} from '../utils/color-utils';
+import {Injectable} from '@angular/core';
+import {AbstractComponent} from './abstract.component';
+import {ColorUtils} from '../styles/color-utils';
 
-
-export class TextRenderer extends Renderer {
+@Injectable({
+  providedIn: 'root'
+})
+export class TextComponent extends AbstractComponent {
 
   private defaultFontAttribute = {
     attributes: {

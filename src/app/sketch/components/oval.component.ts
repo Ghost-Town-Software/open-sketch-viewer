@@ -1,7 +1,19 @@
-import {Renderer} from './renderer';
 import Konva from 'konva';
+import {Injectable} from '@angular/core';
+import {AbstractComponent} from './abstract.component';
+import {ProjectService} from '../../services/project.service';
 
-export class OvalRenderer extends Renderer {
+@Injectable({
+  providedIn: 'root'
+})
+export class OvalComponent extends AbstractComponent {
+
+  public value: string = 'a';
+
+  constructor(public project: ProjectService) {
+    super();
+  }
+
   public render(item) {
 
     const group = this.createBoundingRect(item);
@@ -23,8 +35,6 @@ export class OvalRenderer extends Renderer {
 
     return group;
   }
-
-
 
   private drawOval(item, point1, point2) {
     const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));

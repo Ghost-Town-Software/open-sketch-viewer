@@ -3,7 +3,7 @@ export class ColorUtils {
   public static extractColor(attributes) {
 
     if(!attributes) {
-      return 'rgba(0, 0, 0, 1)';
+      return null;
     }
 
     const red = Math.floor(attributes.blue * 255);
@@ -17,7 +17,7 @@ export class ColorUtils {
   public static extractHexColor(attributes) {
 
     if(!attributes) {
-      return '#000000';
+      return null;
     }
 
     const red = Math.floor(attributes.blue * 255).toString(16);

@@ -2,8 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {SketchService} from '../../services/sketch.service';
 import {PreviewService} from '../../services/preview.service';
-import {ColorUtils} from '../../utils/color-utils';
-import {StyleUtils} from '../../utils/style-utils';
+import {StyleUtils} from '../../sketch/styles/style-utils';
 
 @Component({
   selector: 'attributes-panel',

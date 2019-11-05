@@ -1,8 +1,8 @@
-import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {Injectable} from '@angular/core';
 import Konva from 'konva';
 import {SketchService} from './sketch.service';
-import {Renderer} from '../renderers/renderer';
 import {Subject} from 'rxjs';
+import {AbstractComponent} from '../sketch/components/abstract.component';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +82,7 @@ export class PreviewService {
     const layer = this.stage.findOne('#preview1');
     layer.clear();
 
-    const sketch: Renderer = this.sketch.getFactory(item._class);
+    const sketch: AbstractComponent = this.sketch.getFactory(item._class);
 
     if (!sketch) {
       return;

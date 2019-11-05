@@ -1,9 +1,9 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import Konva from 'konva';
 import {SketchService} from './sketch.service';
-import {Renderer} from '../renderers/renderer';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import {AbstractComponent} from '../sketch/components/abstract.component';
 
 const SCALE_FACTOR = 1.1;
 
@@ -99,7 +99,7 @@ export class CanvasService {
     const layer = this.stage.findOne('#content');
 
     for (const item of this.artboard.layers) {
-      const sketch: Renderer = this.sketch.getFactory(item._class);
+      const sketch: AbstractComponent = this.sketch.getFactory(item._class);
 
       if (!sketch) {
         continue;

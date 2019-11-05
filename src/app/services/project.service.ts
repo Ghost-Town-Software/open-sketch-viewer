@@ -37,6 +37,14 @@ export class ProjectService {
     return null;
   }
 
+  public getImage(path) {
+    if (path in this.state$.value) {
+      return this.state$.value[path];
+    }
+
+    return null;
+  }
+
   public getArtboards(pageId: string) {
     const page = this.getPage(pageId);
 

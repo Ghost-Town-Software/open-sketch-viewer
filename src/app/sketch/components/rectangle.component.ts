@@ -1,9 +1,13 @@
-import {Renderer} from './renderer';
 import Konva from 'konva';
-import {StyleUtils} from '../utils/style-utils';
-import {ColorUtils} from '../utils/color-utils';
+import {Injectable} from '@angular/core';
+import {AbstractComponent} from './abstract.component';
+import {ColorUtils} from '../styles/color-utils';
+import {StyleUtils} from '../styles/style-utils';
 
-export class RectangleRenderer extends Renderer {
+@Injectable({
+  providedIn: 'root'
+})
+export class RectangleComponent extends AbstractComponent {
 
   render(payload) {
     const group = this.createBoundingRect(payload);
