@@ -1,12 +1,16 @@
 import Konva from 'konva';
-import {Style} from './style';
+import {StylesContainer} from '../styles/styles-container';
 
 export abstract class AbstractComponent {
-  protected style: Style = new Style();
+
+  protected styles: StylesContainer = new StylesContainer();
+
   public abstract render(payload);
 
-  public applyStyles(shape, style) {
-    this.style.getStyles(shape, style);
+  public applyStyles(style) {
+    this.styles.applyStyles(style);
+
+    return this.styles.getStyles();
   }
 
   protected createBoundingRect(item: any) {

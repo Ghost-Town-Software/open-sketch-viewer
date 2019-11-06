@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
+import {OvalComponent} from '../sketch/components/oval.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SketchService {
   renderers = {
-    // oval: OvalRenderer,
+    oval: OvalComponent
     // text: TextRenderer,
     // rectangle: RectangleRenderer,
   };

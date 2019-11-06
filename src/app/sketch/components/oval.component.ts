@@ -42,7 +42,7 @@ export class OvalComponent extends AbstractComponent {
     const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
     const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
 
-    const figure = new Konva.Shape({
+    const figureParams = {
       x: 0,
       y: 0,
       width: item.frame.width,
@@ -62,9 +62,11 @@ export class OvalComponent extends AbstractComponent {
         // Konva will apply styles from config
         context.fillStrokeShape(figure);
       }
-    });
+    };
 
-    this.applyStyles(figure, item.style);
+    Object.assign(figureParams, this.applyStyles(item.style));
+
+    const figure = new Konva.Shape(figureParams);
 
     return figure;
   }

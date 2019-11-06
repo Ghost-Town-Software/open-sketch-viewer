@@ -74,10 +74,10 @@ export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
 
     console.log('a', comp);
 
-    // this.canvas.createArtboard(this.canvasEl.nativeElement, this.artboard);
+    this.canvas.createArtboard(this.canvasEl.nativeElement, this.artboard);
   }
 
   ngAfterViewInit() {
-    // this.canvas.render();
+    this.canvas.render();
   }
 }
