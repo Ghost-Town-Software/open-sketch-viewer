@@ -1,7 +1,5 @@
 import {Style} from './style';
-import {ColorUtils} from './color-utils';
 import {ColorStyle} from './color.style';
-import {style} from '@angular/animations';
 
 export class ShadowStyle implements Style {
 

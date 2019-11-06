@@ -1,7 +1,7 @@
 import Konva from 'konva';
 import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
-import {ColorUtils} from '../styles/color-utils';
+import {ColorStyle} from '../styles/color.style';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +28,14 @@ export class TextComponent extends AbstractComponent {
 
     const lineHeight = this.getLineHeight(fontAttributes, paragraphStyle);
 
+    const color = new ColorStyle();
+    color.parseStyles(colorAttributes);
+
     group.add(new Konva.Text({
       text: textObj.string,
       fontFamily: fontAttributes.attributes.name,
       fontSize: fontAttributes.attributes.size,
-      fill: ColorUtils.extractHexColor(colorAttributes),
+      fill: color.getHexColor(),
       lineHeight
     }));
 

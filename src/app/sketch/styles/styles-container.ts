@@ -1,6 +1,7 @@
 import {Style} from './style';
 import {BorderStyle} from './border.style';
 import {ShadowStyle} from './shadow.style';
+import {GradientStyle} from './gradient.style';
 
 export class StylesContainer {
 
@@ -17,6 +18,15 @@ export class StylesContainer {
       const shadow = new ShadowStyle();
       shadow.parseStyles(style.shadows[0]);
       this.addStyle(shadow);
+    }
+
+    if(style.fills.length > 0) {
+      const fillsAttr = style.fills[0];
+      if(fillsAttr.gradient.length > 0) {
+        const gradient = new GradientStyle();
+        gradient.parseStyles(fillsAttr.gradient[0]);
+        this.addStyle(gradient);
+      }
     }
   }
 

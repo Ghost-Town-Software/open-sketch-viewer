@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {SketchService} from '../../services/sketch.service';
 import {PreviewService} from '../../services/preview.service';
-import {StyleUtils} from '../../sketch/styles/style-utils';
 
 @Component({
   selector: 'attributes-panel',
@@ -56,7 +55,7 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
         console.warn('Item has more than one borders', attrs);
       }
 
-      parts.border = StyleUtils.extractBorders(style);
+      parts.border = '';
     }
 
     if (style.contextSettings.opacity) {
