@@ -1,7 +1,8 @@
 import {Style} from './style';
 import {ColorStyle} from './color.style';
+import {AbstractStyle} from './abstract.style';
 
-export class BorderStyle implements Style {
+export class BorderStyle extends AbstractStyle implements Style {
 
   styles: any = {
     isEnabled: false,
@@ -34,10 +35,6 @@ export class BorderStyle implements Style {
     }
 
     return `border: ${this.styles.strokeWidth}px solid ${this.styles.stroke}`;
-  }
-
-  getStyles(): object {
-    return this.styles;
   }
 
 }

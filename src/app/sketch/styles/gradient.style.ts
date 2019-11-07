@@ -1,21 +1,14 @@
 import {Style} from './style';
 import {ColorStyle} from './color.style';
+import {AbstractStyle} from './abstract.style';
 
-export class GradientStyle implements Style {
+export class GradientStyle extends AbstractStyle implements Style {
   styles: any = {
     isEnabled: false
   };
 
   getCss(): string {
     return '';
-  }
-
-  getStyles(): object {
-    if(!this.styles.isEnabled) {
-      return {};
-    }
-
-    return this.styles;
   }
 
   parseStyles(styleObj: any): boolean {

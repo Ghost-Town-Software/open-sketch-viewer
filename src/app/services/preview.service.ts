@@ -97,6 +97,8 @@ export class PreviewService {
 
 
     this.stage.draw();
+
+    return rect;
   }
 
   public destroy() {

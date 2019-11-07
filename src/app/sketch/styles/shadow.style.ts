@@ -1,7 +1,8 @@
 import {Style} from './style';
 import {ColorStyle} from './color.style';
+import {AbstractStyle} from './abstract.style';
 
-export class ShadowStyle implements Style {
+export class ShadowStyle extends AbstractStyle implements Style {
 
   styles: any = {
     isEnabled: false
@@ -19,12 +20,12 @@ export class ShadowStyle implements Style {
 
     this.styles = {
       isEnabled: styleObj.isEnabled,
-      opacity: styleObj.color.alpha,
-      offset: {
+      shadowColor: this.color.getRgba(),
+      shadowOffset: {
         x: styleObj.offsetX,
         y: styleObj.offsetY
       },
-      blur: styleObj.blurRadius
+      shadowBlur: styleObj.blurRadius
     };
 
     return true;
@@ -35,13 +36,6 @@ export class ShadowStyle implements Style {
       return '';
     }
     return `box-shadow: ${this.styles.offset.x}px ${this.styles.offset.y}px ${this.styles.blur}px ${this.color.getRgba()} `;
-  }
-
-  getStyles(): object {
-    if(!this.styles.isEnabled) {
-      return {};
-    }
-    return this.styles;
   }
 
 }

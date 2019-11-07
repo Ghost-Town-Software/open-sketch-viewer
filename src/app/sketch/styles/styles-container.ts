@@ -2,6 +2,7 @@ import {Style} from './style';
 import {BorderStyle} from './border.style';
 import {ShadowStyle} from './shadow.style';
 import {GradientStyle} from './gradient.style';
+import {FillStyle} from './fill.style';
 
 export class StylesContainer {
 
@@ -21,12 +22,9 @@ export class StylesContainer {
     }
 
     if(style.fills.length > 0) {
-      const fillsAttr = style.fills[0];
-      if(fillsAttr.gradient.length > 0) {
-        const gradient = new GradientStyle();
-        gradient.parseStyles(fillsAttr.gradient[0]);
-        this.addStyle(gradient);
-      }
+      const fill = new FillStyle();
+      fill.parseStyles(style.fills[0]);
+      this.addStyle(fill);
     }
   }
 
@@ -37,6 +35,7 @@ export class StylesContainer {
   public getStyles() {
     let combinedStyles = {};
     for(const style of this.styles) {
+      console.log(style, style.getStyles());
       combinedStyles = { ...combinedStyles, ...style.getStyles() };
     }
     return combinedStyles;

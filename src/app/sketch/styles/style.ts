@@ -7,6 +7,6 @@ export interface Style {
 
   getStyles(): object;
 
-  parseStyles(styleObj: any): boolean;
+  parseStyles(payload: any): boolean;
 
 }
