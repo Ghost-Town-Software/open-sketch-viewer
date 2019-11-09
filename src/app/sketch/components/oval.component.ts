@@ -16,6 +16,8 @@ export class OvalComponent extends AbstractComponent {
   public render(): Group {
     const group = this.createBoundingRect();
 
+    const styles = this.applyStyles(this.data.style);
+
     for (let i = 0; i < this.data.points.length; i++) {
       const point1 = this.data.points[i];
       let point2 = this.data.points[0];
@@ -24,7 +26,7 @@ export class OvalComponent extends AbstractComponent {
         point2 = this.data.points[i + 1];
       }
 
-      group.add(this.drawOval(point1, point2));
+      group.add(this.drawOval(point1, point2, styles));
     }
 
     group.on('click', (e) => {
@@ -34,13 +36,11 @@ export class OvalComponent extends AbstractComponent {
     return group;
   }
 
-  private drawOval(point1, point2) {
+  private drawOval(point1, point2, styles) {
     const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
     const control2 = JSON.parse(point2.curveTo.replace('{', '[').replace('}', ']'));
     const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
     const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
-
-    const ovalStyles = this.applyStyles(this.data.style);
 
     return new Konva.Shape({
       x: 0,
@@ -63,7 +63,7 @@ export class OvalComponent extends AbstractComponent {
         context.fillStrokeShape(shape);
       },
 
-      ...ovalStyles
+      ...styles
     });
   }
 }

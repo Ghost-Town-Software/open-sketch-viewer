@@ -28,7 +28,7 @@ export class FillStyle implements Style {
       css.push(this._gradient.getCss());
     }
 
-    return css.join('\n');
+    return css.join(';\n');
   }
 
   getStyles(): object {

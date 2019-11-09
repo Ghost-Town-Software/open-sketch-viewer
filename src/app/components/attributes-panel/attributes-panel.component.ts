@@ -26,7 +26,8 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
     this.sketch.getClickState().subscribe(res => {
       console.log('res', res);
 
-      this.styles = this.getHumanStyles(res.getData());
+      // this.styles = this.getHumanStyles(res.getData());
+      this.styles = res.getCss();
       this.preview.clear();
       this.preview.render(res.getData());
       this.preview.fit();

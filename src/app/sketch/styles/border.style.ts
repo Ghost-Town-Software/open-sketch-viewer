@@ -34,7 +34,7 @@ export class BorderStyle extends AbstractStyle implements Style {
       return '';
     }
 
-    return `border: ${this.styles.strokeWidth}px solid ${this.styles.stroke}`;
+    return `border: ${this.styles.strokeWidth}px solid ${this.styles.stroke};\n`;
   }
 
 }

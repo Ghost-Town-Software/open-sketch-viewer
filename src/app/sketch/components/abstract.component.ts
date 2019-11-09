@@ -18,6 +18,10 @@ export abstract class AbstractComponent {
     return this.data;
   }
 
+  public getCss(): string {
+    return this.styles.getCss();
+  }
+
   public getShape(): Group {
     if(!this.shape) {
       this.shape = this.render();
