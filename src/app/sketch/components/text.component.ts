@@ -1,6 +1,7 @@
 import Konva from 'konva';
 import {AbstractComponent} from './abstract.component';
 import {ColorStyle} from '../styles/color.style';
+import {Group} from 'konva/types/Group';
 
 
 export class TextComponent extends AbstractComponent {
@@ -12,11 +13,11 @@ export class TextComponent extends AbstractComponent {
     }
   };
 
-  public render(payload) {
-    console.log('text renderer', payload);
-    const group = this.createBoundingRect(payload);
+  public render(): Group {
+    console.log('text renderer', this.data);
+    const group = this.createBoundingRect();
 
-    const textObj = payload.attributedString;
+    const textObj = this.data.attributedString;
     const textAttributes = textObj.attributes.length > 0 ? textObj.attributes[0].attributes : {};
 
     const fontAttributes = textAttributes.MSAttributedStringFontAttribute || this.defaultFontAttribute;

@@ -89,8 +89,8 @@ export class PreviewService {
       return;
     }
 
-    const component = factory.create();
-    const rect = component.render(item);
+    const component = factory.create(item);
+    const rect = component.getShape();
     rect.position({x: 0, y: 0});
 
     layer.add(rect);

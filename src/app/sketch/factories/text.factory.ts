@@ -10,7 +10,7 @@ export class TextFactory implements ComponentFactory {
 
   }
 
-  public create(): TextComponent {
-    return new TextComponent();
+  public create(data): TextComponent {
+    return new TextComponent(data);
   }
 }

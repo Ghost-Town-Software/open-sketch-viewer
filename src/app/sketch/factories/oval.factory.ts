@@ -11,7 +11,7 @@ export class OvalFactory implements ComponentFactory {
 
   }
 
-  public create(): OvalComponent {
-    return new OvalComponent(this.project);
+  public create(payload: any): OvalComponent {
+    return new OvalComponent(payload, this.project);
   }
 }

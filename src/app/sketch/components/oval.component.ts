@@ -2,31 +2,29 @@ import Konva from 'konva';
 import {Injectable, Injector} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {ProjectService} from '../../services/project.service';
+import {Group} from 'konva/types/Group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OvalComponent extends AbstractComponent {
 
-  public value: string = 'a';
-
-  constructor(public project: ProjectService) {
-    super();
+  constructor(payload: any, public project: ProjectService) {
+    super(payload);
   }
 
-  public render(item) {
+  public render(): Group {
+    const group = this.createBoundingRect();
 
-    const group = this.createBoundingRect(item);
+    for (let i = 0; i < this.data.points.length; i++) {
+      const point1 = this.data.points[i];
+      let point2 = this.data.points[0];
 
-    for (let i = 0; i < item.points.length; i++) {
-      const point1 = item.points[i];
-      let point2 = item.points[0];
-
-      if (i + 1 < item.points.length) {
-        point2 = item.points[i + 1];
+      if (i + 1 < this.data.points.length) {
+        point2 = this.data.points[i + 1];
       }
 
-      group.add(this.drawOval(item, point1, point2));
+      group.add(this.drawOval(point1, point2));
     }
 
     group.on('click', (e) => {
@@ -36,19 +34,19 @@ export class OvalComponent extends AbstractComponent {
     return group;
   }
 
-  private drawOval(item, point1, point2) {
+  private drawOval(point1, point2) {
     const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
     const control2 = JSON.parse(point2.curveTo.replace('{', '[').replace('}', ']'));
     const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
     const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
 
-    const ovalStyles = this.applyStyles(item.style);
+    const ovalStyles = this.applyStyles(this.data.style);
 
     return new Konva.Shape({
       x: 0,
       y: 0,
-      width: item.frame.width,
-      height: item.frame.height,
+      width: this.data.frame.width,
+      height: this.data.frame.height,
       sceneFunc: (context, shape) => {
         context.beginPath();
         context.moveTo(

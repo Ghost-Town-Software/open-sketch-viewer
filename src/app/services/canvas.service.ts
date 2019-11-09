@@ -3,8 +3,9 @@ import Konva from 'konva';
 import {SketchService} from './sketch.service';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {AbstractComponent} from '../sketch/components/abstract.component';
 import {ComponentFactory} from '../sketch/factories/component.factory';
+import { Vector2d } from 'konva/types/types';
+import {AbstractComponent} from '../sketch/components/abstract.component';
 
 const SCALE_FACTOR = 1.1;
 
@@ -106,12 +107,12 @@ export class CanvasService {
         continue;
       }
 
-      const component = factory.create();
-      const rect = component.render(item);
+      const component: AbstractComponent = factory.create(item);
+      const shape = component.getShape();
 
-      layer.add(rect);
+      layer.add(shape);
 
-      this.bindClickToElement(rect, item);
+      this.bindClickToElement(component);
     }
 
     this.clipArtboard();
@@ -120,9 +121,11 @@ export class CanvasService {
     this.stage.draw();
   }
 
-  private bindClickToElement(element, attrs) {
+  private bindClickToElement(component: AbstractComponent) {
+    const element = component.getShape();
+
     element.on('click', (e) => {
-      this.sketch.click(element, attrs);
+      this.sketch.click(component);
     });
   }
 
@@ -234,43 +237,47 @@ export class CanvasService {
     });
   }
 
+  private dragging(pos: Vector2d): Vector2d {
+    const artboard = this.stage.findOne('#artboard');
+    const box = artboard.getClientRect({skipTransform: false});
+
+    const paddingWidth = this.stage.width() / 4;
+    const paddingHeight = this.stage.height() / 4;
+
+    const spaceWidth = this.stage.width() - paddingWidth - paddingWidth;
+    const spaceHeight = this.stage.height() - paddingHeight - paddingHeight;
+
+    if (box.width > spaceWidth) {
+      if (pos.x > paddingWidth) {
+        pos.x = paddingWidth;
+      } else if (pos.x < -paddingWidth) {
+        pos.x = -paddingWidth;
+      }
+    } else {
+      if (pos.x < paddingWidth) {
+        pos.x = paddingWidth;
+      } else if (pos.x > this.stage.width() - paddingWidth - box.width) {
+        pos.x = this.stage.width() - paddingWidth - box.width;
+      }
+    }
+
+    if (box.height > spaceHeight) {
+      const bottom = (box.height - this.stage.height() + paddingHeight) * -1;
+      if (pos.y > paddingHeight) {
+        pos.y = paddingHeight;
+      } else if (pos.y < bottom) {
+        pos.y = bottom;
+      }
+    }
+
+    return pos;
+  }
+
   private createContentLayer(width, height) {
     const layer = new Konva.Layer({
       id: 'content',
-      dragBoundFunc: (pos) => {
-        const artboard = this.stage.findOne('#artboard');
-        const box = artboard.getClientRect({skipTransform: false});
-
-        const paddingWidth = this.stage.width() / 4;
-        const paddingHeight = this.stage.height() / 4;
-
-        const spaceWidth = this.stage.width() - paddingWidth - paddingWidth;
-        const spaceHeight = this.stage.height() - paddingHeight - paddingHeight;
-
-        if (box.width > spaceWidth) {
-          if (pos.x > paddingWidth) {
-            pos.x = paddingWidth;
-          } else if (pos.x < -paddingWidth) {
-            pos.x = -paddingWidth;
-          }
-        } else {
-          if (pos.x < paddingWidth) {
-            pos.x = paddingWidth;
-          } else if (pos.x > this.stage.width() - paddingWidth - box.width) {
-            pos.x = this.stage.width() - paddingWidth - box.width;
-          }
-        }
-
-        if (box.height > spaceHeight) {
-          const bottom = (box.height - this.stage.height() + paddingHeight) * -1;
-          if (pos.y > paddingHeight) {
-            pos.y = paddingHeight;
-          } else if (pos.y < bottom) {
-            pos.y = bottom;
-          }
-        }
-
-        return pos;
+      dragBoundFunc: (pos: Vector2d) => {
+        return this.dragging(pos);
       }
     });
 

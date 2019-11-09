@@ -1,11 +1,29 @@
 import Konva from 'konva';
 import {StylesContainer} from '../styles/styles-container';
+import {Group} from 'konva/types/Group';
 
 export abstract class AbstractComponent {
 
   protected styles: StylesContainer = new StylesContainer();
+  protected shape: Group;
+  protected data: any;
 
-  public abstract render(payload);
+  protected abstract render(): Group;
+
+  constructor(payload: any) {
+    this.data = payload;
+  }
+
+  public getData(): any {
+    return this.data;
+  }
+
+  public getShape(): Group {
+    if(!this.shape) {
+      this.shape = this.render();
+    }
+    return this.shape;
+  }
 
   public applyStyles(style) {
     this.styles.applyStyles(style);
@@ -13,27 +31,27 @@ export abstract class AbstractComponent {
     return this.styles.getStyles();
   }
 
-  protected createBoundingRect(item: any) {
+  protected createBoundingRect() {
     const group = new Konva.Group({
-      x: item.frame.x,
-      y: item.frame.y,
-      width: item.frame.width,
-      height: item.frame.height,
+      x: this.data.frame.x,
+      y: this.data.frame.y,
+      width: this.data.frame.width,
+      height: this.data.frame.height,
     });
 
-    group.add(this.drawRect(item));
+    group.add(this.drawRect());
     return group;
   }
 
-  protected drawRect(item) {
+  protected drawRect() {
     const rect = new Konva.Rect({
-      width: item.frame.width,
-      height: item.frame.height,
+      width: this.data.frame.width,
+      height: this.data.frame.height,
       stroke: '#333',
       strokeWidth: 1
     });
 
-    const style = item.style;
+    const style = this.data.style;
 
     if (style.borders.length) {
       for (const border of style.borders) {
@@ -43,8 +61,8 @@ export abstract class AbstractComponent {
 
         rect.x(-border.thickness / 2);
         rect.y(-border.thickness / 2);
-        rect.width(item.frame.width + border.thickness);
-        rect.height(item.frame.height + border.thickness);
+        rect.width(this.data.frame.width + border.thickness);
+        rect.height(this.data.frame.height + border.thickness);
       }
     }
 

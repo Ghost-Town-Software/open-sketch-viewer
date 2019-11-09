@@ -10,7 +10,7 @@ export class RectangleFactory implements ComponentFactory {
 
   }
 
-  public create(): RectangleComponent {
-    return new RectangleComponent();
+  public create(data): RectangleComponent {
+    return new RectangleComponent(data);
   }
 }

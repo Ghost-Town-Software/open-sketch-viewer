@@ -4,6 +4,7 @@ import {OvalFactory} from '../sketch/factories/oval.factory';
 import {TextFactory} from '../sketch/factories/text.factory';
 import {RectangleFactory} from '../sketch/factories/rectangle.factory';
 import {ComponentFactory} from '../sketch/factories/component.factory';
+import {AbstractComponent} from '../sketch/components/abstract.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SketchService {
     rectangle: RectangleFactory
   };
 
-  private click$: Subject<{shape, attrs}> = new Subject();
+  private click$: Subject<AbstractComponent> = new Subject();
 
   constructor(private injector: Injector) {
 
@@ -31,8 +32,8 @@ export class SketchService {
     return null;
   }
 
-  public click(shape, attrs) {
-    this.click$.next({shape, attrs});
+  public click(component: AbstractComponent) {
+    this.click$.next(component);
   }
 
   public getClickState() {
