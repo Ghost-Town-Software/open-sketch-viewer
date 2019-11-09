@@ -35,7 +35,7 @@ export class StylesContainer {
   public getStyles() {
     let combinedStyles = {};
     for(const style of this.styles) {
-      console.log(style, style.getStyles());
+      // console.log(style, style.getStyles());
       combinedStyles = { ...combinedStyles, ...style.getStyles() };
     }
     return combinedStyles;

@@ -1,11 +1,8 @@
 import Konva from 'konva';
-import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {ColorStyle} from '../styles/color.style';
 
-@Injectable({
-  providedIn: 'root'
-})
+
 export class TextComponent extends AbstractComponent {
 
   private defaultFontAttribute = {

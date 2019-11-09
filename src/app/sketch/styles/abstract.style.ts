@@ -8,7 +8,7 @@ export abstract class AbstractStyle implements Style {
   abstract getCss(): string;
 
   getStyles(): object {
-    console.log('abstract get styles');
+    // console.log('abstract get styles');
     if(!this.styles.isEnabled) {
       return {};
     }

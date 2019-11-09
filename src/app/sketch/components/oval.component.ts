@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {ProjectService} from '../../services/project.service';
 

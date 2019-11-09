@@ -4,6 +4,7 @@ import {SketchService} from './sketch.service';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {AbstractComponent} from '../sketch/components/abstract.component';
+import {ComponentFactory} from '../sketch/factories/component.factory';
 
 const SCALE_FACTOR = 1.1;
 
@@ -99,13 +100,14 @@ export class CanvasService {
     const layer = this.stage.findOne('#content');
 
     for (const item of this.artboard.layers) {
-      const sketch: AbstractComponent = this.sketch.getFactory(item._class);
+      const factory: ComponentFactory = this.sketch.getFactory(item._class);
 
-      if (!sketch) {
+      if (!factory) {
         continue;
       }
 
-      const rect = sketch.render(item);
+      const component = factory.create();
+      const rect = component.render(item);
 
       layer.add(rect);
 

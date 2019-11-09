@@ -1,27 +1,32 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import {Subject} from 'rxjs';
-import {OvalComponent} from '../sketch/components/oval.component';
-import {TextComponent} from '../sketch/components/text.component';
-import {RectangleComponent} from '../sketch/components/rectangle.component';
+import {OvalFactory} from '../sketch/factories/oval.factory';
+import {TextFactory} from '../sketch/factories/text.factory';
+import {RectangleFactory} from '../sketch/factories/rectangle.factory';
+import {ComponentFactory} from '../sketch/factories/component.factory';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SketchService {
-  renderers = {
-    oval: OvalComponent,
-    text: TextComponent,
-    rectangle: RectangleComponent
+  renderers: {[key: string]: any} = {
+    oval: OvalFactory,
+    text: TextFactory,
+    rectangle: RectangleFactory
   };
 
   private click$: Subject<{shape, attrs}> = new Subject();
 
-  public getFactory(clazz) {
+  constructor(private injector: Injector) {
+
+  }
+
+  public getFactory(clazz): ComponentFactory {
     if (clazz in this.renderers) {
-      return new this.renderers[clazz]();
+      return this.injector.get(this.renderers[clazz]);
     }
 
-    console.warn('Not supported element with class %s', clazz);
+    // console.warn('Not supported element with class %s', clazz);
 
     return null;
   }
