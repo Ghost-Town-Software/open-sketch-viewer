@@ -1,15 +1,18 @@
-
-<div class="tree">
+<div class="layers">
   <ng-template #recursiveList let-layers let-depth="depth">
-    <div class="tree-item tree-depth-{{ depth }}" *ngFor="let layer of layers" (click)="focusItem($event, layer)" [class.tree-leaf]="!layer.layers">
-      <div class="tree-item-header" [class.active]="layer.active">
-        <i (click)="toggleCollapse($event, layer)" class="fas" [class.fa-chevron-right]="!layer.collapsed" [class.fa-chevron-down]="!!layer.collapsed" *ngIf="layer.layers"></i>
+    <div class="layer" [ngClass]="['depth-' + depth, layer.row]" *ngFor="let layer of layers;" (click)="focusItem($event, layer)" [class.tree-leaf]="!layer.layers">
+      <div class="layer-header" [class.active]="layer.active">
+        <div class="layer-icon" *ngIf="layer.layers">
+          <i (click)="toggleCollapse($event, layer)" class="fas" [class.fa-chevron-right]="!layer.collapsed" [class.fa-chevron-down]="!!layer.collapsed"></i>
+        </div>
         <span class="layer-name">{{ layer.name }}</span>
       </div>
-      <div class="tree-children" *ngIf="layer.layers" [class.collapsed]="!layer.collapsed">
+
+      <div class="layer-children" *ngIf="layer.layers" [class.collapsed]="!layer.collapsed">
         <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: layer.layers, depth: depth + 1 }"></ng-container>
       </div>
     </div>
   </ng-template>
+
   <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: layers, depth: 1 }"></ng-container>
 </div>

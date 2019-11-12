@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import {Injectable, Injector} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {ProjectService} from '../../services/project.service';
 import {Group} from 'konva/types/Group';
@@ -15,7 +15,6 @@ export class OvalComponent extends AbstractComponent {
 
   public render(): Group {
     const group = this.createBoundingRect();
-
     const styles = this.applyStyles(this.data.style);
 
     for (let i = 0; i < this.data.points.length; i++) {

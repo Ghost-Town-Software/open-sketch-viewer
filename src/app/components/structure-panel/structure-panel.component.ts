@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Renderer2, ViewChildren} from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'structure-panel',
@@ -7,12 +8,36 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class StructurePanelComponent implements OnInit {
 
-  @Input()
-  layers: any[];
-
   activeLayer: any;
 
+  private _layers: any[];
+
   ngOnInit(): void {
+
+  }
+
+  private mapElements(elements) {
+    let index = 0;
+
+    const recurrence = (list) => {
+      const result = [];
+
+      if(!list) {
+        return list;
+      }
+
+      for(const element of list) {
+        const e = Object.assign({row: index % 2 === 0 ? 'odd' : 'even'}, element);
+        index++;
+
+        e.layers = recurrence(element.layers);
+        result.push(e);
+      }
+
+      return result;
+    };
+
+    return recurrence(elements);
   }
 
   toggleCollapse($event, layer: any) {
@@ -29,5 +54,14 @@ export class StructurePanelComponent implements OnInit {
 
     this.activeLayer = layer;
     this.activeLayer.active = true;
+  }
+
+  @Input()
+  set layers(layers) {
+    this._layers = this.mapElements(layers);
+  }
+
+  get layers() {
+    return this._layers;
   }
 }

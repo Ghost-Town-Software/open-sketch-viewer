@@ -1,42 +1,54 @@
+@import '../../../assets/styles/variables';
 
-.tree {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: dimgrey;
-
-  @for $i from 2 through 9 {
-    .tree-depth-#{$i}  {
-      .tree-item-header {
-        padding-left: 0.5rem * $i;
-      }
-      &.tree-leaf {
-        .tree-item-header {
-          padding-left: 0.5rem + 0.5rem * $i;
-        }
-      }
+@for $i from 0 through 10 {
+  .depth-#{$i} {
+    .layer-header {
+      padding-left: $i * 20px;
     }
   }
+}
 
-  .tree-item {
-    cursor: pointer;
+.layers {
+
+}
+
+.layer {
+  position: relative;
+  cursor: pointer;
+
+  &.even {
+    background: $gray-200;
   }
 
-  .tree-item-header {
-    padding: 0.3rem 0.5rem;
+  &.odd {
+    background: $gray-100;
+  }
+}
 
-    &:hover, &.active {
-      background: whitesmoke;
-      color: #333;
-    }
+.layer-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 15px;
+
+  &:hover {
+    background: $gray-300;
   }
 
-  .tree-children {
-    &.collapsed {
-      display: none;
-    }
+  .layer-icon {
+    min-width: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
   }
+}
 
-  i.fas {
-    margin-right: 5px;
+.layer-children {
+  overflow: hidden;
+
+  &.collapsed {
+    height: 0;
   }
 }
