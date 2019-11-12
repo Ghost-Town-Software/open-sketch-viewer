@@ -11,7 +11,7 @@ export class ShadowStyle extends AbstractStyle implements Style {
   color: ColorStyle;
 
   parseStyles(styleObj: any): boolean {
-    if(styleObj._class !== 'shadow') {
+    if (styleObj._class !== 'shadow') {
       return false;
     }
 
@@ -35,7 +35,8 @@ export class ShadowStyle extends AbstractStyle implements Style {
     if (!this.styles.isEnabled) {
       return '';
     }
-    return `box-shadow: ${this.styles.offset.x}px ${this.styles.offset.y}px ${this.styles.blur}px ${this.color.getRgba()};\n`;
+    return `box-shadow: ${this.styles.shadowOffset.x}px ${this.styles.shadowOffset.y}px `
+      + `${this.styles.shadowBlur}px ${this.color.getRgba()};\n`;
   }
 
 }
