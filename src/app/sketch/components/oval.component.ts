@@ -1,12 +1,8 @@
 import Konva from 'konva';
-import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {ProjectService} from '../../services/project.service';
 import {Group} from 'konva/types/Group';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class OvalComponent extends AbstractComponent {
 
   constructor(payload: any, public project: ProjectService) {

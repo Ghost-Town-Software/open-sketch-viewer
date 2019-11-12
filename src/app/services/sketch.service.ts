@@ -5,6 +5,7 @@ import {TextFactory} from '../sketch/factories/text.factory';
 import {RectangleFactory} from '../sketch/factories/rectangle.factory';
 import {ComponentFactory} from '../sketch/factories/component.factory';
 import {AbstractComponent} from '../sketch/components/abstract.component';
+import {ShapeGroupFactory} from "../sketch/factories/shape-group.factory";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class SketchService {
   renderers: {[key: string]: any} = {
     oval: OvalFactory,
     text: TextFactory,
-    rectangle: RectangleFactory
+    rectangle: RectangleFactory,
+    shapeGroup: ShapeGroupFactory,
   };
 
   private click$: Subject<AbstractComponent> = new Subject();

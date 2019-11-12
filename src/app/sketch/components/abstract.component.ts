@@ -72,4 +72,8 @@ export abstract class AbstractComponent {
 
     return rect;
   }
+
+  private curvePoints(points) {
+
+  }
 }

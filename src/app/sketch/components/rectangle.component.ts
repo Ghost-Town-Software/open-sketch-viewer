@@ -1,11 +1,7 @@
 import Konva from 'konva';
-import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
 import {Group} from 'konva/types/Group';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class RectangleComponent extends AbstractComponent {
 
   render(): Group {

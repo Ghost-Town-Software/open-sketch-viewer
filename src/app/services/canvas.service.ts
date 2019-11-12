@@ -115,11 +115,72 @@ export class CanvasService {
       this.bindClickToElement(component);
     }
 
+    // layer.add(this.drawShapePath());
+
     this.clipArtboard();
     this.center();
 
     this.stage.draw();
   }
+  //
+  // private drawShapePath() {
+  //   const layer = SHAPE;
+  //   console.log('shaaape', {
+  //     width: layer.frame.width,
+  //     height: layer.frame.height,
+  //   });
+  //   const shape = new Konva.Shape({
+  //     x: 400,
+  //     y: 0,
+  //     width: layer.frame.width,
+  //     height: layer.frame.height,
+  //     sceneFunc: (context, shape) => {
+  //       console.log('shape_group', layer.points);
+  //       const begin = JSON.parse(layer.points[0].point.replace('{', '[').replace('}', ']'));
+  //
+  //       context.beginPath();
+  //       context.moveTo(
+  //         Math.round(begin[0] * layer.frame.width), Math.round(begin[1] * layer.frame.height)
+  //       );
+  //
+  //       for (let i = 0; i < layer.points.length; i++) {
+  //         const point1 = layer.points[i];
+  //         let point2 = layer.points[0];
+  //
+  //         if (i + 1 < layer.points.length) {
+  //           point2 = layer.points[i + 1];
+  //         }
+  //
+  //         const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
+  //         const control2 = JSON.parse(point2.curveTo.replace('{', '[').replace('}', ']'));
+  //         const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
+  //         const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
+  //
+  //
+  //         console.log('from', Math.round(from[0] * layer.frame.width), Math.round(from[1] * layer.frame.height));
+  //         console.log('to', Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height));
+  //
+  //         context.lineTo(
+  //           Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height)
+  //         );
+  //
+  //         // context.bezierCurveTo(
+  //         //   Math.round(control1[0] * layer.frame.width), Math.round(control1[1] * layer.frame.height),
+  //         //   Math.round(control2[0] * layer.frame.width), Math.round(control2[1] * layer.frame.height),
+  //         //   Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height)
+  //         // );
+  //       }
+  //
+  //       context.strokeStyle = "red";
+  //       context.stroke();
+  //
+  //       // Konva will apply styles from config
+  //       context.fillStrokeShape(shape);
+  //     },
+  //   });
+  //
+  //   return shape;
+  // }
 
   private bindClickToElement(component: AbstractComponent) {
     const element = component.getShape();
@@ -344,4 +405,165 @@ export class CanvasService {
     return Math.floor(scale * 100);
   }
 }
+
+const SHAPE = {
+  "_class": "shapePath",
+  "do_objectID": "8A5337D7-878B-478D-B0C4-01C431B9BE5C",
+  "booleanOperation": -1,
+  "isFixedToViewport": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "maintainScrollPosition": false,
+  "name": "Path",
+  "nameIsFixed": false,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "includedLayerIds": [],
+    "layerOptions": 0,
+    "shouldTrim": false,
+    "exportFormats": []
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 168,
+    "width": 158.1600000000001,
+    "x": 536.1600000000001,
+    "y": 2.880000000000109
+  },
+  "clippingMaskMode": 0,
+  "hasClippingMask": false,
+  "style": {
+    "_class": "style",
+    "endMarkerType": 0,
+    "miterLimit": 10,
+    "startMarkerType": 0,
+    "windingRule": 1,
+    "blur": {
+      "_class": "blur",
+      "isEnabled": false,
+      "center": "{0.5, 0.5}",
+      "motionAngle": 0,
+      "radius": 10,
+      "saturation": 1,
+      "type": 0
+    },
+    "borderOptions": {
+      "_class": "borderOptions",
+      "isEnabled": true,
+      "dashPattern": [],
+      "lineCapStyle": 0,
+      "lineJoinStyle": 0
+    },
+    "borders": [],
+    "colorControls": {
+      "_class": "colorControls",
+      "isEnabled": true,
+      "brightness": 0,
+      "contrast": 1,
+      "hue": 0,
+      "saturation": 1
+    },
+    "contextSettings": {
+      "_class": "graphicsContextSettings",
+      "blendMode": 0,
+      "opacity": 1
+    },
+    "fills": [],
+    "innerShadows": [],
+    "shadows": []
+  },
+  "edited": true,
+  "isClosed": true,
+  "pointRadiusBehaviour": 1,
+  "points": [
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.10166919575113829, 1}",
+      "curveMode": 1,
+      "curveTo": "{0.10166919575113829, 1}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.10166919575113829, 1}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.31866464339908923, 0.24285714285714394}",
+      "curveMode": 1,
+      "curveTo": "{0.31866464339908923, 0.24285714285714394}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.31866464339908923, 0.24285714285714394}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0, 0.24285714285714394}",
+      "curveMode": 1,
+      "curveTo": "{0, 0.24285714285714394}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0, 0.24285714285714394}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.069802731411229585, 0}",
+      "curveMode": 1,
+      "curveTo": "{0.069802731411229585, 0}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.069802731411229585, 0}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{1, 0}",
+      "curveMode": 1,
+      "curveTo": "{1, 0}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{1, 0}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.93171471927162253, 0.24285714285714394}",
+      "curveMode": 1,
+      "curveTo": "{0.93171471927162253, 0.24285714285714394}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.93171471927162253, 0.24285714285714394}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.61305007587253257, 0.24285714285714394}",
+      "curveMode": 1,
+      "curveTo": "{0.61305007587253257, 0.24285714285714394}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.61305007587253257, 0.24285714285714394}"
+    },
+    {
+      "_class": "curvePoint",
+      "cornerRadius": 0,
+      "curveFrom": "{0.39757207890743529, 1}",
+      "curveMode": 1,
+      "curveTo": "{0.39757207890743529, 1}",
+      "hasCurveFrom": false,
+      "hasCurveTo": false,
+      "point": "{0.39757207890743529, 1}"
+    }
+  ]
+};
 
