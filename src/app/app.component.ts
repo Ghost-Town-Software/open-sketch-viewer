@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import {LoaderService} from './services/loader.service';
+import {OvalComponent} from './sketch/components/oval.component';
 
 @Component({
   selector: 'app-root',

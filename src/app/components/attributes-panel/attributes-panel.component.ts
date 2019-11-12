@@ -2,8 +2,6 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {SketchService} from '../../services/sketch.service';
 import {PreviewService} from '../../services/preview.service';
-import {ColorUtils} from '../../utils/color-utils';
-import {StyleUtils} from '../../utils/style-utils';
 
 @Component({
   selector: 'attributes-panel',
@@ -28,9 +26,10 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
     this.sketch.getClickState().subscribe(res => {
       console.log('res', res);
 
-      this.styles = this.getHumanStyles(res.attrs);
+      // this.styles = this.getHumanStyles(res.getData());
+      this.styles = res.getCss();
       this.preview.clear();
-      this.preview.render(res.attrs);
+      this.preview.render(res.getData());
       this.preview.fit();
 
       this.preview.draw();
@@ -57,7 +56,7 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
         console.warn('Item has more than one borders', attrs);
       }
 
-      parts.border = StyleUtils.extractBorders(style);
+      parts.border = '';
     }
 
     if (style.contextSettings.opacity) {

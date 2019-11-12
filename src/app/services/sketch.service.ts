@@ -1,34 +1,39 @@
-import {Injectable} from '@angular/core';
-import {OvalRenderer} from '../renderers/oval.renderer';
-import {Renderer} from '../renderers/renderer';
+import {Injectable, Injector} from '@angular/core';
 import {Subject} from 'rxjs';
-import {TextRenderer} from '../renderers/text.renderer';
-import {RectangleRenderer} from '../renderers/rectangle.renderer';
+import {OvalFactory} from '../sketch/factories/oval.factory';
+import {TextFactory} from '../sketch/factories/text.factory';
+import {RectangleFactory} from '../sketch/factories/rectangle.factory';
+import {ComponentFactory} from '../sketch/factories/component.factory';
+import {AbstractComponent} from '../sketch/components/abstract.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SketchService {
-  renderers = {
-    oval: new OvalRenderer(),
-    text: new TextRenderer(),
-    rectangle: new RectangleRenderer()
+  renderers: {[key: string]: any} = {
+    oval: OvalFactory,
+    text: TextFactory,
+    rectangle: RectangleFactory
   };
 
-  private click$: Subject<{shape, attrs}> = new Subject();
+  private click$: Subject<AbstractComponent> = new Subject();
 
-  public getFactory(clazz): Renderer {
+  constructor(private injector: Injector) {
+
+  }
+
+  public getFactory(clazz): ComponentFactory {
     if (clazz in this.renderers) {
-      return this.renderers[clazz];
+      return this.injector.get(this.renderers[clazz]);
     }
 
-    console.warn('Not supported element with class %s', clazz);
+    // console.warn('Not supported element with class %s', clazz);
 
     return null;
   }
 
-  public click(shape, attrs) {
-    this.click$.next({shape, attrs});
+  public click(component: AbstractComponent) {
+    this.click$.next(component);
   }
 
   public getClickState() {

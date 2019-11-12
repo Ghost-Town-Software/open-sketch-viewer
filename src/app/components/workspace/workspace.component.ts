@@ -6,7 +6,7 @@ import {CanvasService} from '../../services/canvas.service';
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.template.html',
-  styleUrls: ['./workspace.styles.scss']
+  styleUrls: ['./workspace.styles.scss'],
 })
 export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() artboard: any;
@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('artboard', this.artboard);
+
     this.canvas.createArtboard(this.canvasEl.nativeElement, this.artboard);
   }
 

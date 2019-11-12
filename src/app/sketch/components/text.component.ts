@@ -1,9 +1,10 @@
-import {Renderer} from './renderer';
 import Konva from 'konva';
-import {ColorUtils} from '../utils/color-utils';
+import {AbstractComponent} from './abstract.component';
+import {ColorStyle} from '../styles/color.style';
+import {Group} from 'konva/types/Group';
 
 
-export class TextRenderer extends Renderer {
+export class TextComponent extends AbstractComponent {
 
   private defaultFontAttribute = {
     attributes: {
@@ -12,11 +13,11 @@ export class TextRenderer extends Renderer {
     }
   };
 
-  public render(payload) {
-    console.log('text renderer', payload);
-    const group = this.createBoundingRect(payload);
+  public render(): Group {
+    console.log('text renderer', this.data);
+    const group = this.createBoundingRect();
 
-    const textObj = payload.attributedString;
+    const textObj = this.data.attributedString;
     const textAttributes = textObj.attributes.length > 0 ? textObj.attributes[0].attributes : {};
 
     const fontAttributes = textAttributes.MSAttributedStringFontAttribute || this.defaultFontAttribute;
@@ -25,11 +26,14 @@ export class TextRenderer extends Renderer {
 
     const lineHeight = this.getLineHeight(fontAttributes, paragraphStyle);
 
+    const color = new ColorStyle();
+    color.parseStyles(colorAttributes);
+
     group.add(new Konva.Text({
       text: textObj.string,
       fontFamily: fontAttributes.attributes.name,
       fontSize: fontAttributes.attributes.size,
-      fill: ColorUtils.extractHexColor(colorAttributes),
+      fill: color.getHexColor(),
       lineHeight
     }));
 
