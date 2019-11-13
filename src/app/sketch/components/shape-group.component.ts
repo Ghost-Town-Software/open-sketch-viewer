@@ -36,17 +36,6 @@ export class ShapeGroupComponent extends AbstractComponent {
   }
 
   private drawShape(layer, styles) {
-    if(layer.do_objectID === '3C4F34DF-D755-4636-A7B0-667E39073B79') {
-      console.log('styles', styles, this.data.style, {
-        x: layer.frame.x,
-        y: layer.frame.y,
-        width: layer.frame.width,
-        height: layer.frame.height,
-        globalCompositeOperation: 'xor',
-        fill: '#252525',
-      });
-    }
-
     const {fill} = styles;
 
     const shape = new Konva.Shape({
