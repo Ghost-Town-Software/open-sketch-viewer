@@ -1,9 +1,11 @@
 import Konva from 'konva';
 import {StylesContainer} from '../styles/styles-container';
 import {Group} from 'konva/types/Group';
+import {StyleModel} from "../models/style/style.model";
 
 export abstract class AbstractComponent {
 
+  protected style: StyleModel;
   protected styles: StylesContainer = new StylesContainer();
   protected shape: Group;
   protected data: any;
@@ -12,6 +14,7 @@ export abstract class AbstractComponent {
 
   constructor(payload: any) {
     this.data = payload;
+    this.style = new StyleModel(payload.style);
   }
 
   public getData(): any {

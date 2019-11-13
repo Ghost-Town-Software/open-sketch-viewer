@@ -24,10 +24,6 @@ export class OvalComponent extends AbstractComponent {
       group.add(this.drawOval(point1, point2, styles));
     }
 
-    group.on('click', (e) => {
-      console.log('group clicked');
-    });
-
     return group;
   }
 
