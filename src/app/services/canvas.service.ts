@@ -115,7 +115,7 @@ export class CanvasService {
       this.bindClickToElement(component);
     }
 
-    // this.clipArtboard();
+    this.clipArtboard();
     this.center();
 
     this.stage.draw();
