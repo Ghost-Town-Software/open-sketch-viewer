@@ -115,72 +115,11 @@ export class CanvasService {
       this.bindClickToElement(component);
     }
 
-    // layer.add(this.drawShapePath());
-
-    this.clipArtboard();
+    // this.clipArtboard();
     this.center();
 
     this.stage.draw();
   }
-  //
-  // private drawShapePath() {
-  //   const layer = SHAPE;
-  //   console.log('shaaape', {
-  //     width: layer.frame.width,
-  //     height: layer.frame.height,
-  //   });
-  //   const shape = new Konva.Shape({
-  //     x: 400,
-  //     y: 0,
-  //     width: layer.frame.width,
-  //     height: layer.frame.height,
-  //     sceneFunc: (context, shape) => {
-  //       console.log('shape_group', layer.points);
-  //       const begin = JSON.parse(layer.points[0].point.replace('{', '[').replace('}', ']'));
-  //
-  //       context.beginPath();
-  //       context.moveTo(
-  //         Math.round(begin[0] * layer.frame.width), Math.round(begin[1] * layer.frame.height)
-  //       );
-  //
-  //       for (let i = 0; i < layer.points.length; i++) {
-  //         const point1 = layer.points[i];
-  //         let point2 = layer.points[0];
-  //
-  //         if (i + 1 < layer.points.length) {
-  //           point2 = layer.points[i + 1];
-  //         }
-  //
-  //         const control1 = JSON.parse(point1.curveFrom.replace('{', '[').replace('}', ']'));
-  //         const control2 = JSON.parse(point2.curveTo.replace('{', '[').replace('}', ']'));
-  //         const from = JSON.parse(point1.point.replace('{', '[').replace('}', ']'));
-  //         const to = JSON.parse(point2.point.replace('{', '[').replace('}', ']'));
-  //
-  //
-  //         console.log('from', Math.round(from[0] * layer.frame.width), Math.round(from[1] * layer.frame.height));
-  //         console.log('to', Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height));
-  //
-  //         context.lineTo(
-  //           Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height)
-  //         );
-  //
-  //         // context.bezierCurveTo(
-  //         //   Math.round(control1[0] * layer.frame.width), Math.round(control1[1] * layer.frame.height),
-  //         //   Math.round(control2[0] * layer.frame.width), Math.round(control2[1] * layer.frame.height),
-  //         //   Math.round(to[0] * layer.frame.width), Math.round(to[1] * layer.frame.height)
-  //         // );
-  //       }
-  //
-  //       context.strokeStyle = "red";
-  //       context.stroke();
-  //
-  //       // Konva will apply styles from config
-  //       context.fillStrokeShape(shape);
-  //     },
-  //   });
-  //
-  //   return shape;
-  // }
 
   private bindClickToElement(component: AbstractComponent) {
     const element = component.getShape();

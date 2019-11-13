@@ -1,7 +1,5 @@
 import Konva from 'konva';
-import {Injectable} from '@angular/core';
 import {AbstractComponent} from './abstract.component';
-import {ProjectService} from '../../services/project.service';
 import {Group} from 'konva/types/Group';
 
 export class ShapeGroupComponent extends AbstractComponent {
@@ -12,17 +10,26 @@ export class ShapeGroupComponent extends AbstractComponent {
 
   public render(): Group {
     const group = this.createBoundingRect();
-    const styles = this.applyStyles(this.data.style);
+    const styles: any = this.applyStyles(this.data.style);
     const layers = this.data.layers;
 
-    // group.globalCompositeOperation('xor');
+    group.add(new Konva.Rect({
+      x: 0,
+      y: 0,
+      width: this.data.frame.width,
+      height: this.data.frame.height,
+      fill: '#fff', // any color
+      globalCompositeOperation: 'destination-in'
+    }));
 
     for (const layer of layers) {
-      const shape = this.drawShape(layer, styles);
+      group.add(this.drawShape(layer, styles));
+    }
 
-      // shape.globalCompositeOperation('destination-out');
+    group.cache();
 
-      group.add(shape);
+    if(styles.opacity) {
+      group.opacity(styles.opacity);
     }
 
     return group;
@@ -30,15 +37,25 @@ export class ShapeGroupComponent extends AbstractComponent {
 
   private drawShape(layer, styles) {
     if(layer.do_objectID === '3C4F34DF-D755-4636-A7B0-667E39073B79') {
-      console.log('styles', styles, this.data.style);
+      console.log('styles', styles, this.data.style, {
+        x: layer.frame.x,
+        y: layer.frame.y,
+        width: layer.frame.width,
+        height: layer.frame.height,
+        globalCompositeOperation: 'xor',
+        fill: '#252525',
+      });
     }
+
+    const {fill} = styles;
 
     const shape = new Konva.Shape({
       x: layer.frame.x,
       y: layer.frame.y,
       width: layer.frame.width,
       height: layer.frame.height,
-      ...styles,
+      globalCompositeOperation: 'xor',
+      fill,
       sceneFunc: (context, shape) => {
         for (let i = 0; i < layer.points.length; i++) {
           const path = layer.points[i];
@@ -65,27 +82,10 @@ export class ShapeGroupComponent extends AbstractComponent {
           );
         }
 
-
         // Konva will apply styles from config
         context.fillStrokeShape(shape);
       },
     });
-
-
-    // const color = layer.style.colorControls;
-    // if(color.isEnabled) {
-    //   shape.cache();
-    //   shape.filters([
-    //     Konva.Filters.HSL,
-    //     Konva.Filters.Brighten,
-    //     Konva.Filters.Contrast
-    //   ]);
-    //
-    //   shape.hue(parseFloat(color.hue));
-    //   shape.saturation(this.saturation(color.saturation));
-    //   shape.brightness(this.brightness(color.brightness));
-    //   shape.contrast(this.contrast(color.contrast));
-    // }
 
     return shape;
   }
