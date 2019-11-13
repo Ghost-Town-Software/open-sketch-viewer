@@ -60,5 +60,6 @@ export class OvalComponent extends AbstractComponent {
 
       ...styles
     });
+
   }
 }

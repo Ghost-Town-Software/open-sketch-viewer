@@ -2,6 +2,7 @@ import {Style} from './style';
 import {BorderStyle} from './border.style';
 import {ShadowStyle} from './shadow.style';
 import {FillStyle} from './fill.style';
+import {GraphicsContextSettingsStyle} from "./graphics-context-settings.style";
 
 export class StylesContainer {
 
@@ -24,6 +25,12 @@ export class StylesContainer {
       const fill = new FillStyle();
       fill.parseStyles(style.fills[0]);
       this.addStyle(fill);
+    }
+
+    if (style.contextSettings) {
+      const opacity = new GraphicsContextSettingsStyle();
+      opacity.parseStyles(style.contextSettings);
+      this.addStyle(opacity);
     }
   }
 
