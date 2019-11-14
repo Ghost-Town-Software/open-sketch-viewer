@@ -7,4 +7,14 @@ export class GraphicsContextSettings {
     this.blendMode = blendMode;
     this.opacity = opacity;
   }
+
+  public value() {
+    if(this.opacity === 1) {
+      return {};
+    }
+
+    return {
+      opacity: this.opacity
+    };
+  }
 }

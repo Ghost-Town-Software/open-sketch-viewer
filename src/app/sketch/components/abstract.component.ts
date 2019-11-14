@@ -1,7 +1,9 @@
 import Konva from 'konva';
 import {StylesContainer} from '../styles/styles-container';
 import {Group} from 'konva/types/Group';
-import {StyleModel} from "../models/style/style.model";
+import {StyleModel} from '../models/style/style.model';
+import {BaseComponent} from '../models/base-component.model';
+import {ModelFactory} from '../models/model-factory';
 
 export abstract class AbstractComponent {
 
@@ -10,11 +12,15 @@ export abstract class AbstractComponent {
   protected shape: Group;
   protected data: any;
 
+  protected model: BaseComponent;
+
   protected abstract render(): Group;
 
   constructor(payload: any) {
     this.data = payload;
     this.style = new StyleModel(payload.style);
+
+    this.model = this.buildModel(payload);
   }
 
   public getData(): any {
@@ -26,7 +32,7 @@ export abstract class AbstractComponent {
   }
 
   public getShape(): Group {
-    if(!this.shape) {
+    if (!this.shape) {
       this.shape = this.render();
     }
     return this.shape;
@@ -76,7 +82,13 @@ export abstract class AbstractComponent {
     return rect;
   }
 
-  private curvePoints(points) {
+  private buildModel(payload) {
+    const model = ModelFactory.create(payload);
 
+    if(payload.layers) {
+      model.layers = payload.layers.map(this.buildModel);
+    }
+
+    return model;
   }
 }

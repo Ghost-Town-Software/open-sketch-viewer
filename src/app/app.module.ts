@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -10,6 +10,7 @@ import {AttributesPanelComponent} from './components/attributes-panel/attributes
 import {StructurePanelComponent} from './components/structure-panel/structure-panel.component';
 import {PageComponent} from './components/page/page.component';
 import {ArtboardComponent} from './components/artboard/artboard.component';
+import {setInjector} from './injector.static';
 
 @NgModule({
   declarations: [
@@ -30,4 +31,7 @@ import {ArtboardComponent} from './components/artboard/artboard.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(i: Injector) {
+    setInjector(i);
+  }
 }

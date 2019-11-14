@@ -1,9 +1,9 @@
-import {GraphicsContextSettings} from "./graphical-control-settings.model";
-import {Color} from "./color.model";
+import {GraphicsContextSettings} from './graphical-control-settings.model';
+import {Color} from './color.model';
 
 export class Fill {
   readonly _class: string = 'fill';
-  isEnabled: boolean = false;
+  isEnabled = false;
   fillType: number;
   color: Color;
   contextSettings: GraphicsContextSettings;
@@ -13,5 +13,15 @@ export class Fill {
     this.fillType = fillType;
     this.color = new Color(color);
     this.contextSettings = new GraphicsContextSettings(contextSettings);
+  }
+
+  public value() {
+    if (!this.isEnabled) {
+      return {};
+    }
+
+    return {
+      fill: this.color.value()
+    };
   }
 }

@@ -19,12 +19,12 @@ export class FillStyle implements Style {
   styles: any;
 
   getCss(): string {
-    if(!this.isEnabled) {
+    if (!this.isEnabled) {
       return '';
     }
     const css = [this.color.getCss()];
 
-    if(this._gradient) {
+    if (this._gradient) {
       css.push(this._gradient.getCss());
     }
 
@@ -32,7 +32,7 @@ export class FillStyle implements Style {
   }
 
   getStyles(): object {
-    if(!this.isEnabled) {
+    if (!this.isEnabled) {
       return {};
     }
     return {
@@ -43,7 +43,7 @@ export class FillStyle implements Style {
 
   parseStyles(payload: any): boolean {
 
-    if(payload._class !== 'fill') {
+    if (payload._class !== 'fill') {
       console.error('Invalid fill style with class %s', payload._class);
       return false;
     }
@@ -52,7 +52,7 @@ export class FillStyle implements Style {
     this._color = new ColorStyle();
     this._color.parseStyles(payload.color);
 
-    if(payload.gradients && payload.gradients.length > 0) {
+    if (payload.gradients && payload.gradients.length > 0) {
       this._gradient = new GradientStyle();
       this._gradient.parseStyles(payload.gradients);
     }

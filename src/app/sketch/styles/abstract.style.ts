@@ -9,7 +9,7 @@ export abstract class AbstractStyle implements Style {
 
   getStyles(): object {
     // console.log('abstract get styles');
-    if(!this.styles.isEnabled) {
+    if (!this.styles.isEnabled) {
       return {};
     }
     return _.omit(this.styles, ['isEnabled']);

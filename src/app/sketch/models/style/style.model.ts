@@ -1,9 +1,11 @@
-import {Blur} from "./blur.model";
-import {Border} from "./border.style";
-import {BorderOptions} from "./border-options.model";
-import {GraphicsContextSettings} from "./graphical-control-settings.model";
-import {ColorControls} from "./color-controls.model";
-import {Fill} from "./fill.model";
+import {Blur} from './blur.model';
+import {BorderOptions} from './border-options.model';
+import {GraphicsContextSettings} from './graphical-control-settings.model';
+import {ColorControls} from './color-controls.model';
+import {Fill} from './fill.model';
+import {Border} from './border.model';
+import {Shadow} from './shadow.model';
+import {TextStyle} from './text-style.model';
 
 export class StyleModel {
   readonly _class: string = 'style';
@@ -18,12 +20,14 @@ export class StyleModel {
   contextSettings: GraphicsContextSettings;
   fills: Fill[];
   innerShadows: any[];
-  shadows: any[];
+  shadows: Shadow[];
+
+  textStyle: TextStyle;
 
   constructor({
                 endMarketType, miterLimit, startMarkerType, windingRule,
                 blur, borderOptions, borders, colorControls, contextSettings,
-                fills, innerShadows, shadows
+                fills, innerShadows, shadows, textStyle
               }) {
 
     this.endMarketType = endMarketType;
@@ -36,8 +40,37 @@ export class StyleModel {
     this.colorControls = new ColorControls(colorControls);
     this.contextSettings = new GraphicsContextSettings(contextSettings);
     this.fills = fills.map(fill => new Fill(fill));
+    this.shadows = shadows.map(shadow => new Shadow(shadow));
+
+    if(textStyle) {
+      this.textStyle = new TextStyle(textStyle);
+    }
 
     this.innerShadows = innerShadows;
-    this.shadows = shadows;
+  }
+
+  public value() {
+    if(this.fills.length > 2) {
+      console.warn('Element has more than 1 fill', this.fills);
+    }
+
+    if(this.borders.length > 2) {
+      console.warn('Element has more than 1 border', this.borders);
+    }
+
+    if(this.shadows.length > 2) {
+      console.warn('Element has more than 1 shadow', this.shadows);
+    }
+
+    return {
+      ...(this.fills.length > 0 ? this.fills[0].value() : {}),
+      ...(this.borders.length > 0 ? this.borders[0].value() : {}),
+      ...(this.shadows.length > 0 ? this.shadows[0].value() : {}),
+      ...this.contextSettings.value()
+    };
+  }
+
+  public css(): string {
+    return null;
   }
 }

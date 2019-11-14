@@ -1,6 +1,6 @@
 export class BorderOptions {
   readonly _class: string = 'borderOptions';
-  isEnabled: boolean = false;
+  isEnabled = false;
   dashPattern: any[];
   lineCapStyle: number;
   lineJoinStyle: number;

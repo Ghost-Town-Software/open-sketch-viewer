@@ -1,4 +1,4 @@
-import {Color} from "./color.model";
+import {Color} from './color.model';
 
 export class GradientStop {
   readonly _class: string = 'gradientStop';

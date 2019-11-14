@@ -1,6 +1,6 @@
-import {Point} from "../../../model/point.model";
-import {GradientStop} from "./gradient-stop.model";
-import {PointUtil} from "../../utils/point.util";
+import {Point} from '../../../model/point.model';
+import {GradientStop} from './gradient-stop.model';
+import {PointUtil} from '../../utils/point.util';
 
 export class Gradient {
   readonly _class: string = 'gradient';

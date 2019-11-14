@@ -5,10 +5,9 @@ import {Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class Sketch {
-  renderers = {
-  };
+  renderers = {};
 
-  private click$: Subject<{shape, attrs}> = new Subject();
+  private click$: Subject<{ shape, attrs }> = new Subject();
 
   constructor(private injector: Injector) {
 

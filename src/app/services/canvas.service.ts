@@ -4,8 +4,8 @@ import {SketchService} from './sketch.service';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ComponentFactory} from '../sketch/factories/component.factory';
-import { Vector2d } from 'konva/types/types';
 import {AbstractComponent} from '../sketch/components/abstract.component';
+import {ModelFactory} from '../sketch/models/model-factory';
 
 const SCALE_FACTOR = 1.1;
 
@@ -97,22 +97,41 @@ export class CanvasService {
     return this.stage;
   }
 
+  private buildModel(payload) {
+    const model = ModelFactory.create(payload);
+
+    if(model && payload.layers) {
+      model.layers = payload.layers.map((item) => this.buildModel(item));
+    }
+
+    return model;
+  }
+
   public render() {
     const layer = this.stage.findOne('#content');
 
     for (const item of this.artboard.layers) {
-      const factory: ComponentFactory = this.sketch.getFactory(item._class);
+      const model = this.buildModel(item);
 
-      if (!factory) {
-        continue;
+      if(model) {
+        const shape = model.render();
+        if(shape) {
+          layer.add(shape);
+        }
       }
 
-      const component: AbstractComponent = factory.create(item);
-      const shape = component.getShape();
-
-      layer.add(shape);
-
-      this.bindClickToElement(component);
+      // const factory: ComponentFactory = this.sketch.getFactory(item._class);
+      //
+      // if (!factory) {
+      //   continue;
+      // }
+      //
+      // const component: AbstractComponent = factory.create(item);
+      // const shape = component.getShape();
+      //
+      // layer.add(shape);
+      //
+      // this.bindClickToElement(component);
     }
 
     this.clipArtboard();

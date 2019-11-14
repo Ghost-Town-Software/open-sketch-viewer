@@ -28,7 +28,7 @@ export class ShapeGroupComponent extends AbstractComponent {
 
     group.cache();
 
-    if(styles.opacity) {
+    if (styles.opacity) {
       group.opacity(styles.opacity);
     }
 
@@ -38,7 +38,7 @@ export class ShapeGroupComponent extends AbstractComponent {
   private drawShape(layer, styles) {
     const {fill} = styles;
 
-    const shape = new Konva.Shape({
+    const shapeKonva = new Konva.Shape({
       x: layer.frame.x,
       y: layer.frame.y,
       width: layer.frame.width,
@@ -76,7 +76,7 @@ export class ShapeGroupComponent extends AbstractComponent {
       },
     });
 
-    return shape;
+    return shapeKonva;
   }
 
   private toPoint(str) {

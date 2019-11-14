@@ -8,7 +8,8 @@ import {Injectable} from '@angular/core';
 })
 export class PageResolver implements Resolve<any> {
 
-  public constructor(private projectService: ProjectService) {}
+  public constructor(private projectService: ProjectService) {
+  }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     return this.projectService.getPage(route.params.id);

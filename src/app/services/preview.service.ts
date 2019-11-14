@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import Konva from 'konva';
 import {SketchService} from './sketch.service';
 import {Subject} from 'rxjs';
-import {AbstractComponent} from '../sketch/components/abstract.component';
 import {ComponentFactory} from '../sketch/factories/component.factory';
 
 @Injectable({

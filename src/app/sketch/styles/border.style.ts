@@ -13,7 +13,7 @@ export class BorderStyle extends AbstractStyle implements Style {
   color: ColorStyle;
 
   parseStyles(styleObj: any): boolean {
-    if(styleObj._class !== 'border') {
+    if (styleObj._class !== 'border') {
       return false;
     }
 
@@ -30,7 +30,7 @@ export class BorderStyle extends AbstractStyle implements Style {
   }
 
   getCss(): string {
-    if(!this.styles.isEnabled) {
+    if (!this.styles.isEnabled) {
       return '';
     }
 

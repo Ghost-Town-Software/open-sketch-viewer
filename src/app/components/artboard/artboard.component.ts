@@ -18,10 +18,10 @@ export class ArtboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.activatedRoute.data
-    .pipe(
-      tap(data => console.log(data))
-    )
-    .subscribe(res => this.artboard = res.artboard);
+      .pipe(
+        tap(data => console.log(data))
+      )
+      .subscribe(res => this.artboard = res.artboard);
   }
 
   ngAfterViewInit(): void {

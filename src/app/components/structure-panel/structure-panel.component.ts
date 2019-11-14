@@ -1,5 +1,4 @@
-import {Component, Input, OnInit, Renderer2, ViewChildren} from '@angular/core';
-import * as _ from 'lodash';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'structure-panel',
@@ -22,11 +21,11 @@ export class StructurePanelComponent implements OnInit {
     const recurrence = (list) => {
       const result = [];
 
-      if(!list) {
+      if (!list) {
         return list;
       }
 
-      for(const element of list) {
+      for (const element of list) {
         const e = Object.assign({row: index % 2 === 0 ? 'odd' : 'even'}, element);
         index++;
 

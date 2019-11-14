@@ -2,7 +2,7 @@ import {Style} from './style';
 import {BorderStyle} from './border.style';
 import {ShadowStyle} from './shadow.style';
 import {FillStyle} from './fill.style';
-import {GraphicsContextSettingsStyle} from "./graphics-context-settings.style";
+import {GraphicsContextSettingsStyle} from './graphics-context-settings.style';
 
 export class StylesContainer {
 

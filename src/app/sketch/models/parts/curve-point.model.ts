@@ -1,5 +1,5 @@
-import {Point} from "../../../model/point.model";
-import {PointUtil} from "../../utils/point.util";
+import {Point} from '../../../model/point.model';
+import {PointUtil} from '../../utils/point.util';
 
 export class CurvePoint {
   readonly _class: string = 'curvePoint';

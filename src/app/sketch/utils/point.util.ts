@@ -1,4 +1,4 @@
-import {Point} from "../../model/point.model";
+import {Point} from '../../model/point.model';
 
 export class PointUtil {
   public static toPoint(str): Point {

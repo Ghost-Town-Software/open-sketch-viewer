@@ -1,10 +1,10 @@
-import {GraphicsContextSettings} from "./graphical-control-settings.model";
-import {Gradient} from "./gradient.model";
-import {Color} from "./color.model";
+import {GraphicsContextSettings} from './graphical-control-settings.model';
+import {Gradient} from './gradient.model';
+import {Color} from './color.model';
 
 export class Border {
   readonly _class: string = 'border';
-  isEnabled: boolean = false;
+  isEnabled = false;
   fillType: number;
   color: Color;
   contextSettings: GraphicsContextSettings;
@@ -20,5 +20,24 @@ export class Border {
     this.gradient = new Gradient(gradient);
     this.position = position;
     this.thickness = thickness;
+  }
+
+  public value() {
+    if(!this.isEnabled) {
+      return {};
+    }
+
+    return {
+      strokeWidth: this.thickness,
+      stroke: this.color.rgba()
+    };
+  }
+
+  public css(): string {
+    if (!this.isEnabled) {
+      return null;
+    }
+
+    return `border: ${this.thickness}px solid ${this.color.rgba()};\n`;
   }
 }

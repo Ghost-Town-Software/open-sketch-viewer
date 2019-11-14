@@ -1,21 +1,17 @@
 import {BaseComponent} from './base-component.model';
 import {CurvePoint} from './parts/curve-point.model';
 import Konva from 'konva';
-import {CurvePointRenderer} from '../renderers/curve-point.renderer';
 
-export class Oval extends BaseComponent {
-  readonly _class: string = 'oval';
+export class Rectangle extends BaseComponent {
+  readonly _class: string = 'rectangle';
   pointRadiusBehaviour: number;
   points: CurvePoint[];
-
-  renderer: CurvePointRenderer;
 
   constructor(payload) {
     super(payload);
 
     this.points = payload.points.map(point => new CurvePoint(point));
     this.pointRadiusBehaviour = payload.pointRadiusBehaviour;
-    this.renderer = new CurvePointRenderer(this.points, this.frame);
   }
 
   render() {
@@ -26,15 +22,13 @@ export class Oval extends BaseComponent {
       height: this.frame.height,
     });
 
-    const element = new Konva.Shape({
+    const element = new Konva.Rect({
+      x: 0,
+      y: 0,
       width: this.frame.width,
       height: this.frame.height,
-
-      ...this.style.value(),
-
-      sceneFunc: (context, shape) => {
-        this.renderer.render(context, shape);
-      },
+      cornerRadius: this.points.map(p => p.cornerRadius),
+      ...this.style.value()
     });
 
     this.canvas.add(element);

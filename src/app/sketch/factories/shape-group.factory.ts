@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ComponentFactory} from './component.factory';
-import {ShapeGroupComponent} from "../components/shape-group.component";
+import {ShapeGroupComponent} from '../components/shape-group.component';
 
 @Injectable({
   providedIn: 'root'

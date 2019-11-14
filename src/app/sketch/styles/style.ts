@@ -1,4 +1,3 @@
-
 export interface Style {
 
   styles: any;

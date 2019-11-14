@@ -1,9 +1,9 @@
-import {Point} from "../../../model/point.model";
-import {PointUtil} from "../../utils/point.util";
+import {Point} from '../../../model/point.model';
+import {PointUtil} from '../../utils/point.util';
 
 export class Blur {
   readonly _class: string = 'blur';
-  isEnabled: boolean = false;
+  isEnabled = false;
   center: Point;
   motionAngle: number;
   radius: number;

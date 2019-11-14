@@ -26,7 +26,7 @@ export class ColorStyle implements Style {
   }
 
   parseStyles(styleObj: any): boolean {
-    if(styleObj._class !== 'color') {
+    if (styleObj._class !== 'color') {
       return false;
     }
 

@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import * as JSZip from 'jszip';
 import {map, mergeMap, reduce, switchMap} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
-import {EMPTY, from, noop, of} from 'rxjs';
+import {EMPTY, from, of} from 'rxjs';
 import {FileType} from '../enums/file.type';
 import {TypeResolver} from '../utils/type-resolver';
 

@@ -14,7 +14,6 @@ export class TextComponent extends AbstractComponent {
   };
 
   public render(): Group {
-    console.log('text renderer', this.data);
     const group = this.createBoundingRect();
 
     const textObj = this.data.attributedString;
@@ -22,7 +21,7 @@ export class TextComponent extends AbstractComponent {
 
     const fontAttributes = textAttributes.MSAttributedStringFontAttribute || this.defaultFontAttribute;
     const colorAttributes = textAttributes.MSAttributedStringColorAttribute;
-    const paragraphStyle = textAttributes.paragraphStyle || { maximumLineHeight: 24 };
+    const paragraphStyle = textAttributes.paragraphStyle || {maximumLineHeight: 24};
 
     const lineHeight = this.getLineHeight(fontAttributes, paragraphStyle);
 
@@ -41,7 +40,7 @@ export class TextComponent extends AbstractComponent {
   }
 
   private getLineHeight(fontAttributes, paragraphStyle) {
-      const fontSize = fontAttributes.attributes.size;
-      return paragraphStyle.maximumLineHeight / fontSize;
+    const fontSize = fontAttributes.attributes.size;
+    return paragraphStyle.maximumLineHeight / fontSize;
   }
 }
