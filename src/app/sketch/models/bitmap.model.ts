@@ -22,7 +22,8 @@ export class Bitmap extends BaseComponent {
 
   render() {
     this.canvas = new Konva.Group({
-      ...this.frame
+      ...this.frame,
+      transformsEnabled: 'position',
     });
 
     const picture = this.project.getImage(this.image._ref);
@@ -31,6 +32,7 @@ export class Bitmap extends BaseComponent {
       image.setAttrs({
         width: this.frame.width,
         height: this.frame.height,
+        transformsEnabled: 'position',
       });
 
       this.canvas.add(image);

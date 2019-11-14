@@ -21,6 +21,7 @@ export class Rectangle extends BaseComponent {
       y: this.frame.y,
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
     });
 
     const element = new Konva.Rect({
@@ -28,6 +29,7 @@ export class Rectangle extends BaseComponent {
       y: 0,
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
       cornerRadius: this.points.map(p => p.cornerRadius),
       ...this.style.value()
     });

@@ -32,6 +32,8 @@ export class ShapePath extends BaseComponent {
       width: this.frame.width,
       height: this.frame.height,
       globalCompositeOperation: 'xor',
+      transformsEnabled: 'position',
+      hitGraphEnabled: false,
       ...styles,
 
       sceneFunc: (context, shape) => {

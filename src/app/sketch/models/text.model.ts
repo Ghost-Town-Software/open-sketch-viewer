@@ -28,6 +28,7 @@ export class Text extends BaseComponent {
       y: this.frame.y,
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
     });
 
     this.attributedString.attributes.forEach(attribute => {
@@ -35,6 +36,8 @@ export class Text extends BaseComponent {
       const value = this.attributedString.string.substr(attribute.location, attribute.length);
 
       const text = new Konva.Text({
+        hitGraphEnabled: false,
+        transformsEnabled: 'position',
         text: value,
         ...innerStyle
       });

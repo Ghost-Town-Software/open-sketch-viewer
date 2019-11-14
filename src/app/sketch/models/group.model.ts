@@ -8,7 +8,8 @@ export class Group extends BaseComponent {
 
   render() {
     this.canvas = new Konva.Group({
-      ...this.frame
+      ...this.frame,
+      transformsEnabled: 'position',
     });
 
     this.layers.forEach(layer => {

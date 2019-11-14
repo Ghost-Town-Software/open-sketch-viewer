@@ -29,7 +29,8 @@ export class Border {
 
     return {
       strokeWidth: this.thickness,
-      stroke: this.color.rgba()
+      stroke: this.color.rgba(),
+      hitStrokeWidth: this.thickness > 3
     };
   }
 

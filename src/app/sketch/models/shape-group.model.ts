@@ -17,6 +17,7 @@ export class ShapeGroup extends BaseComponent {
       y: this.frame.y,
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
     });
 
     this.layers.forEach(layer => {

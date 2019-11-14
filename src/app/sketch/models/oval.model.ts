@@ -25,11 +25,13 @@ export class Oval extends BaseComponent {
       y: this.frame.y,
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
     });
 
     const element = new Konva.Shape({
       width: this.frame.width,
       height: this.frame.height,
+      transformsEnabled: 'position',
 
       ...this.style.value(),
 
