@@ -41,7 +41,7 @@ export class PreviewService {
 
   public draw() {
     const layer = this.stage.findOne('#preview1');
-    layer.draw();
+    layer.batchDraw();
   }
 
   public center() {
@@ -97,7 +97,7 @@ export class PreviewService {
     this.center();
 
 
-    this.stage.draw();
+    this.stage.batchDraw();
 
     return rect;
   }

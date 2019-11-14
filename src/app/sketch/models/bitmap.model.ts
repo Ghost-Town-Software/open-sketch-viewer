@@ -3,6 +3,7 @@ import Konva from 'konva';
 import {getService} from '../../injector.static';
 import {ProjectService} from '../../services/project.service';
 import {Image} from './parts/image.model';
+import {environment} from '../../../environments/environment';
 
 export class Bitmap extends BaseComponent {
   project: ProjectService;
@@ -33,6 +34,11 @@ export class Bitmap extends BaseComponent {
       });
 
       this.canvas.add(image);
+
+      if (environment.cache) {
+        this.canvas.cache();
+      }
+
       this.canvas.draw();
     });
 

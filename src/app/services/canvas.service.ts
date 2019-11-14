@@ -59,7 +59,7 @@ export class CanvasService {
 
   public draw() {
     const layer = this.stage.findOne('#content');
-    layer.draw();
+    layer.batchDraw();
   }
 
   public center() {
@@ -122,12 +122,9 @@ export class CanvasService {
     }
 
     this.clipArtboard();
-
-
     this.center();
 
     this.stage.batchDraw();
-    this.stage.cache();
   }
 
   private bindClickToElement(component: AbstractComponent) {
@@ -212,7 +209,7 @@ export class CanvasService {
       this.stage.height(canvas.parentNode.clientHeight);
       this.htmlRenderer.setStyle(canvas, 'display', 'block');
 
-      this.stage.draw();
+      this.stage.batchDraw();
     });
   }
 
@@ -242,16 +239,13 @@ export class CanvasService {
 
       layer.y(y);
       layer.x(x);
-      layer.draw();
+      layer.batchDraw();
     });
   }
 
   private createContentLayer(width, height) {
     const layer = new Konva.Layer({
       id: 'content',
-      // dragBoundFunc: (pos: Vector2d) => {
-      //   return this.dragging(pos);
-      // }
     });
 
     layer.add(new Konva.Rect({
@@ -314,7 +308,7 @@ export class CanvasService {
     console.log('set scale', {x: scale, y: scale});
     layer.scale({x: scale, y: scale});
     console.log('draw it');
-    layer.draw();
+    layer.batchDraw();
 
     console.log('zooomed', Math.floor(scale * 100));
 

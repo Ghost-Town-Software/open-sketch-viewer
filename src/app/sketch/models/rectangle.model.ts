@@ -1,6 +1,7 @@
 import {BaseComponent} from './base-component.model';
 import {CurvePoint} from './parts/curve-point.model';
 import Konva from 'konva';
+import {environment} from '../../../environments/environment';
 
 export class Rectangle extends BaseComponent {
   readonly _class: string = 'rectangle';
@@ -32,6 +33,10 @@ export class Rectangle extends BaseComponent {
     });
 
     this.canvas.add(element);
+
+    if (environment.cache) {
+      this.canvas.cache();
+    }
 
     return this.canvas;
   }

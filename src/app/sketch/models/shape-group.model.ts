@@ -1,5 +1,6 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
+import {environment} from '../../../environments/environment';
 
 export class ShapeGroup extends BaseComponent {
   readonly _class: string = 'shapeGroup';
@@ -38,6 +39,10 @@ export class ShapeGroup extends BaseComponent {
       if (typeof this.canvas[key] !== 'undefined') {
         this.canvas[key](styles[key]);
       }
+    }
+
+    if (environment.cache) {
+      this.canvas.cache();
     }
 
     return this.canvas;

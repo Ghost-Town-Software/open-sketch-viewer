@@ -1,6 +1,7 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 import {AttributedString} from './parts/attributed-string.model';
+import {environment} from '../../../environments/environment';
 
 export class Text extends BaseComponent {
   readonly _class: string = 'text';
@@ -42,6 +43,10 @@ export class Text extends BaseComponent {
 
       this.canvas.add(text);
     });
+
+    if (environment.cache) {
+      this.canvas.cache();
+    }
 
     return this.canvas;
   }

@@ -26,7 +26,7 @@ export class ShapePath extends BaseComponent {
       styles.fill = '#000';
     }
 
-    return new Konva.Shape({
+    const item = new Konva.Shape({
       x: this.frame.x,
       y: this.frame.y,
       width: this.frame.width,
@@ -38,5 +38,7 @@ export class ShapePath extends BaseComponent {
         this.renderer.render(context, shape);
       },
     });
+
+    return item;
   }
 }
