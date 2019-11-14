@@ -1,8 +1,8 @@
-import {StyleModel} from "./style/style.model";
-import {Oval} from "./oval.model";
-import {Rect} from "./parts/rect.model";
-import {ShapeGroup} from "./shape-group.model";
-import {ShapePath} from "./shape-path.model";
+import {StyleModel} from './style/style.model';
+import {Oval} from './oval.model';
+import {Rect} from './parts/rect.model';
+import {ShapeGroup} from './shape-group.model';
+import {ShapePath} from './shape-path.model';
 
 export abstract class BaseComponent {
   readonly _class: string = 'component';
@@ -24,7 +24,7 @@ export abstract class BaseComponent {
   }
 
   public static createComponent(component: BaseComponent): BaseComponent {
-    switch(component._class) {
+    switch (component._class) {
       case 'oval':
         return new Oval(component);
       case 'shapeGroup':

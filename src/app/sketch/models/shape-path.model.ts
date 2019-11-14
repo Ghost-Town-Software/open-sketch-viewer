@@ -1,5 +1,5 @@
-import {BaseComponent} from "./base-component.model";
-import {CurvePoint} from "./parts/curve-point.model";
+import {BaseComponent} from './base-component.model';
+import {CurvePoint} from './parts/curve-point.model';
 
 export class ShapePath extends BaseComponent {
   readonly _class: string = 'shapePath';
