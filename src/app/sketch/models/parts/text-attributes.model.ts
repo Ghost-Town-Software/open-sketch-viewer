@@ -24,7 +24,7 @@ export class TextAttributes {
   value() {
     const fontSize = this.MSAttributedStringFontAttribute.attributes.size;
     const fill = this.MSAttributedStringColorAttribute.value();
-    const lineHeight = this.paragraphStyle.maximumLineHeight / fontSize;
+    const lineHeight = this.paragraphStyle.maximumLineHeight === undefined ? fontSize : (this.paragraphStyle.maximumLineHeight / fontSize);
     const fontFamily = this.MSAttributedStringFontAttribute.attributes.name;
 
     return {
