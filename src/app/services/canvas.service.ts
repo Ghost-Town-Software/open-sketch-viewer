@@ -119,25 +119,15 @@ export class CanvasService {
           layer.add(shape);
         }
       }
-
-      // const factory: ComponentFactory = this.sketch.getFactory(item._class);
-      //
-      // if (!factory) {
-      //   continue;
-      // }
-      //
-      // const component: AbstractComponent = factory.create(item);
-      // const shape = component.getShape();
-      //
-      // layer.add(shape);
-      //
-      // this.bindClickToElement(component);
     }
 
     this.clipArtboard();
+
+
     this.center();
 
-    this.stage.draw();
+    this.stage.batchDraw();
+    this.stage.cache();
   }
 
   private bindClickToElement(component: AbstractComponent) {
@@ -321,8 +311,12 @@ export class CanvasService {
       scale = scaleValue;
     }
 
+    console.log('set scale', {x: scale, y: scale});
     layer.scale({x: scale, y: scale});
+    console.log('draw it');
     layer.draw();
+
+    console.log('zooomed', Math.floor(scale * 100));
 
     return Math.floor(scale * 100);
   }

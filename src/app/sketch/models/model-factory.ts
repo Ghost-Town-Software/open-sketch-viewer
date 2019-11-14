@@ -4,6 +4,7 @@ import {ShapePath} from './shape-path.model';
 import {Rectangle} from './rectangle.model';
 import {Text} from './text.model';
 import {Group} from './group.model';
+import {Bitmap} from './bitmap.model';
 
 export class ModelFactory {
 
@@ -21,6 +22,8 @@ export class ModelFactory {
         return new Text(component);
       case 'group':
         return new Group(component);
+      case 'bitmap':
+        return new Bitmap(component);
     }
 
     return null;
