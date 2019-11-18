@@ -16,7 +16,7 @@ export class Oval extends BaseComponent {
 
     this.points = payload.points.map(point => new CurvePoint(point));
     this.pointRadiusBehaviour = payload.pointRadiusBehaviour;
-    this.renderer = new CurvePointRenderer(this.points, this.frame);
+    this.renderer = new CurvePointRenderer(this.points, this.frame, this.isClosed);
   }
 
   render() {

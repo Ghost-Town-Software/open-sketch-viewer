@@ -14,10 +14,7 @@ export class ProjectService {
     const pages = this.getPages();
     const page = pages.find((p) => p.name === 'Symbols');
 
-    console.log('looking for', symbolId);
-
     for (const layer of page.layers) {
-      console.log('layer', layer, layer.symbolID, symbolId);
       if(layer.symbolID === symbolId) {
         return layer;
       }
@@ -27,7 +24,6 @@ export class ProjectService {
   }
 
   public getPages() {
-    console.log('getPages', this._state);
     const document = this.getDocument();
     const pages = [];
 
@@ -108,12 +104,10 @@ export class ProjectService {
   }
 
   public getDocument() {
-    console.log('getDocument', this._state);
     return this._state['document.json'];
   }
 
   public load(state) {
-    console.log('set state', state);
     this._state = state;
   }
 }

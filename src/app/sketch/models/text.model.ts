@@ -45,10 +45,6 @@ export class Text extends BaseComponent {
       const innerStyle = attribute.attributes.value();
       const value = this.attributedString.string.substr(attribute.location, attribute.length);
 
-      console.log({
-        ...this.style.value(),
-        ...innerStyle,
-      });
       const text = new Konva.Text({
         x: 0,
         y: 0,

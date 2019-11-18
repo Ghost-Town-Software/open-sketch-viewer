@@ -24,8 +24,6 @@ export class Rectangle extends BaseComponent {
       transformsEnabled: 'position',
     });
 
-    console.log('rect frame', this.canvas.width(), this.canvas.height(), this.canvas.x(), this.canvas.y());
-
     const element = new Konva.Rect({
       x: 0,
       y: 0,

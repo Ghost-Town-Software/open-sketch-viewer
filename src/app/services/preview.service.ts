@@ -46,8 +46,6 @@ export class PreviewService {
     const layer = this.stage.findOne('#preview1');
     const box = layer.getClientRect({skipTransform: false});
 
-    console.log('center', this.stage.width(), box.width);
-
     layer.x((this.stage.width() - box.width) / 2);
 
     if (box.height < this.stage.height()) {
@@ -60,11 +58,6 @@ export class PreviewService {
   public createPreview(container) {
     this.stage = new Konva.Stage({
       container,
-      width: container.parentNode.clientWidth,
-      height: container.parentNode.clientHeight,
-    });
-
-    console.log({
       width: container.parentNode.clientWidth,
       height: container.parentNode.clientHeight,
     });

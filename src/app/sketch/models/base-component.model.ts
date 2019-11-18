@@ -11,14 +11,15 @@ export abstract class BaseComponent {
   frame: Rect;
   style: Style;
   layers: BaseComponent[];
-
   canvas: Group;
+  isClosed: boolean;
 
-  protected constructor({do_objectID, name, isFlippedHorizontal, isFlippedVertical, frame, style}) {
+  protected constructor({do_objectID, name, isFlippedHorizontal, isFlippedVertical, frame, style, isClosed}) {
     this.do_objectID = do_objectID;
     this.name = name;
     this.isFlippedHorizontal = isFlippedHorizontal;
     this.isFlippedVertical = isFlippedVertical;
+    this.isClosed = isClosed;
     this.frame = new Rect(frame);
     this.style = new Style(style);
   }

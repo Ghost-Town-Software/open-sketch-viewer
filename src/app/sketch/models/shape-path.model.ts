@@ -16,15 +16,11 @@ export class ShapePath extends BaseComponent {
     this.points = payload.points.map(point => new CurvePoint(point));
     this.pointRadiusBehaviour = payload.pointRadiusBehaviour;
 
-    this.renderer = new CurvePointRenderer(this.points, this.frame);
+    this.renderer = new CurvePointRenderer(this.points, this.frame, this.isClosed);
   }
 
   render() {
     const styles: any = this.style.value();
-
-    if(!styles.fill) {
-      styles.fill = '#000';
-    }
 
     const item = new Konva.Shape({
       x: this.frame.x,

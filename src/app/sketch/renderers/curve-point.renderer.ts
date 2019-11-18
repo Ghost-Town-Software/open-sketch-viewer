@@ -2,7 +2,7 @@ import {CurvePoint} from '../models/parts/curve-point.model';
 import {Rect} from '../models/parts/rect.model';
 
 export class CurvePointRenderer {
-  constructor(private points: CurvePoint[], private frame: Rect) {
+  constructor(private points: CurvePoint[], private frame: Rect, private isClosedPath) {
     if(!this.points || !this.points.length) {
       console.warn('No points found', this.points);
     }
@@ -12,6 +12,10 @@ export class CurvePointRenderer {
     for (let i = 0; i < this.points.length; i++) {
       const current = this.points[i];
       const nextPath = i + 1 < this.points.length ? this.points[i + 1] : this.points[0];
+
+      if(!this.isClosedPath && this.points.length === i + 1) {
+        continue;
+      }
 
       if (i === 0) {
         context.beginPath();
@@ -23,16 +27,16 @@ export class CurvePointRenderer {
         this.getRelativeWidth(nextPath.curveTo.x), this.getRelativeHeight(nextPath.curveTo.y),
         this.getRelativeWidth(nextPath.point.x), this.getRelativeHeight(nextPath.point.y),
       );
-    }
+  }
 
     context.fillStrokeShape(shape);
   }
 
   private getRelativeWidth(percent) {
-    return Math.round(percent * this.frame.width);
+    return (percent * this.frame.width);
   }
 
   private getRelativeHeight(percent) {
-    return Math.round(percent * this.frame.height);
+    return (percent * this.frame.height);
   }
 }
