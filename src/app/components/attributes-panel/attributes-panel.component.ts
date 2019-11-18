@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
-import {SketchService} from '../../services/sketch.service';
 import {PreviewService} from '../../services/preview.service';
 
 @Component({
@@ -14,7 +13,7 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
 
   currentZoom: number;
 
-  constructor(private canvas: CanvasService, private sketch: SketchService, private preview: PreviewService) {
+  constructor(private canvas: CanvasService, private preview: PreviewService) {
 
   }
 
@@ -23,18 +22,6 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.sketch.getClickState().subscribe(res => {
-      console.log('res', res);
-
-      // this.styles = this.getHumanStyles(res.getData());
-      this.styles = res.getCss();
-      this.preview.clear();
-      this.preview.render(res.getData());
-      this.preview.fit();
-
-      this.preview.draw();
-    });
-
     this.currentZoom = 100.0;
   }
 

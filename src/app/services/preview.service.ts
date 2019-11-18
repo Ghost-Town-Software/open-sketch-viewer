@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import Konva from 'konva';
-import {SketchService} from './sketch.service';
 import {Subject} from 'rxjs';
-import {ComponentFactory} from '../sketch/factories/component.factory';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ export class PreviewService {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private sketch: SketchService) {
+  constructor() {
   }
 
   public fit(): number {
@@ -76,30 +74,6 @@ export class PreviewService {
     }));
 
     return this.stage;
-  }
-
-  public render(item) {
-    const layer = this.stage.findOne('#preview1');
-    layer.clear();
-
-    const factory: ComponentFactory = this.sketch.getFactory(item._class);
-
-    if (!factory) {
-      return;
-    }
-
-    const component = factory.create(item);
-    const rect = component.getShape();
-    rect.position({x: 0, y: 0});
-
-    layer.add(rect);
-
-    this.center();
-
-
-    this.stage.batchDraw();
-
-    return rect;
   }
 
   public destroy() {

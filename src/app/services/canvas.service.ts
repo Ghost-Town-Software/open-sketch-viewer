@@ -1,10 +1,7 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import Konva from 'konva';
-import {SketchService} from './sketch.service';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {ComponentFactory} from '../sketch/factories/component.factory';
-import {AbstractComponent} from '../sketch/components/abstract.component';
 import {ModelFactory} from '../sketch/models/model-factory';
 
 const SCALE_FACTOR = 1.1;
@@ -21,7 +18,7 @@ export class CanvasService {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private sketch: SketchService, rendererFactory: RendererFactory2) {
+  constructor(rendererFactory: RendererFactory2) {
     this.htmlRenderer = rendererFactory.createRenderer(null, null);
   }
 
@@ -125,14 +122,6 @@ export class CanvasService {
     this.center();
 
     this.stage.batchDraw();
-  }
-
-  private bindClickToElement(component: AbstractComponent) {
-    const element = component.getShape();
-
-    element.on('click', (e) => {
-      this.sketch.click(component);
-    });
   }
 
   public destroy() {

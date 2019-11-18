@@ -7,7 +7,7 @@ import {Border} from './border.model';
 import {Shadow} from './shadow.model';
 import {TextStyle} from './text-style.model';
 
-export class StyleModel {
+export class Style {
   readonly _class: string = 'style';
   endMarketType: number;
   miterLimit: number;

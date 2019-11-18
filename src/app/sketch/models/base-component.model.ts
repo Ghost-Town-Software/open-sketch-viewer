@@ -1,4 +1,4 @@
-import {StyleModel} from './style/style.model';
+import {Style} from './style/style';
 import {Rect} from './parts/rect.model';
 import {Group} from 'konva/types/Group';
 
@@ -7,7 +7,7 @@ export abstract class BaseComponent {
   do_objectID: string;
   name: string;
   frame: Rect;
-  style: StyleModel;
+  style: Style;
   layers: BaseComponent[];
 
   canvas: Group;
@@ -16,7 +16,7 @@ export abstract class BaseComponent {
     this.do_objectID = do_objectID;
     this.name = name;
     this.frame = new Rect(frame);
-    this.style = new StyleModel(style);
+    this.style = new Style(style);
   }
 
   abstract render();
