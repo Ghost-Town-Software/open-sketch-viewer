@@ -8,13 +8,14 @@ export class Oval extends BaseComponent {
   readonly _class: string = 'oval';
   pointRadiusBehaviour: number;
   points: CurvePoint[];
-
+  isClosed: boolean;
   renderer: CurvePointRenderer;
 
   constructor(payload) {
     super(payload);
 
     this.points = payload.points.map(point => new CurvePoint(point));
+    this.isClosed = payload.isClosed;
     this.pointRadiusBehaviour = payload.pointRadiusBehaviour;
     this.renderer = new CurvePointRenderer(this.points, this.frame, this.isClosed);
   }

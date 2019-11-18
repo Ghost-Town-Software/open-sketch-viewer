@@ -23,6 +23,8 @@ export class ShapeGroup extends BaseComponent {
     this.layers.forEach(layer => {
       const shapePath = layer.render();
 
+      shapePath.globalCompositeOperation('xor');
+
       if(styles.fill) {
         shapePath.fill(styles.fill);
       }

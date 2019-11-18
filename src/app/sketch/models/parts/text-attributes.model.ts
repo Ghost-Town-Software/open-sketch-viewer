@@ -39,6 +39,9 @@ export class TextAttributes {
         case 'Bold':
           fontStyle = '700';
           break;
+        case 'Light':
+          fontStyle = '300';
+          break;
       }
     }
 

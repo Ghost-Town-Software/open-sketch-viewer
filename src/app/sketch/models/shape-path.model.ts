@@ -7,6 +7,7 @@ export class ShapePath extends BaseComponent {
   readonly _class: string = 'shapePath';
   pointRadiusBehaviour: number;
   points: CurvePoint[];
+  isClosed: boolean;
 
   renderer: CurvePointRenderer;
 
@@ -15,6 +16,7 @@ export class ShapePath extends BaseComponent {
 
     this.points = payload.points.map(point => new CurvePoint(point));
     this.pointRadiusBehaviour = payload.pointRadiusBehaviour;
+    this.isClosed = payload.isClosed;
 
     this.renderer = new CurvePointRenderer(this.points, this.frame, this.isClosed);
   }
@@ -27,7 +29,7 @@ export class ShapePath extends BaseComponent {
       y: this.frame.y,
       width: this.frame.width,
       height: this.frame.height,
-      globalCompositeOperation: 'xor',
+      // globalCompositeOperation: 'xor',
       transformsEnabled: 'position',
       hitGraphEnabled: false,
       ...styles,

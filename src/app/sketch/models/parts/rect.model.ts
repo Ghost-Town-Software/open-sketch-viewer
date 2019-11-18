@@ -1,6 +1,6 @@
 export class Rect {
   readonly _class: string = 'rect';
-  constrainProportions: boolean = false;
+  constrainProportions = false;
   height: number;
   width: number;
   x: number;
