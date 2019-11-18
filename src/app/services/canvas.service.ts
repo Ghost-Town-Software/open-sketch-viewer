@@ -43,25 +43,12 @@ export class CanvasService {
     return this.stage;
   }
 
-  private buildModel(payload) {
-    const model = ModelFactory.create(payload);
-
-    if(model && payload.layers) {
-      model.layers = payload.layers.map((item) => this.buildModel(item));
-    }
-
-    return model;
-  }
-
   public render() {
     const layer = this.stage.findOne('#content');
 
-    for (const item of this.artboard.layers) {
-      let model;
+    for (const model of this.artboard.layers) {
 
       try {
-        model = this.buildModel(item);
-
         if(model) {
           const shape = model.render();
           if(shape) {

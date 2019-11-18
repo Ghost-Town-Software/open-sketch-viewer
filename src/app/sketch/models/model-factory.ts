@@ -5,11 +5,19 @@ import {Rectangle} from './rectangle.model';
 import {Text} from './text.model';
 import {Group} from './group.model';
 import {Bitmap} from './bitmap.model';
+import {SymbolInstance} from './symbol-instance.model';
+import {Page} from './page.model';
+import {SymbolMaster} from './symbol-master.model';
+import {Artboard} from './artboard.model';
 
 export class ModelFactory {
 
   public static create(component) {
     switch (component._class) {
+      case 'page':
+        return new Page(component);
+      case 'artboard':
+        return new Artboard(component);
       case 'oval':
         return new Oval(component);
       case 'shapeGroup':
@@ -24,6 +32,10 @@ export class ModelFactory {
         return new Group(component);
       case 'bitmap':
         return new Bitmap(component);
+      case 'symbolInstance':
+        return new SymbolInstance(component);
+      case 'symbolMaster':
+        return new SymbolMaster(component);
     }
 
     return null;

@@ -14,6 +14,7 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('blaaa');
     this.pages = this.project.getPages();
   }
 }

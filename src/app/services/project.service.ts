@@ -1,25 +1,38 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private state$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private _state;
 
   constructor() {
   }
 
-  public getState() {
-    return this.state$.asObservable();
+
+  public getSymbolMaster(symbolId) {
+    const pages = this.getPages();
+    const page = pages.find((p) => p.name === 'Symbols');
+
+    console.log('looking for', symbolId);
+
+    for (const layer of page.layers) {
+      console.log('layer', layer, layer.symbolID, symbolId);
+      if(layer.symbolID === symbolId) {
+        return layer;
+      }
+    }
+
+    return null;
   }
 
   public getPages() {
+    console.log('getPages', this._state);
     const document = this.getDocument();
     const pages = [];
 
     for (const page of document.pages) {
-      pages.push(this.state$.value[page._ref + '.json']);
+      pages.push(this._state[page._ref + '.json']);
     }
 
     return pages;
@@ -64,16 +77,16 @@ export class ProjectService {
   }
 
   public get(kind) {
-    if (kind in this.state$.value) {
-      return this.state$.value[kind];
+    if (kind in this._state) {
+      return this._state[kind];
     }
 
     return null;
   }
 
   public getImage(path) {
-    if (path in this.state$.value) {
-      return this.state$.value[path];
+    if (path in this._state) {
+      return this._state[path];
     }
 
     return null;
@@ -86,7 +99,7 @@ export class ProjectService {
   }
 
   public getPage(id) {
-    return this.state$.value[`pages/${id}.json`];
+    return this._state[`pages/${id}.json`];
   }
 
   public getArtboard(pageId: string, artboardId: string) {
@@ -95,10 +108,13 @@ export class ProjectService {
   }
 
   public getDocument() {
-    return this.state$.value['document.json'];
+    console.log('getDocument', this._state);
+    return this._state['document.json'];
   }
 
   public load(state) {
-    this.state$.next(state);
+    console.log('set state', state);
+    this._state = state;
   }
 }
+

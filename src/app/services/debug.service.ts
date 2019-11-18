@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ProjectService} from './project.service';
 import Konva from 'konva';
-import {ModelFactory} from '../sketch/models/model-factory';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class DebugService {
   }
 
   public render(container, objectID) {
-    const object = this.project.find(objectID);
+    const model = this.project.find(objectID);
 
     this.stage = new Konva.Stage({
       container,
@@ -23,7 +22,6 @@ export class DebugService {
     });
 
     const layer = new Konva.Layer();
-    const model = this.buildModel(object);
 
     if(model) {
       const shape = model.render();
@@ -34,7 +32,7 @@ export class DebugService {
         layer.add(shape);
       }
     } else {
-      console.error('Not implemented yet', object._class);
+      console.error('Not implemented yet', model._class);
     }
 
     this.stage.add(layer);
@@ -54,16 +52,4 @@ export class DebugService {
       layer.y(0);
     }
   }
-
-
-  private buildModel(payload) {
-    const model = ModelFactory.create(payload);
-
-    if(model && payload.layers) {
-      model.layers = payload.layers.map((item) => this.buildModel(item));
-    }
-
-    return model;
-  }
-
 }
