@@ -62,11 +62,14 @@ export class Style {
       console.warn('Element has more than 1 shadow', this.shadows);
     }
 
+    const textStyle = this.textStyle ? this.textStyle.value() : {};
+
     return {
       ...(this.fills.length > 0 ? this.fills[0].value() : {}),
       ...(this.borders.length > 0 ? this.borders[0].value() : {}),
       ...(this.shadows.length > 0 ? this.shadows[0].value() : {}),
-      ...this.contextSettings.value()
+      ...this.contextSettings.value(),
+      ...textStyle
     };
   }
 

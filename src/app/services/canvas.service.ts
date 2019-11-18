@@ -57,13 +57,21 @@ export class CanvasService {
     const layer = this.stage.findOne('#content');
 
     for (const item of this.artboard.layers) {
-      const model = this.buildModel(item);
+      let model;
 
-      if(model) {
-        const shape = model.render();
-        if(shape) {
-          layer.add(shape);
+      try {
+        model = this.buildModel(item);
+
+        if(model) {
+          const shape = model.render();
+          if(shape) {
+            layer.add(shape);
+          }
         }
+      } catch(e) {
+        console.error('Error affected by', model);
+        console.error(e);
+        throw e;
       }
     }
 

@@ -41,7 +41,7 @@ export class DebugService {
 
     this.center(layer);
 
-    this.stage.batchDraw();
+    this.stage.draw();
   }
 
   public center(layer) {

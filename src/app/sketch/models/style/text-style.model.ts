@@ -13,10 +13,25 @@ export class TextStyle {
   }
 
   value() {
-    return this.encodedAttributes.value();
+    const values = this.encodedAttributes.value();
+
+    return Object.assign({
+      verticalAlign: this.getVerticalAlignment()
+    }, values);
   }
 
   css() {
 
+  }
+
+  getVerticalAlignment() {
+    switch (this.verticalAlignment) {
+      case 0:
+        return 'top';
+      case 1:
+        return 'middle';
+      default:
+        throw new Error('Invalid alignment: ' + this.verticalAlignment);
+    }
   }
 }

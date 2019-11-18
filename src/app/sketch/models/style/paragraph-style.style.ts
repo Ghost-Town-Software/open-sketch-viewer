@@ -11,4 +11,17 @@ export class ParagraphStyle {
     this.minimumLineHeight = minimumLineHeight;
     this.allowsDefaultTighteningForTruncation = allowsDefaultTighteningForTruncation;
   }
+
+  getAlignment() {
+    switch(this.alignment) {
+      case 2:
+        return 'center';
+      case 1:
+        return 'right';
+      case 0:
+        return 'left';
+      default:
+        throw new Error('Invalid alignment: ' + this.alignment);
+    }
+  }
 }

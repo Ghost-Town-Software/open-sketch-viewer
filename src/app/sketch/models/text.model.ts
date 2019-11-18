@@ -31,18 +31,28 @@ export class Text extends BaseComponent {
       transformsEnabled: 'position',
     });
 
+
+
     this.attributedString.attributes.forEach(attribute => {
       const innerStyle = attribute.attributes.value();
       const value = this.attributedString.string.substr(attribute.location, attribute.length);
 
       const text = new Konva.Text({
+        x: 0,
+        y: 0,
+        width: this.frame.width,
+        height: this.frame.height,
         hitGraphEnabled: false,
         transformsEnabled: 'position',
         text: value,
-        ...innerStyle
+        ...this.style.value(),
+        ...innerStyle,
       });
 
-      // console.log(text.width(), text.height(), value);
+      console.log('text', {
+        ...this.style.value(),
+        ...innerStyle,
+      });
 
       this.canvas.add(text);
     });
