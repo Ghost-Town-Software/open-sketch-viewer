@@ -31,12 +31,24 @@ export class Text extends BaseComponent {
       transformsEnabled: 'position',
     });
 
-
+    // this.canvas.add(new Konva.Rect({
+    //   x: 0,
+    //   y: 0,
+    //   width: this.frame.width,
+    //   height: this.frame.height,
+    //   transformsEnabled: 'position',
+    //   strokeWidth: 1,
+    //   stroke: 'red'
+    // }));
 
     this.attributedString.attributes.forEach(attribute => {
       const innerStyle = attribute.attributes.value();
       const value = this.attributedString.string.substr(attribute.location, attribute.length);
 
+      console.log({
+        ...this.style.value(),
+        ...innerStyle,
+      });
       const text = new Konva.Text({
         x: 0,
         y: 0,
@@ -45,11 +57,6 @@ export class Text extends BaseComponent {
         hitGraphEnabled: false,
         transformsEnabled: 'position',
         text: value,
-        ...this.style.value(),
-        ...innerStyle,
-      });
-
-      console.log('text', {
         ...this.style.value(),
         ...innerStyle,
       });

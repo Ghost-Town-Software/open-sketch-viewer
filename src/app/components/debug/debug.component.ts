@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer
 import {ProjectService} from '../../services/project.service';
 import {CanvasService} from '../../services/canvas.service';
 import {DebugService} from '../../services/debug.service';
-
+import FontFaceObserver from 'fontfaceobserver';
 
 @Component({
   selector: 'debug',
@@ -23,9 +23,15 @@ export class DebugComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('FontFaceObserver', FontFaceObserver);
   }
 
   ngAfterViewInit() {
-    this.debug.render(this.canvasEl.nativeElement, this.objectID);
+    const font = new FontFaceObserver('Roboto');
+    font.load().then(() => {
+      console.log('ulala');
+
+      this.debug.render(this.canvasEl.nativeElement, this.objectID);
+    });
   }
 }

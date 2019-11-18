@@ -29,6 +29,7 @@ export class Bitmap extends BaseComponent {
     const picture = this.project.getImage(this.image._ref);
 
     Konva.Image.fromURL(picture, (image) => {
+
       image.setAttrs({
         width: this.frame.width,
         height: this.frame.height,
@@ -44,6 +45,7 @@ export class Bitmap extends BaseComponent {
       this.canvas.draw();
     });
 
+    this.flip(this.canvas);
     return this.canvas;
   }
 }

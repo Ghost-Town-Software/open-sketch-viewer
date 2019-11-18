@@ -42,6 +42,8 @@ export class Oval extends BaseComponent {
 
     this.canvas.add(element);
 
+    this.flip(this.canvas);
+
     if (environment.cache) {
       this.canvas.cache();
     }

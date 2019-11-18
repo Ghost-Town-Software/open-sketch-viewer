@@ -1,9 +1,15 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 
-export class Group extends BaseComponent {
+export class SymbolMaster extends BaseComponent {
+  readonly _class: string = 'symbolMaster';
+
+  symbolID: string;
+
   constructor(payload) {
     super(payload);
+
+    this.symbolID = payload.symbolID;
   }
 
   render() {
@@ -18,9 +24,7 @@ export class Group extends BaseComponent {
         console.warn('Not implemented yet', layer);
         return;
       }
-
-      const item = layer.render();
-      this.canvas.add(item);
+      this.canvas.add(layer.render());
     });
 
     this.flip(this.canvas);

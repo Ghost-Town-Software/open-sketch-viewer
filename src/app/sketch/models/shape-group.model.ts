@@ -30,6 +30,8 @@ export class ShapeGroup extends BaseComponent {
       this.canvas.add(shapePath);
     });
 
+    this.flip(this.canvas);
+
     this.canvas.cache();
 
     for (const key in styles) {

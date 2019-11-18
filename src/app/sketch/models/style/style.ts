@@ -49,6 +49,10 @@ export class Style {
     this.innerShadows = innerShadows;
   }
 
+  public thickness() {
+    return this.borders.length > 0 ? this.borders[0].thickness : 0;
+  }
+
   public value() {
     if(this.fills.length > 2) {
       console.warn('Element has more than 1 fill', this.fills);

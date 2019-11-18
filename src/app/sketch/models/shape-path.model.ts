@@ -41,6 +41,8 @@ export class ShapePath extends BaseComponent {
       },
     });
 
+    this.flip(item);
+
     return item;
   }
 }

@@ -22,13 +22,28 @@ export class TextAttributes {
 
 
   value() {
+    const font = this.MSAttributedStringFontAttribute.attributes.name.split('-');
+
     const fontSize = this.MSAttributedStringFontAttribute.attributes.size;
     const fill = this.MSAttributedStringColorAttribute.value();
     const lineHeight = this.paragraphStyle.maximumLineHeight === undefined ? 1 : (this.paragraphStyle.maximumLineHeight / fontSize);
-    const fontFamily = this.MSAttributedStringFontAttribute.attributes.name;
+    const fontFamily = font[0];
     const align = this.paragraphStyle.getAlignment();
+    let fontStyle = 'normal';
+
+    if(font.length > 1) {
+      switch(font[1]) {
+        case 'Black':
+          fontStyle = '900';
+          break;
+        case 'Bold':
+          fontStyle = '700';
+          break;
+      }
+    }
 
     return {
+      fontStyle,
       fontSize,
       fill,
       lineHeight,

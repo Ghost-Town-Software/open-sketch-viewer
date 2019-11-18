@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer
 import {ProjectService} from '../../services/project.service';
 import {CanvasService} from '../../services/canvas.service';
 import {DebugService} from '../../services/debug.service';
-
+import FontFaceObserver from 'fontfaceobserver';
 
 @Component({
   selector: 'workspace',
@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('FontFaceObserver', FontFaceObserver);
     console.log('artboard', this.artboard);
 
     this.canvas.createArtboard(this.canvasEl.nativeElement, this.artboard);
