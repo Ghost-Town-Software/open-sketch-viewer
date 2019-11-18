@@ -11,6 +11,7 @@ import {StructurePanelComponent} from './components/structure-panel/structure-pa
 import {PageComponent} from './components/page/page.component';
 import {ArtboardComponent} from './components/artboard/artboard.component';
 import {setInjector} from './injector.static';
+import {DebugComponent} from './components/debug/debug.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {setInjector} from './injector.static';
     AttributesPanelComponent,
     StructurePanelComponent,
     PageComponent,
-    ArtboardComponent
+    ArtboardComponent,
+    DebugComponent,
   ],
   imports: [
     BrowserModule,

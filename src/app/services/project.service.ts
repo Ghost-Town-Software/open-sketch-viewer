@@ -25,6 +25,40 @@ export class ProjectService {
     return pages;
   }
 
+  public find(objectID) {
+    const pages = this.getPages();
+
+    for (const page of pages) {
+      const value = findInNested(page);
+
+      if (value) {
+        return value;
+      }
+    }
+
+    return null;
+
+    function findInNested(object) {
+      if (object.do_objectID === objectID) {
+        return object;
+      }
+
+      if (!object.layers) {
+        return null;
+      }
+
+      for (const layer of object.layers) {
+        const value = findInNested(layer);
+
+        if (value) {
+          return value;
+        }
+      }
+
+      return null;
+    }
+  }
+
   public getPreview() {
     return this.get('previews/preview.png');
   }

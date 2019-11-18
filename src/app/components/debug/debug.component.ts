@@ -5,31 +5,27 @@ import {DebugService} from '../../services/debug.service';
 
 
 @Component({
-  selector: 'workspace',
-  templateUrl: './workspace.template.html',
-  styleUrls: ['./workspace.styles.scss'],
+  selector: 'debug',
+  templateUrl: './debug.template.html',
+  styleUrls: ['./debug.styles.scss'],
 })
-export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() artboard: any;
+export class DebugComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', {static: true}) canvasEl;
-
+  @Input('object-id') objectID;
 
   constructor(private elementRef: ElementRef, private project: ProjectService, private renderer: Renderer2,
-              private canvas: CanvasService) {
+              private debug: DebugService) {
 
   }
 
   ngOnDestroy(): void {
-    this.canvas.destroy();
+    // this.debug.destroy();
   }
 
   ngOnInit(): void {
-    console.log('artboard', this.artboard);
-
-    this.canvas.createArtboard(this.canvasEl.nativeElement, this.artboard);
   }
 
   ngAfterViewInit() {
-    this.canvas.render();
+    this.debug.render(this.canvasEl.nativeElement, this.objectID);
   }
 }

@@ -22,57 +22,6 @@ export class CanvasService {
     this.htmlRenderer = rendererFactory.createRenderer(null, null);
   }
 
-  public zoomIn() {
-    return this.zoom(1);
-  }
-
-  public zoomOut() {
-    return this.zoom(-1);
-  }
-
-  public fit() {
-    const layer = this.stage.findOne('#content');
-    const currentZoom = this.getCurrentZoom();
-    const scaleValue = currentZoom * .95;
-
-    layer.scale({
-      x: scaleValue,
-      y: scaleValue
-    });
-
-    this.center();
-
-    return Math.floor(currentZoom * 100);
-  }
-
-  public getCurrentZoom() {
-    const artboard = this.stage.findOne('#artboard');
-    const box = artboard.getClientRect({relativeTo: this.stage});
-    const stageSize = this.stage.getSize();
-    const scaleX = stageSize.width / box.width;
-    const scaleY = stageSize.height / box.height;
-    return Math.min(scaleX, scaleY);
-  }
-
-  public draw() {
-    const layer = this.stage.findOne('#content');
-    layer.batchDraw();
-  }
-
-  public center() {
-    const layer = this.stage.findOne('#content');
-    const artboard = this.stage.findOne('#artboard');
-    const box = artboard.getClientRect({skipTransform: false});
-
-    layer.x((this.stage.width() - box.width) / 2);
-
-    if (box.height < this.stage.height()) {
-      layer.y((this.stage.height() - box.height) / 2);
-    } else if (layer.y() > 0) {
-      layer.y(0);
-    }
-  }
-
   public createArtboard(container, artboard) {
     this.artboard = artboard;
     this.stage = new Konva.Stage({
@@ -129,6 +78,57 @@ export class CanvasService {
     this.destroy$.complete();
     this.stage.destroy();
     this.stage = null;
+  }
+
+  public zoomIn() {
+    return this.zoom(1);
+  }
+
+  public zoomOut() {
+    return this.zoom(-1);
+  }
+
+  public fit() {
+    const layer = this.stage.findOne('#content');
+    const currentZoom = this.getCurrentZoom();
+    const scaleValue = currentZoom * .95;
+
+    layer.scale({
+      x: scaleValue,
+      y: scaleValue
+    });
+
+    this.center();
+
+    return Math.floor(currentZoom * 100);
+  }
+
+  public getCurrentZoom() {
+    const artboard = this.stage.findOne('#artboard');
+    const box = artboard.getClientRect({relativeTo: this.stage});
+    const stageSize = this.stage.getSize();
+    const scaleX = stageSize.width / box.width;
+    const scaleY = stageSize.height / box.height;
+    return Math.min(scaleX, scaleY);
+  }
+
+  public draw() {
+    const layer = this.stage.findOne('#content');
+    layer.batchDraw();
+  }
+
+  public center() {
+    const layer = this.stage.findOne('#content');
+    const artboard = this.stage.findOne('#artboard');
+    const box = artboard.getClientRect({skipTransform: false});
+
+    layer.x((this.stage.width() - box.width) / 2);
+
+    if (box.height < this.stage.height()) {
+      layer.y((this.stage.height() - box.height) / 2);
+    } else if (layer.y() > 0) {
+      layer.y(0);
+    }
   }
 
   private clipArtboard() {
