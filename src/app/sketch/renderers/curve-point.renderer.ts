@@ -13,20 +13,24 @@ export class CurvePointRenderer {
       const current = this.points[i];
       const nextPath = i + 1 < this.points.length ? this.points[i + 1] : this.points[0];
 
-      if (!this.isClosedPath && this.points.length === i + 1) {
-        continue;
-      }
+      // if (!this.isClosedPath && this.points.length === i + 1) {
+      //   continue;
+      // }
 
       if (i === 0) {
         context.beginPath();
         context.moveTo(this.getRelativeWidth(current.point.x), this.getRelativeHeight(current.point.y));
       }
 
-      context.bezierCurveTo(
-        this.getRelativeWidth(current.curveFrom.x), this.getRelativeHeight(current.curveFrom.y),
-        this.getRelativeWidth(nextPath.curveTo.x), this.getRelativeHeight(nextPath.curveTo.y),
-        this.getRelativeWidth(nextPath.point.x), this.getRelativeHeight(nextPath.point.y),
-      );
+      if(current.curveMode === 1) {
+        context.lineTo(this.getRelativeWidth(current.point.x), this.getRelativeHeight(current.point.y));
+      } else {
+        context.bezierCurveTo(
+          this.getRelativeWidth(current.curveFrom.x), this.getRelativeHeight(current.curveFrom.y),
+          this.getRelativeWidth(nextPath.curveTo.x), this.getRelativeHeight(nextPath.curveTo.y),
+          this.getRelativeWidth(nextPath.point.x), this.getRelativeHeight(nextPath.point.y),
+        );
+      }
     }
 
     if (this.isClosedPath) {

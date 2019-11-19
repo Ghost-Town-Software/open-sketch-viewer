@@ -37,7 +37,7 @@ export class Style {
     this.windingRule = windingRule;
     this.blur = new Blur(blur);
     this.borderOptions = new BorderOptions(borderOptions);
-    this.borders = borders.map(border => new Border(border));
+    this.borders = borders.map(border => new Border(border, frame));
     this.colorControls = new ColorControls(colorControls);
     this.contextSettings = new GraphicsContextSettings(contextSettings);
     this.fills = fills.map(fill => new Fill(fill, frame));

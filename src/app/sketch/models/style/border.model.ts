@@ -12,12 +12,12 @@ export class Border {
   position: number;
   thickness: number;
 
-  constructor({isEnabled, fillType, color, contextSettings, gradient, position, thickness}) {
+  constructor({isEnabled, fillType, color, contextSettings, gradient, position, thickness}, frame) {
     this.isEnabled = !!isEnabled;
     this.fillType = fillType;
     this.color = new Color(color);
     this.contextSettings = new GraphicsContextSettings(contextSettings);
-    this.gradient = new Gradient(gradient);
+    this.gradient = new Gradient(gradient, frame);
     this.position = position;
     this.thickness = thickness;
   }
