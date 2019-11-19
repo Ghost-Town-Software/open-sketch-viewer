@@ -25,11 +25,7 @@ export class ShapePath extends BaseComponent {
     const styles: any = this.style.value();
 
     const item = new Konva.Shape({
-      x: this.frame.x,
-      y: this.frame.y,
-      width: this.frame.width,
-      height: this.frame.height,
-      // globalCompositeOperation: 'xor',
+      ...this.frame,
       transformsEnabled: 'position',
       hitGraphEnabled: false,
       ...styles,

@@ -8,14 +8,25 @@ export class Rect {
 
   constructor({constrainProportions, height, width, x, y}) {
     this.constrainProportions = constrainProportions;
-    // this.height = Math.round(height);
-    // this.width = Math.round(width);
-    // this.x = Math.round(x);
-    // this.y = Math.round(y);
-
     this.height = (height);
     this.width = (width);
     this.x = (x);
     this.y = (y);
+  }
+
+  round() {
+    return {
+      x: Math.round(this.x),
+      y: Math.round(this.y),
+      width: Math.round(this.width),
+      height: Math.round(this.height),
+    };
+  }
+
+  applyRound() {
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    this.width = Math.round(this.width);
+    this.height = Math.round(this.height);
   }
 }

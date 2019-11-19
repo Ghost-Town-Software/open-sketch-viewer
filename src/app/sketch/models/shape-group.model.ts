@@ -12,10 +12,7 @@ export class ShapeGroup extends BaseComponent {
   render() {
     const styles = this.style.value();
     this.canvas = new Konva.Group({
-      x: this.frame.x,
-      y: this.frame.y,
-      width: this.frame.width,
-      height: this.frame.height,
+      ...this.frame,
       transformsEnabled: 'position',
     });
 
