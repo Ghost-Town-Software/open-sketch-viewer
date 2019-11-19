@@ -41,10 +41,10 @@ export class CurvePointRenderer {
   }
 
   private getRelativeWidth(percent) {
-    return Math.round(percent * this.frame.width);
+    return (percent * this.frame.width);
   }
 
   private getRelativeHeight(percent) {
-    return Math.round(percent * this.frame.height);
+    return (percent * this.frame.height);
   }
 }
