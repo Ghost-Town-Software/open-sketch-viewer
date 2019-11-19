@@ -34,10 +34,18 @@ export class Color {
   }
 
   public hex() {
-    const red = Math.floor(this.red * 255).toString(16);
-    const green = Math.floor(this.green * 255).toString(16);
-    const blue = Math.floor(this.blue * 255).toString(16);
+    const red = this.fixHex(Math.floor(this.red * 255).toString(16));
+    const green = this.fixHex(Math.floor(this.green * 255).toString(16));
+    const blue = this.fixHex(Math.floor(this.blue * 255).toString(16));
 
     return `#${red}${green}${blue}`;
+  }
+
+  private fixHex(hex) {
+    if (hex.length < 2) {
+      return '0' + hex;
+    }
+
+    return hex;
   }
 }

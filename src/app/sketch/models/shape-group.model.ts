@@ -11,7 +11,6 @@ export class ShapeGroup extends BaseComponent {
 
   render() {
     const styles = this.style.value();
-
     this.canvas = new Konva.Group({
       x: this.frame.x,
       y: this.frame.y,
@@ -25,8 +24,12 @@ export class ShapeGroup extends BaseComponent {
 
       shapePath.globalCompositeOperation('xor');
 
-      if(styles.fill) {
-        shapePath.fill(styles.fill);
+      for(const property in styles) {
+        if(!styles.hasOwnProperty(property)) {
+          continue;
+        }
+
+        shapePath[property](styles[property]);
       }
 
       this.canvas.add(shapePath);

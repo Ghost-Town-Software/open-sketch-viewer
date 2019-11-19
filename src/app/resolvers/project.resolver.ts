@@ -18,7 +18,6 @@ export class ProjectResolver implements Resolve<any> {
     return this.loader.loadDefault()
       .pipe(
         map((model: any) => {
-          this.project.load(model);
           model = this.resolveState(model);
           this.project.load(model);
           return model;
@@ -37,6 +36,9 @@ export class ProjectResolver implements Resolve<any> {
   }
 
   private buildModel(payload) {
+    // if(payload.do_objectID === 'D32DF7D8-AD73-4B57-8A67-46911334366A') {
+    //   console.log(JSON.stringify(payload));
+    // }
     const model = ModelFactory.create(payload);
 
     if(model && payload.layers) {

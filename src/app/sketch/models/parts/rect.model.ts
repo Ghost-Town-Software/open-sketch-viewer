@@ -12,5 +12,10 @@ export class Rect {
     this.width = Math.round(width);
     this.x = Math.round(x);
     this.y = Math.round(y);
+
+    // this.height = (height);
+    // this.width = (width);
+    // this.x = (x);
+    // this.y = (y);
   }
 }
