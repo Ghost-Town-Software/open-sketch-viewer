@@ -39,7 +39,7 @@ export class Bitmap extends BaseComponent {
       this.canvas.add(image);
 
       if (environment.cache) {
-        this.canvas.cache();
+        this.canvas.cache({offset: 5});
       }
 
       this.canvas.draw();

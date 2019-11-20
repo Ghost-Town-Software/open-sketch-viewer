@@ -34,7 +34,7 @@ export class ShapeGroup extends BaseComponent {
 
     this.flip(this.canvas);
 
-    this.canvas.cache();
+    this.canvas.cache({offset: 2});
 
     for (const key in styles) {
       if (!styles.hasOwnProperty(key)) {
