@@ -31,16 +31,6 @@ export class Text extends BaseComponent {
       transformsEnabled: 'position',
     });
 
-    // this.canvas.add(new Konva.Rect({
-    //   x: 0,
-    //   y: 0,
-    //   width: this.frame.width,
-    //   height: this.frame.height,
-    //   transformsEnabled: 'position',
-    //   strokeWidth: 1,
-    //   stroke: 'red'
-    // }));
-
     this.attributedString.attributes.forEach(attribute => {
       const innerStyle = attribute.attributes.value();
       const value = this.attributedString.string.substr(attribute.location, attribute.length);
