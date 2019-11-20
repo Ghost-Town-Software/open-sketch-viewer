@@ -110,12 +110,6 @@ export class ProjectService {
 
   public load(state) {
     this.state = state;
-
-    this.resolveFonts(state);
-  }
-
-  private resolveFonts(model) {
-    console.log('model', model);
   }
 }
 
