@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ProjectService} from '../../services/project.service';
 import {DebugService} from '../../services/debug.service';
-import WebFont from 'webfontloader';
 
 @Component({
   selector: 'debug',
@@ -25,6 +24,6 @@ export class DebugComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-
+    this.debug.render(this.canvasEl.nativeElement, this.objectID);
   }
 }

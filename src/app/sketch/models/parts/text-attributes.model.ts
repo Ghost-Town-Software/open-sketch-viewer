@@ -25,7 +25,7 @@ export class TextAttributes {
     const font = this.MSAttributedStringFontAttribute.attributes.name.split('-');
 
     const fontSize = this.MSAttributedStringFontAttribute.attributes.size;
-    const fill = this.MSAttributedStringColorAttribute.value();
+    const color = this.MSAttributedStringColorAttribute.value();
     const lineHeight = this.paragraphStyle.maximumLineHeight === undefined ? 1 : (this.paragraphStyle.maximumLineHeight / fontSize);
     const fontFamily = font[0];
     const align = this.paragraphStyle.getAlignment();
@@ -48,7 +48,7 @@ export class TextAttributes {
     return {
       fontStyle,
       fontSize,
-      fill,
+      color,
       lineHeight,
       fontFamily,
       align

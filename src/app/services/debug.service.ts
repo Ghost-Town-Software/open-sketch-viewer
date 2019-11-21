@@ -37,7 +37,7 @@ export class DebugService {
 
     this.stage.add(layer);
 
-    this.center(layer);
+    // this.center(layer);
 
     this.stage.draw();
   }
