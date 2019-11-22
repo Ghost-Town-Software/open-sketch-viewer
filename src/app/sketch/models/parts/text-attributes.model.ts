@@ -1,6 +1,7 @@
 import {FontDescriptor} from '../style/font-descriptor.style';
 import {Color} from '../style/color.model';
 import {ParagraphStyle} from '../style/paragraph-style.style';
+import {FontUtil} from '../../utils/font.util';
 
 export class TextAttributes {
   MSAttributedStringFontAttribute: FontDescriptor;
@@ -22,36 +23,20 @@ export class TextAttributes {
 
 
   value() {
-    const font = this.MSAttributedStringFontAttribute.attributes.name.split('-');
-
+    const font = FontUtil.toFont(this.MSAttributedStringFontAttribute.attributes.name);
     const fontSize = this.MSAttributedStringFontAttribute.attributes.size;
     const color = this.MSAttributedStringColorAttribute.value();
-    const lineHeight = this.paragraphStyle.maximumLineHeight === undefined ? 1 : (this.paragraphStyle.maximumLineHeight / fontSize);
-    const fontFamily = font[0];
     const align = this.paragraphStyle.getAlignment();
-    let fontStyle = 'normal';
-
-    if(font.length > 1) {
-      switch(font[1]) {
-        case 'Black':
-          fontStyle = '900';
-          break;
-        case 'Bold':
-          fontStyle = '700';
-          break;
-        case 'Light':
-          fontStyle = '300';
-          break;
-      }
-    }
+    const fontStyle = 'normal';
 
     return {
+      fontFamily: font.family,
+      fontWeight: font.weight,
+      fontSize: fontSize + 'px',
+      lineHeight: (this.paragraphStyle.maximumLineHeight || fontSize) + 'px',
+      textAlign: align,
       fontStyle,
-      fontSize,
-      color,
-      lineHeight,
-      fontFamily,
-      align
+      color
     };
   }
 }
