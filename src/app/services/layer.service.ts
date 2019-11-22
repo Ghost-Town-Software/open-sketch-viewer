@@ -6,6 +6,7 @@ import {AsyncSubject, BehaviorSubject, Subject} from 'rxjs';
 })
 export class LayerService {
   workspaceLayer$: BehaviorSubject<string> = new BehaviorSubject(null);
+  attributeLayer$: BehaviorSubject<string> = new BehaviorSubject(null);
 
   bindEvents(stage) {
     this.workspaceLayer$.subscribe(do_objectID => {

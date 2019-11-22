@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import Konva from 'konva';
 import {Subject} from 'rxjs';
+import {BaseComponent} from '../sketch/models/base-component.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,22 @@ export class PreviewService {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor() {
+  }
+
+  public render(component: BaseComponent) {
+    const layer = this.stage.findOne('#preview1');
+    layer.clear();
+
+    const rect = component.render();
+    rect.position({x: 0, y: 0});
+
+    layer.add(rect);
+
+    this.center();
+
+    this.stage.batchDraw();
+
+    return rect;
   }
 
   public fit(): number {

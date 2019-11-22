@@ -58,6 +58,7 @@ export class StructurePanelComponent implements OnInit {
     this.activeLayer = layer;
     this.activeLayer.active = true;
     this.layerService.workspaceLayer$.next(layer.do_objectID);
+    this.layerService.attributeLayer$.next(layer.do_objectID);
   }
 
   @Input()

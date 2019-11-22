@@ -80,6 +80,17 @@ export class Style {
   }
 
   public css(): string {
-    return null;
+
+    let css = '';
+
+    if(this.borders.length > 0) {
+      css += this.borders[0].css() + '\n';
+    }
+
+    if(this.shadows.length > 0) {
+      css += this.shadows[0].css() + '\n';
+    }
+
+    return css;
   }
 }

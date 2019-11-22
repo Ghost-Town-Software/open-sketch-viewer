@@ -24,6 +24,10 @@ export class CanvasService {
     this.htmlRenderer = rendererFactory.createRenderer(null, null);
   }
 
+  public findLayer(layerId: string) {
+    return this.artboard.layers.find(layer => layer.do_objectID === layerId);
+  }
+
   public createArtboard(container, artboard) {
     this.artboard = artboard;
     this.stage = new Konva.Stage({

@@ -37,6 +37,10 @@
     background: $gray-300;
   }
 
+  &.active {
+    font-weight: bold;
+  }
+
   .layer-icon {
     min-width: 20px;
     width: 20px;

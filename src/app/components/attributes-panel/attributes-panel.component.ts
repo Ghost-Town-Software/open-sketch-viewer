@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {PreviewService} from '../../services/preview.service';
+import {LayerService} from '../../services/layer.service';
+import {BaseComponent} from '../../sketch/models/base-component.model';
 
 @Component({
   selector: 'attributes-panel',
@@ -10,10 +12,15 @@ import {PreviewService} from '../../services/preview.service';
 export class AttributesPanelComponent implements OnInit, AfterViewInit {
   @ViewChild('preview', {static: true}) previewEl;
   styles: string;
+  attributes: string;
 
   currentZoom: number;
 
-  constructor(private canvas: CanvasService, private preview: PreviewService) {
+  activeLayer: BaseComponent;
+
+  constructor(private canvas: CanvasService,
+              private preview: PreviewService,
+              private layerService: LayerService) {
 
   }
 
@@ -23,43 +30,18 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.currentZoom = 100.0;
-  }
 
-  private getHumanStyles(attrs) {
-    const style = attrs.style;
-    const parts: any = {};
-    parts.width = attrs.frame.width + 'px';
-    parts.height = attrs.frame.height + 'px';
+    this.layerService.attributeLayer$.subscribe(do_objectID => {
+      const layer = this.canvas.findLayer(do_objectID);
+      this.activeLayer = layer;
+      this.styles = layer ? layer.getStyles() : null;
 
-    if (style.blur.isEnabled) {
-      console.log('Blur is not implemented yet.');
-    }
-
-    if (style.borderOptions.isEnabled) {
-    }
-
-    if (style.borders.length) {
-      if (style.borders.length > 1) {
-        console.warn('Item has more than one borders', attrs);
+      if(this.activeLayer) {
+        this.preview.clear();
+        this.preview.render(layer);
+        this.preview.fit();
       }
-
-      parts.border = '';
-    }
-
-    if (style.contextSettings.opacity) {
-      parts.opacity = Math.round(style.contextSettings.opacity * 100) / 100;
-    }
-
-    const res: any = [];
-    for (const key in parts) {
-      if (!parts.hasOwnProperty(key)) {
-        continue;
-      }
-
-      res.push(key + ': ' + parts[key] + ';');
-    }
-
-    return res.join('\n');
+    });
   }
 
   zoomIn() {

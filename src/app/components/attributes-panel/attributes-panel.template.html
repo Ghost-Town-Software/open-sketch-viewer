@@ -1,30 +1,67 @@
-<div class="form-group">
-  <label>Preview</label>
-  <div id="preview-canvas">
-    <div #preview></div>
-  </div>
-</div>
-
-<div class="form-group">
-  <label>Styles</label>
-  <pre [innerHTML]="styles"></pre>
-</div>
-
-<div class="form-group">
-  <label>Zoom</label>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <button role="button" class="btn btn-outline-secondary" (click)="zoomOut()">-</button>
-    </div>
-    <input type="text" class="form-control" readonly [value]="currentZoom + ' %'">
-    <div class="input-group-append">
-      <button role="button" class="btn btn-outline-secondary" (click)="zoomIn()">+</button>
+<div class="attr-section">
+  <label class="attr-header">Preview</label>
+  <div class="attr-content">
+    <div id="preview-canvas">
+      <div #preview></div>
     </div>
   </div>
 </div>
 
-
-<div class="form-group">
-  <button role="button" class="btn btn-primary" (click)="fit()">Fit</button>
-  <button role="button" class="btn btn-primary" (click)="center()">Center</button>
+<div class="attr-section" *ngIf="styles">
+  <label class="attr-header">Styles</label>
+  <div class="attr-content container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <pre [innerHTML]="styles"></pre>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="attr-section" *ngIf="activeLayer">
+  <label class="attr-header">Attributes</label>
+  <div class="attr-content container-fluid">
+    <dl class="row">
+      <dt class="col-sm-3">
+        Name
+      </dt>
+      <dd class="col-sm-9">
+        {{ activeLayer.name }}
+      </dd>
+      <dt class="col-sm-3">
+        Width
+      </dt>
+      <dd class="col-sm-9">
+        {{ activeLayer.frame.width }} px
+      </dd>
+      <dt class="col-sm-3">
+        Height
+      </dt>
+      <dd class="col-sm-9">
+        {{ activeLayer.frame.height }} px
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<div class="attr-section">
+  <label class="attr-header">Zoom</label>
+  <div class="attr-content">
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <button role="button" class="btn btn-outline-secondary" (click)="zoomOut()">-</button>
+        </div>
+        <input type="text" class="form-control" readonly [value]="currentZoom + ' %'">
+        <div class="input-group-append">
+          <button role="button" class="btn btn-outline-secondary" (click)="zoomIn()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button role="button" class="btn btn-primary mr-2" (click)="fit()">Fit</button>
+    <button role="button" class="btn btn-primary" (click)="center()">Center</button>
+  </div>
+</div>
+
