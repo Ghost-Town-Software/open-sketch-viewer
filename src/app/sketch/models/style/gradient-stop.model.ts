@@ -9,4 +9,8 @@ export class GradientStop {
     this.position = position;
     this.color = new Color(color);
   }
+
+  value() {
+    return [this.position, this.color.value()];
+  }
 }

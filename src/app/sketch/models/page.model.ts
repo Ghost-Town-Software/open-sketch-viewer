@@ -30,4 +30,5 @@ export class Page extends BaseComponent {
 
     return this.canvas;
   }
+
 }

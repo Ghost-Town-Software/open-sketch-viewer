@@ -16,7 +16,8 @@ export class TextStyle {
     const values = this.encodedAttributes.value();
 
     return Object.assign({
-      verticalAlign: this.getVerticalAlignment()
+      verticalAlign: this.getVerticalAlignment(),
+      display: 'table-cell'
     }, values);
   }
 
@@ -25,13 +26,8 @@ export class TextStyle {
   }
 
   getVerticalAlignment() {
-    switch (this.verticalAlignment) {
-      case 0:
-        return 'top';
-      case 1:
-        return 'middle';
-      default:
-        throw new Error('Invalid alignment: ' + this.verticalAlignment);
-    }
+    const alignments = ['top', 'middle', 'bottom'];
+
+    return alignments[this.verticalAlignment];
   }
 }

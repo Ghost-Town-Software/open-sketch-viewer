@@ -13,15 +13,8 @@ export class ParagraphStyle {
   }
 
   getAlignment() {
-    switch(this.alignment) {
-      case 2:
-        return 'center';
-      case 1:
-        return 'right';
-      case 0:
-        return 'left';
-      default:
-        throw new Error('Invalid alignment: ' + this.alignment);
-    }
+    const alignments = ['left', 'right', 'center', 'start', 'end'];
+
+    return alignments[this.alignment];
   }
 }

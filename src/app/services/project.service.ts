@@ -4,7 +4,8 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class ProjectService {
-  private _state;
+  private state;
+  private fonts;
 
   constructor() {
   }
@@ -28,7 +29,7 @@ export class ProjectService {
     const pages = [];
 
     for (const page of document.pages) {
-      pages.push(this._state[page._ref + '.json']);
+      pages.push(this.state[page._ref + '.json']);
     }
 
     return pages;
@@ -73,16 +74,16 @@ export class ProjectService {
   }
 
   public get(kind) {
-    if (kind in this._state) {
-      return this._state[kind];
+    if (kind in this.state) {
+      return this.state[kind];
     }
 
     return null;
   }
 
   public getImage(path) {
-    if (path in this._state) {
-      return this._state[path];
+    if (path in this.state) {
+      return this.state[path];
     }
 
     return null;
@@ -95,7 +96,7 @@ export class ProjectService {
   }
 
   public getPage(id) {
-    return this._state[`pages/${id}.json`];
+    return this.state[`pages/${id}.json`];
   }
 
   public getArtboard(pageId: string, artboardId: string) {
@@ -104,11 +105,11 @@ export class ProjectService {
   }
 
   public getDocument() {
-    return this._state['document.json'];
+    return this.state['document.json'];
   }
 
   public load(state) {
-    this._state = state;
+    this.state = state;
   }
 }
 

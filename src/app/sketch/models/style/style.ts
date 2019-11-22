@@ -6,6 +6,7 @@ import {Fill} from './fill.model';
 import {Border} from './border.model';
 import {Shadow} from './shadow.model';
 import {TextStyle} from './text-style.model';
+import {Rect} from '../parts/rect.model';
 
 export class Style {
   readonly _class: string = 'style';
@@ -23,12 +24,12 @@ export class Style {
   shadows: Shadow[];
 
   textStyle: TextStyle;
+  frame: Rect;
 
-  constructor({
-                endMarketType, miterLimit, startMarkerType, windingRule,
+  constructor({endMarketType, miterLimit, startMarkerType, windingRule,
                 blur, borderOptions, borders, colorControls, contextSettings,
-                fills, innerShadows, shadows, textStyle
-              }) {
+                fills, innerShadows, shadows, textStyle},
+              frame) {
 
     this.endMarketType = endMarketType;
     this.miterLimit = miterLimit;
@@ -36,13 +37,14 @@ export class Style {
     this.windingRule = windingRule;
     this.blur = new Blur(blur);
     this.borderOptions = new BorderOptions(borderOptions);
-    this.borders = borders.map(border => new Border(border));
+    this.borders = borders.map(border => new Border(border, frame));
     this.colorControls = new ColorControls(colorControls);
     this.contextSettings = new GraphicsContextSettings(contextSettings);
-    this.fills = fills.map(fill => new Fill(fill));
+    this.fills = fills.map(fill => new Fill(fill, frame));
     this.shadows = shadows.map(shadow => new Shadow(shadow));
+    this.frame = frame;
 
-    if(textStyle) {
+    if (textStyle) {
       this.textStyle = new TextStyle(textStyle);
     }
 
@@ -54,15 +56,15 @@ export class Style {
   }
 
   public value() {
-    if(this.fills.length > 2) {
+    if (this.fills.length > 2) {
       console.warn('Element has more than 1 fill', this.fills);
     }
 
-    if(this.borders.length > 2) {
+    if (this.borders.length > 2) {
       console.warn('Element has more than 1 border', this.borders);
     }
 
-    if(this.shadows.length > 2) {
+    if (this.shadows.length > 2) {
       console.warn('Element has more than 1 shadow', this.shadows);
     }
 
