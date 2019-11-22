@@ -18,6 +18,7 @@ export class ShapeGroup extends BaseComponent {
       width: this.frame.width,
       height: this.frame.height,
       transformsEnabled: 'position',
+      id: this.do_objectID,
     });
 
     this.layers.forEach(layer => {
@@ -30,9 +31,11 @@ export class ShapeGroup extends BaseComponent {
       }
 
       this.canvas.add(shapePath);
+      this.bindEvents(shapePath);
     });
 
     this.flip(this.canvas);
+    this.bindEvents(this.canvas);
 
     this.canvas.cache();
 

@@ -23,6 +23,7 @@ export class Bitmap extends BaseComponent {
   render() {
     this.canvas = new Konva.Group({
       ...this.frame,
+      id: this.do_objectID,
       transformsEnabled: 'position',
     });
 
@@ -37,6 +38,7 @@ export class Bitmap extends BaseComponent {
       });
 
       this.canvas.add(image);
+      this.bindEvents(image);
 
       if (environment.cache) {
         this.canvas.cache();
@@ -44,6 +46,7 @@ export class Bitmap extends BaseComponent {
 
       this.canvas.draw();
     });
+
 
     this.flip(this.canvas);
     return this.canvas;

@@ -22,6 +22,7 @@ export class Rectangle extends BaseComponent {
       width: this.frame.width,
       height: this.frame.height,
       transformsEnabled: 'position',
+      id: this.do_objectID,
     });
 
     const element = new Konva.Rect({
@@ -35,6 +36,7 @@ export class Rectangle extends BaseComponent {
     });
 
     this.canvas.add(element);
+    this.bindEvents(this.canvas);
 
     if (environment.cache) {
       this.canvas.cache();

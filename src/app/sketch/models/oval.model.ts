@@ -22,6 +22,7 @@ export class Oval extends BaseComponent {
 
   render() {
     this.canvas = new Konva.Group({
+      id: this.do_objectID,
       x: this.frame.x,
       y: this.frame.y,
       width: this.frame.width,
@@ -44,6 +45,7 @@ export class Oval extends BaseComponent {
     this.canvas.add(element);
 
     this.flip(this.canvas);
+    this.bindEvents(this.canvas);
 
     if (environment.cache) {
       this.canvas.cache();

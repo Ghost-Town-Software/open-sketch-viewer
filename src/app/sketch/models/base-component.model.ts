@@ -24,6 +24,10 @@ export abstract class BaseComponent {
 
   abstract render();
 
+  bindEvents(canvas) {
+
+  }
+
   flip(node) {
     if(this.isFlippedVertical) {
       node.transformsEnabled('all');

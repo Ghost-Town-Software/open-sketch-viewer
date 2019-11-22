@@ -10,6 +10,7 @@ export class Group extends BaseComponent {
     this.canvas = new Konva.Group({
       ...this.frame,
       ...this.style.value(),
+      id: this.do_objectID,
       transformsEnabled: 'position',
     });
 
@@ -24,6 +25,7 @@ export class Group extends BaseComponent {
     });
 
     this.flip(this.canvas);
+    this.bindEvents(this.canvas);
 
     return this.canvas;
   }

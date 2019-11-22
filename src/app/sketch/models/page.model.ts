@@ -17,6 +17,7 @@ export class Page extends BaseComponent {
       width: this.frame.width,
       height: this.frame.height,
       transformsEnabled: 'position',
+      id: this.do_objectID,
     });
 
     for(const layer of this.layers) {

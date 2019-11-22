@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {LayerService} from '../../services/layer.service';
 
 @Component({
   selector: 'structure-panel',
@@ -10,6 +12,8 @@ export class StructurePanelComponent implements OnInit {
   activeLayer: any;
 
   private _layers: any[];
+
+  constructor(private layerService: LayerService) {}
 
   ngOnInit(): void {
 
@@ -53,6 +57,7 @@ export class StructurePanelComponent implements OnInit {
 
     this.activeLayer = layer;
     this.activeLayer.active = true;
+    this.layerService.workspaceLayer$.next(layer.do_objectID);
   }
 
   @Input()

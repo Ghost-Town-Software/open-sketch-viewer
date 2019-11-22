@@ -3,6 +3,8 @@ import Konva from 'konva';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ModelFactory} from '../sketch/models/model-factory';
+import {BaseComponent} from '../sketch/models/base-component.model';
+import {LayerService} from './layer.service';
 
 const SCALE_FACTOR = 1.1;
 
@@ -18,7 +20,7 @@ export class CanvasService {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(rendererFactory: RendererFactory2) {
+  constructor(rendererFactory: RendererFactory2, private layerService: LayerService) {
     this.htmlRenderer = rendererFactory.createRenderer(null, null);
   }
 
@@ -32,13 +34,16 @@ export class CanvasService {
 
     const {width, height} = artboard.frame;
 
+    const contentLayer = this.createContentLayer(width, height);
     this.stage.add(this.createBackgroundLayer(width, height));
-    this.stage.add(this.createContentLayer(width, height));
+    this.stage.add(contentLayer);
 
     this.bindWheel();
     this.bindKeyboard();
     this.bindMouse();
     this.bindResize();
+
+    this.layerService.bindEvents(this.stage);
 
     return this.stage;
   }
@@ -47,7 +52,6 @@ export class CanvasService {
     const layer = this.stage.findOne('#content');
 
     for (const model of this.artboard.layers) {
-
       try {
         if(model) {
           const shape = model.render();

@@ -17,6 +17,7 @@ export class SymbolMaster extends BaseComponent {
       ...this.frame,
       ...this.style.value(),
       transformsEnabled: 'position',
+      id: this.do_objectID,
     });
 
     this.layers.forEach(layer => {
@@ -28,6 +29,7 @@ export class SymbolMaster extends BaseComponent {
     });
 
     this.flip(this.canvas);
+    this.bindEvents(this.canvas);
 
     return this.canvas;
   }

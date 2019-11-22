@@ -1,5 +1,6 @@
 import {Injectable, Injector} from '@angular/core';
 import {Subject} from 'rxjs';
+import {BaseComponent} from './models/base-component.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class Sketch {
 
   }
 
-  public render(item) {
+  public render(item): BaseComponent {
     if (item._class in this.renderers) {
       return new this.renderers[item._class]();
     }
