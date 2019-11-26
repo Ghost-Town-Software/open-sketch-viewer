@@ -31,17 +31,17 @@ export class AttributesPanelComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.currentZoom = 100.0;
 
-    this.layerService.attributeLayer$.subscribe(do_objectID => {
-      const layer = this.canvas.findLayer(do_objectID);
-      this.activeLayer = layer;
-      this.styles = layer ? layer.getStyles() : null;
-
-      if(this.activeLayer) {
-        this.preview.clear();
-        this.preview.render(layer);
-        this.preview.fit();
-      }
-    });
+    // this.layerService.attributeLayer$.subscribe(do_objectID => {
+    //   const layer = this.canvas.findLayer(do_objectID);
+    //   this.activeLayer = layer;
+    //   this.styles = layer ? layer.getStyles() : null;
+    //
+    //   if(this.activeLayer) {
+    //     this.preview.clear();
+    //     this.preview.render(layer);
+    //     this.preview.fit();
+    //   }
+    // });
   }
 
   zoomIn() {

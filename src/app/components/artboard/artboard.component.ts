@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
+import {TextService} from '../../services/text.service';
 
 @Component({
   selector: 'artboard',
@@ -13,7 +14,7 @@ export class ArtboardComponent implements OnInit, AfterViewInit {
 
   artboard: any;
 
-  public constructor(private activatedRoute: ActivatedRoute, private renderer: Renderer2) {
+  public constructor(private activatedRoute: ActivatedRoute, private renderer: Renderer2, private text: TextService) {
   }
 
   ngOnInit(): void {

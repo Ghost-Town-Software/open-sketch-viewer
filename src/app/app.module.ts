@@ -12,6 +12,7 @@ import {PageComponent} from './components/page/page.component';
 import {ArtboardComponent} from './components/artboard/artboard.component';
 import {setInjector} from './injector.static';
 import {DebugComponent} from './components/debug/debug.component';
+import {TextRendererComponent} from './components/text-renderer/text-renderer.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {DebugComponent} from './components/debug/debug.component';
     WorkspaceComponent,
     AttributesPanelComponent,
     StructurePanelComponent,
+    TextRendererComponent,
     PageComponent,
     ArtboardComponent,
     DebugComponent,

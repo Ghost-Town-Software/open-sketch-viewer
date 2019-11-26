@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  cache: true,
+  cache: false,
+  environment: 'PROD'
 };

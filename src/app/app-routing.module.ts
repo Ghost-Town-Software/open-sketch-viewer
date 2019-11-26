@@ -6,6 +6,7 @@ import {PageComponent} from './components/page/page.component';
 import {PageResolver} from './components/page/page.resolver';
 import {ArtboardComponent} from './components/artboard/artboard.component';
 import {ArtboardResolver} from './components/artboard/artboard.resolver';
+import {TextRendererComponent} from './components/text-renderer/text-renderer.component';
 
 
 const routes: Routes = [
@@ -34,13 +35,17 @@ const routes: Routes = [
         }
       }
     ]
+  },
+  {
+    path: 'text-renderer',
+    component: TextRendererComponent,
   }
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
+
 }

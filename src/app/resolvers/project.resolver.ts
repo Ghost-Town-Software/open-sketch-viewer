@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {LoaderService} from '../services/loader.service';
 import {ProjectService} from '../services/project.service';
 import {flatMap, map} from 'rxjs/operators';
 import {ModelFactory} from '../sketch/models/model-factory';
 import {FontUtil} from '../sketch/utils/font.util';
+import {TextService} from '../services/text.service';
 import WebFont from 'webfontloader';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectResolver implements Resolve<any> {
-  constructor(private loader: LoaderService, private project: ProjectService) {
+  constructor(private loader: LoaderService, private project: ProjectService, private text: TextService) {
 
   }
 
@@ -34,6 +35,7 @@ export class ProjectResolver implements Resolve<any> {
     const fonts = model['meta.json'].fonts;
     const toLoad = {};
 
+
     fonts.map((font) => {
       return FontUtil.toFont(font);
     }).forEach((font) => {
@@ -54,25 +56,25 @@ export class ProjectResolver implements Resolve<any> {
 
       const weights = toLoad[key].join(',');
       results.push(`${key}:${weights}:latin-ext`);
-
-      return new Observable(subscriber => {
-        WebFont.load({
-          google: {
-            families: results
-          },
-          active() {
-            console.log('Fonts loaded', results);
-            subscriber.next(model);
-            subscriber.complete();
-          },
-          inactive() {
-            console.log('Fonts can\'t be loaded', results);
-            subscriber.next(model);
-            subscriber.complete();
-          }
-        });
-      });
     }
+
+    return new Observable(subscriber => {
+      WebFont.load({
+        google: {
+          families: results
+        },
+        active() {
+          console.log('Fonts loaded', results);
+          subscriber.next(model);
+          subscriber.complete();
+        },
+        inactive() {
+          console.log('Fonts can\'t be loaded', results);
+          subscriber.next(model);
+          subscriber.complete();
+        }
+      });
+    });
   }
 
   private resolveState(model) {
