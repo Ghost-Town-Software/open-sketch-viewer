@@ -1,17 +1,17 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {ProjectService} from '../../services/project.service';
 import {Injectable} from '@angular/core';
+import {NewProjectService} from '../project.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PageResolver implements Resolve<any> {
+export class ArtboardResolver implements Resolve<any> {
 
-  public constructor(private projectService: ProjectService) {
+  public constructor(private project: NewProjectService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    return this.projectService.getPage(route.params.id);
+    return this.project.getArtboard(route.params.artboardId);
   }
 }

@@ -1,1 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
+
+button:focus {
+  outline: 0 !important;
+}
+
+* {
+  cursor: default;
+}

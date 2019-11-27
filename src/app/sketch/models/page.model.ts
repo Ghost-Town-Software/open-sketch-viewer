@@ -7,7 +7,6 @@ export class Page extends BaseComponent {
 
   constructor(payload) {
     super(payload);
-
   }
 
   render() {

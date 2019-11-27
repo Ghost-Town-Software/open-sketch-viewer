@@ -1,0 +1,16 @@
+@import '../../assets/styles/variables';
+
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+project-selector {
+  width: 30%;
+  border-right: 1px solid $border-color;
+}
+
+project-uploader {
+  flex-grow: 1;
+}

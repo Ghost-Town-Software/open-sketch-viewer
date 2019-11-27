@@ -1,0 +1,20 @@
+@import '../../../assets/styles/variables';
+
+.input-group {
+  position: relative;
+
+  .form-control {
+    padding-right: 40px;
+  }
+
+  .directory-dialog-btn {
+    color: $gray-700;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 5;
+  }
+}

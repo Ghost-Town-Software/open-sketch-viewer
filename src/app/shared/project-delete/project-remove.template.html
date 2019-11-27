@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <div class="modal-title pull-left">Delete project</div>
+
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <p>Do you want to delete project and keep files?</p>
+</div>
+
+<div class="modal-footer text-right">
+  <button class="btn btn-outline-primary" (click)="deleteAll()">Delete all</button>
+  <button class="btn btn-primary" (click)="keepFiles()">Keep files</button>
+</div>

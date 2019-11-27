@@ -1,0 +1,17 @@
+<h5 class="page-title">Select project</h5>
+
+<ul class="project-list" *ngFor="let project of projects | async;">
+  <li class="project-item">
+    <div class="project-details" (click)="load(project)">
+      <div class="project-name">{{ project.name }}</div>
+      <div class="project-path">{{ project.path }}</div>
+    </div>
+
+    <div class="project-delete">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="delete(project)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </li>
+</ul>
+

@@ -82,6 +82,7 @@
     "node": ">=10.9.0"
   },
   "dependencies": {
+    "@angular/animations": "~8.2.14",
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
@@ -94,6 +95,11 @@
     "jszip": "3.2.2",
     "konva": "4.0.18",
     "lodash": "4.17.15",
-    "webfontloader": "1.6.28"
+    "moment": "2.24.0",
+    "ngx-bootstrap": "5.2.0",
+    "rimraf": "3.0.0",
+    "shortid": "2.2.15",
+    "webfontloader": "1.6.28",
+    "yauzl": "2.10.0"
   }
 }

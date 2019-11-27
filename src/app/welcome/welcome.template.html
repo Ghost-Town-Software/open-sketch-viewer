@@ -1,0 +1,7 @@
+<project-selector *ngIf="(projects | async).length"
+                  [projects]="projects"
+                  (delete)="delete($event)"
+                  (load)="load($event)"
+></project-selector>
+
+<project-uploader></project-uploader>

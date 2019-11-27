@@ -31,4 +31,8 @@ export class ElectronService {
       this.fs = window.require('fs');
     }
   }
+
+  userData() {
+    return this.remote.app.getPath('userData');
+  }
 }

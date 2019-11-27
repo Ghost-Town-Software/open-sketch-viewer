@@ -1,0 +1,57 @@
+@import '../../../assets/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: $grid-gutter-width / 2;
+}
+
+.page-title {
+  margin-bottom: 30px;
+}
+
+.project-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 -$grid-gutter-width / 2;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.project-item {
+  padding: $grid-gutter-width / 2;
+  border-top: 1px solid $border-color;
+  display: flex;
+
+  &:hover {
+    background: $gray-100;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.project-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-delete {
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-item + .project-item {
+  border-top: 1px solid $border-color;
+}
+
+.project-path {
+  font-size: 70%;
+  color: $gray-700;
+}
