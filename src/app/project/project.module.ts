@@ -6,7 +6,6 @@ import {PageListComponent} from './page-list/page-list.component';
 import {ProjectResolver} from './project.resolver';
 import {PageListResolver} from './page-list/page-list.resolver';
 import {CommonModule} from '@angular/common';
-import {NewProjectService} from './project.service';
 import {ArtboardListResolver} from './artboard-list/artboard-list.resolver';
 import {ArtboardListComponent} from './artboard-list/artboard-list.component';
 import {ArtboardComponent} from './artboard/artboard.component';
@@ -24,7 +23,6 @@ import {ArtboardResolver} from './artboard/artboard.resolver';
     PageListResolver,
     ArtboardListResolver,
     ArtboardResolver,
-    NewProjectService
   ],
   imports: [
     CommonModule,

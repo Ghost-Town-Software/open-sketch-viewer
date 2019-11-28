@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import yauzl from 'yauzl';
 import {AppService} from '../services/app.service';
+import {Observable} from 'rxjs';
 
 const remote = require('electron').remote;
 const app = remote.app;
@@ -18,31 +19,43 @@ export class ProjectCreatorService {
   }
 
   extract(file: File, destination) {
-    yauzl.open(file.path, {lazyEntries: true}, (err, zip) => {
-      if (err) throw err;
+    return new Observable(subscriber => {
+      yauzl.open(file.path, {lazyEntries: true}, (err, zip) => {
+        if (err) throw err;
 
-      zip.readEntry();
-      zip.on("entry", (entry) => {
-        const target = path.join(destination, entry.fileName);
+        zip.readEntry();
+        zip.on("entry", (entry) => {
+          const target = path.join(destination, entry.fileName);
 
-        if (/\/$/.test(entry.fileName)) {
-          zip.readEntry();
-        } else {
-          // file entry
-          zip.openReadStream(entry, (err, readStream: any) => {
-            if (err) throw err;
+          if (/\/$/.test(entry.fileName)) {
+            zip.readEntry();
+          } else {
+            // file entry
+            zip.openReadStream(entry, (err, readStream: any) => {
+              if (err) throw err;
 
-            if(!fs.existsSync(path.dirname(target))) {
-              fs.mkdirSync(path.dirname(target), { recursive: true })
-            }
+              if(!fs.existsSync(path.dirname(target))) {
+                fs.mkdirSync(path.dirname(target), { recursive: true })
+              }
 
-            readStream.on("end", () => {
-              zip.readEntry();
+              readStream.on("end", () => {
+                zip.readEntry();
+              });
+
+              readStream.pipe(fs.createWriteStream(target));
             });
+          }
+        });
 
-            readStream.pipe(fs.createWriteStream(target));
-          });
-        }
+        zip.on('error', () => {
+          subscriber.next();
+          subscriber.complete();
+        });
+
+        zip.on('close', () => {
+          subscriber.next();
+          subscriber.complete();
+        })
       });
     });
   }
@@ -68,8 +81,9 @@ export class ProjectCreatorService {
     });
 
     modal.content.create$.subscribe(path => {
-      this.extract(file, path);
-      this.app.createProject(path);
+      this.extract(file, path).subscribe(() => {
+        this.app.createProject(path);
+      });
     });
   }
 }

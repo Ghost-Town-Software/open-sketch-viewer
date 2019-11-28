@@ -6,6 +6,7 @@ import {ArtboardListComponent} from './artboard-list/artboard-list.component';
 import {ArtboardListResolver} from './artboard-list/artboard-list.resolver';
 import {ArtboardComponent} from './artboard/artboard.component';
 import {ArtboardResolver} from './artboard/artboard.resolver';
+import {ProjectComponent} from './project.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
     resolve: {
       project: ProjectResolver
     },
+    component: ProjectComponent,
     children: [
       {
         path: '',

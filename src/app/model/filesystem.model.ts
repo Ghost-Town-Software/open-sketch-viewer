@@ -1,5 +1,5 @@
 import {join} from 'path';
-import {readFileSync} from 'fs';
+import {readFileSync, existsSync, mkdirSync} from 'fs';
 import {Document} from './document.model';
 import {Page} from '../sketch/models/page.model';
 
@@ -8,6 +8,19 @@ export class Filesystem {
 
   constructor(root: string) {
     this.root = root;
+  }
+
+  getPath(path): string {
+    return join(this.root, path);
+  }
+
+  getText(id): string {
+    const destination = join(this.root, 'text');
+    if(!existsSync(destination)) {
+      mkdirSync(destination);
+    }
+
+    return join(destination, id + '.png');
   }
 
   getDocument(): Document {

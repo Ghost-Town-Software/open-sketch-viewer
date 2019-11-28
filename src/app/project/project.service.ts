@@ -3,55 +3,61 @@ import {AppService} from '../services/app.service';
 import {Project} from '../model/config.model';
 import {Filesystem} from '../model/filesystem.model';
 import {Page} from '../sketch/models/page.model';
-import {TextService} from "../services/text.service";
-import {FontUtil} from "../sketch/utils/font.util";getMeta
+import {TextService} from '../services/text.service';
+import {Artboard} from '../sketch/models/artboard.model';
+import * as fs from 'fs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NewProjectService {
-  private project: Project;
   private filesystem: Filesystem;
+  private project: Project;
+  private symbol: Page;
+  private artboard: Artboard;
 
-  constructor(private app: AppService, private text: TextService) {
+  constructor() {
 
   }
 
-  loadFonts() {
-    const meta = this.filesystem.getMeta();
-    const fonts = meta.fonts;
-    const toLoad = {};
+  public getProject() {
+    return this.project;
+  }
 
+  public getSymbolMaster(symbolId): any {
+    const layers = this.symbol.layers.filter((layer: any) => layer.symbolID === symbolId);
 
-    fonts.map((font) => {
-      return FontUtil.toFont(font);
-    }).forEach((font) => {
-      if(!toLoad.hasOwnProperty(font.family)) {
-        toLoad[font.family] = [];
-      }
-
-      toLoad[font.family].push(font.weight);
-    });
-
-
-    const results = [];
-
-    for(const key in toLoad) {
-      if(!toLoad.hasOwnProperty(key)) {
-        continue;
-      }
-
-      const weights = toLoad[key].join(',');
-      results.push(`${key}:${weights}:latin-ext`);
+    if(layers.length) {
+      return layers[0];
     }
 
-    this.text.loadFonts(results);
+    return null;
+  }
+
+  setArtboard(artboard: Artboard) {
+    this.artboard = artboard;
+  }
+
+  getTextPath(id) {
+    return this.filesystem.getText(id);
+  }
+
+  getPath(image) {
+    return this.filesystem.getPath(image);
+  }
+
+  getImage(image) {
+    const path = this.getPath(image);
+    const content = fs.readFileSync(path);
+
+    console.log('content', content.toString());
   }
 
   setProject(project: Project) {
     this.project = project;
-    this.filesystem = new Filesystem(project.path);
   }
 
-  getArtboard(pageId, artboardId) {
+  getRawArtboard(pageId, artboardId) {
     const page = this.filesystem.getPage(pageId);
 
     return page.layers.filter(layer => layer.do_objectID === artboardId)[0];
@@ -61,7 +67,7 @@ export class NewProjectService {
     return page.layers.filter(layer => layer._class === 'artboard');
   }
 
-  getPage(id): Page {
+  getRawPage(id): Page {
     return this.filesystem.getPage(id);
   }
 
@@ -71,5 +77,13 @@ export class NewProjectService {
 
   private getDocument() {
     return this.filesystem.getDocument();
+  }
+
+  setSymbolPage(symbol: Page) {
+    this.symbol = symbol;
+  }
+
+  setFilesystem(filesystem: Filesystem) {
+    this.filesystem = filesystem;
   }
 }

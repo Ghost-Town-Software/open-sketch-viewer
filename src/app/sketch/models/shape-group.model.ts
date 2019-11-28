@@ -22,12 +22,14 @@ export class ShapeGroup extends BaseComponent {
 
       shapePath.globalCompositeOperation('xor');
 
-      for(const property in styles) {
-        if(!styles.hasOwnProperty(property)) {
+      for (const property in styles) {
+        if (!styles.hasOwnProperty(property)) {
           continue;
         }
 
-        shapePath[property](styles[property]);
+        if (typeof shapePath[property] === 'function') {
+          shapePath[property](styles[property]);
+        }
       }
 
       this.canvas.add(shapePath);

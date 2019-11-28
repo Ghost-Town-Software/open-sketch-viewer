@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as moment from 'moment';
 import * as shortid from 'shortid';
 import {Config, Project} from '../model/config.model';
+import {PrerenderService} from './prerender.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AppService {
     return this._projects$.asObservable();
   }
 
-  constructor(private electron: ElectronService) {
+  constructor(private electron: ElectronService, private prerender: PrerenderService) {
     // this.writeConfig({
     //   projects: []
     // });
@@ -35,6 +36,8 @@ export class AppService {
 
     this.config.projects.unshift(project);
     this.writeConfig(this.config);
+
+    this.prerender.run(project);
 
     this._projects$.next(this.config.projects);
   }

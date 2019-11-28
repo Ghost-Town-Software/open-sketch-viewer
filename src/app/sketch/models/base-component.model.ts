@@ -17,12 +17,13 @@ export abstract class BaseComponent {
 
   protected layerService: LayerService;
 
-  protected constructor({do_objectID, name, isFlippedHorizontal, isFlippedVertical, frame, style}) {
+  protected constructor({do_objectID, name, isFlippedHorizontal, isFlippedVertical, frame, style, layers}) {
     this.do_objectID = do_objectID;
     this.name = name;
     this.isFlippedHorizontal = isFlippedHorizontal;
     this.isFlippedVertical = isFlippedVertical;
     this.frame = new Rect(frame);
+    this.layers = layers;
     this.style = new Style(style || {}, this.frame);
     this.layerService = getService(LayerService);
   }

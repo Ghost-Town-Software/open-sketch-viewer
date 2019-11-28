@@ -13,6 +13,10 @@ import {Artboard} from './artboard.model';
 export class ModelFactory {
 
   public static create(component) {
+    if(component && component.layers) {
+      component.layers = component.layers.map(ModelFactory.create);
+    }
+
     switch (component._class) {
       case 'page':
         return new Page(component);

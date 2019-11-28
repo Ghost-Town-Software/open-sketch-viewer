@@ -1,32 +1,37 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 import {getService} from '../../injector.static';
-import {ProjectService} from '../../services/project.service';
 import {SymbolMaster} from './symbol-master.model';
+import {NewProjectService} from '../../project/project.service';
 
 export class SymbolInstance extends BaseComponent {
   readonly _class: string = 'symbolInstance';
 
   symbolID: string;
-  project: ProjectService;
+  project: NewProjectService;
 
   constructor(payload) {
     super(payload);
 
     this.symbolID = payload.symbolID;
-    this.project = getService(ProjectService);
+    this.project = getService(NewProjectService);
   }
 
   render() {
     const master: SymbolMaster = this.project.getSymbolMaster(this.symbolID);
-    master.frame.x = 0;
-    master.frame.y = 0;
 
     this.canvas = new Konva.Group({
       ...this.frame,
       ...this.style.value(),
       transformsEnabled: 'position',
     });
+
+    if(!master) {
+      return this.canvas;
+    }
+
+    master.frame.x = 0;
+    master.frame.y = 0;
 
     this.flip(this.canvas);
 

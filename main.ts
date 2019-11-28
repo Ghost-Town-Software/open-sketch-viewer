@@ -7,7 +7,6 @@ const args = process.argv.slice(1),
     serve = args.some(val => val === '--serve');
 
 function createWindow(): BrowserWindow {
-
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
@@ -19,6 +18,7 @@ function createWindow(): BrowserWindow {
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
+      webSecurity: false,
       allowRunningInsecureContent: (serve) ? true : false,
     },
   });
@@ -58,8 +58,12 @@ try {
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
 
+  ipcMain.on('font-loaded', (event, args) => {
+    win.webContents.send('font-loaded', args);
+  });
+
   ipcMain.on('capture', (event, message) => {
-    win.webContents.send('capture', event, message);
+    win.webContents.send('capture', message);
   });
 
   // Quit when all windows are closed.
