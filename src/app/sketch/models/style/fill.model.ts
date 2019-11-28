@@ -17,9 +17,9 @@ export class Fill {
   constructor({isEnabled, fillType, color, contextSettings, gradient}, frame) {
     this.isEnabled = !!isEnabled;
     this.fillType = fillType;
-    this.color = new Color(color);
-    this.contextSettings = new GraphicsContextSettings(contextSettings);
-    this.gradient = new Gradient(gradient, frame);
+    this.color = new Color(color || {});
+    this.contextSettings = new GraphicsContextSettings(contextSettings || {});
+    this.gradient = new Gradient(gradient || {}, frame);
   }
 
   public value() {

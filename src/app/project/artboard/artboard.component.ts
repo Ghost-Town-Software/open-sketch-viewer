@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, HostListener, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
-import {TextService} from '../../services/text.service';
+import {CanvasService} from "../../services/canvas.service";
 
 @Component({
   selector: 'artboard',
@@ -9,12 +9,11 @@ import {TextService} from '../../services/text.service';
   styleUrls: ['./artboard.styles.scss']
 })
 export class ArtboardComponent implements OnInit, AfterViewInit {
-  @ViewChild('main', {static: true}) main;
-  @ViewChild('header', {static: true}) header;
+  @ViewChild('workspace', {static: true}) workspace;
 
   artboard: any;
 
-  public constructor(private activatedRoute: ActivatedRoute, private renderer: Renderer2, private text: TextService) {
+  public constructor(private activatedRoute: ActivatedRoute, private renderer: Renderer2, private canvas: CanvasService) {
   }
 
   ngOnInit(): void {
@@ -26,13 +25,7 @@ export class ArtboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.resize();
-  }
-
-  @HostListener('window:resize')
-  resize() {
-    const height = window.innerHeight - this.header.nativeElement.clientHeight;
-
-    this.renderer.setStyle(this.main.nativeElement, 'height', height + 'px');
+    this.canvas.createArtboard(this.workspace.nativeElement, this.artboard);
+    this.canvas.render();
   }
 }

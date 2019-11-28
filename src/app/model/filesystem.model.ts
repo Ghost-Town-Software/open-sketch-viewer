@@ -16,6 +16,12 @@ export class Filesystem {
     return JSON.parse(content.toString());
   }
 
+  getMeta() {
+    const content = readFileSync(join(this.root, 'meta.json'));
+
+    return JSON.parse(content.toString());
+  }
+
   getPages(): Page[] {
     const document = this.getDocument();
     const pages: Page[] = [];

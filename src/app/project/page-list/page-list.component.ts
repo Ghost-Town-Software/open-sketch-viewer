@@ -14,6 +14,7 @@ export class PageListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('page list');
     this.activatedRoute.data.subscribe(data => {
       this.pages = data.pages;
     });

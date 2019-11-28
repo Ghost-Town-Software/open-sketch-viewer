@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoaderService} from './services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +9,6 @@ export class AppComponent implements OnInit {
   title = 'open-sketch-viewer';
   data: any;
 
-  constructor(private loader: LoaderService) {
-
-  }
-
   ngOnInit() {
-    this.loader.loadDefault().subscribe((res) => {
-      this.data = res;
-    });
   }
 }

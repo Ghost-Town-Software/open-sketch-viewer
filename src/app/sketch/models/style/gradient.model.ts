@@ -18,7 +18,7 @@ export class Gradient {
 
   frame: Rect;
 
-  constructor({elipseLength, from, gradientType, to, stops, noiseIndex, noiseIntensity, patternFillType, patternTileScale}, frame) {
+  constructor({elipseLength, from, gradientType, to, stops = [], noiseIndex, noiseIntensity, patternFillType, patternTileScale}, frame) {
     this.elipseLength = elipseLength;
     this.gradientType = gradientType;
     this.stops = stops.map(stop => new GradientStop(stop));
@@ -47,7 +47,7 @@ export class Gradient {
   private toPoint(p, frame) {
     const point = PointUtil.toPoint(p);
 
-    if(frame) {
+    if(frame && point) {
       return {
         x: frame.width * point.x,
         y: frame.height * point.y,

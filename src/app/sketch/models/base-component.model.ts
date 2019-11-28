@@ -23,7 +23,7 @@ export abstract class BaseComponent {
     this.isFlippedHorizontal = isFlippedHorizontal;
     this.isFlippedVertical = isFlippedVertical;
     this.frame = new Rect(frame);
-    this.style = new Style(style, this.frame);
+    this.style = new Style(style || {}, this.frame);
     this.layerService = getService(LayerService);
   }
 

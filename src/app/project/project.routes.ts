@@ -19,22 +19,27 @@ export const routes: Routes = [
         component: PageListComponent,
         resolve: {
           pages: PageListResolver
-        }
+        },
       },
       {
         path: 'page/:pageId',
-        component: ArtboardListComponent,
         resolve: {
           page: ArtboardListResolver
-        }
+        },
+        children: [
+          {
+            path: '',
+            component: ArtboardListComponent,
+          },
+          {
+            path: 'artboard/:artboardId',
+            component: ArtboardComponent,
+            resolve: {
+              artboard: ArtboardResolver
+            }
+          }
+        ]
       },
-      {
-        path: 'page/:pageId/artboard/:artboardId',
-        component: ArtboardComponent,
-        resolve: {
-          page: ArtboardResolver
-        }
-      }
     ]
   }
 ];

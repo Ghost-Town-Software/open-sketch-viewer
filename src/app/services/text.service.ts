@@ -1,24 +1,38 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {BrowserWindow} from "electron";
+import WebFont from 'webfontloader';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TextService {
-  private fontLoader$ = new BehaviorSubject(null);
-  textRender$ = new BehaviorSubject(null);
-  fonts = null;
+  private window: BrowserWindow;
+  private loading: boolean | Promise<any> = false;
 
-  loadFont(font) {
-    this.fonts = font;
-    this.fontLoader$.next(font);
+  constructor() {
+    this.window = new BrowserWindow({
+      show: true,
+      backgroundColor: 'rgba(0,0,0,0)'
+    });
+
+    this.loading = this.window.loadFile('text.html').then(() => this.loading = false);
   }
 
-  renderText(callback) {
-    this.textRender$.next(callback);
-  }
+  loadFonts(fonts) {
+    const script = `
+    WebFont.load({
+      google: {
+        families: ${fonts}
+      },
+      active() {
+        console.log('Fonts loaded', ${fonts});
+      },
+      inactive() {
+        console.log('Fonts can\'t be loaded', ${fonts});
+      }
+    });
+    `;
 
-  fontLoader() {
-    return this.fontLoader$.asObservable();
+    this.window.webContents.executeJavaScript(script);
   }
 }

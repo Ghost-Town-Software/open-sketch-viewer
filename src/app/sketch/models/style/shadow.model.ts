@@ -18,7 +18,7 @@ export class Shadow {
     this.offsetY = offsetY;
     this.spread = spread;
     this.color = new Color(color);
-    this.contextSettings = new GraphicsContextSettings(contextSettings);
+    this.contextSettings = new GraphicsContextSettings(contextSettings || {});
   }
 
   public value() {
