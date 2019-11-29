@@ -1,1 +1,20 @@
-<div class="workspace" #workspace></div>
+<div class="artboard-header" #header>
+
+</div>
+
+<div class="artboard-main">
+
+  <div class="artboard-layers">
+    <structure-panel [layers]="artboard.layers"></structure-panel>
+  </div>
+
+  <div class="artboard-canvas">
+    <div class="workspace" #workspace></div>
+  </div>
+
+  <div class="artboard-sidebar">
+    <attributes-panel></attributes-panel>
+  </div>
+
+</div>
+

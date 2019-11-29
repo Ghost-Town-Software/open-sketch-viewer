@@ -67,6 +67,17 @@ export class NewProjectService {
     return page.layers.filter(layer => layer._class === 'artboard');
   }
 
+  getArtboard() {
+    return this.artboard;
+  }
+
+  getArtboardLayer(do_objectID: string) {
+    if(!this.artboard) {
+      return null;
+    }
+    return this.artboard.layers.find(layer => layer.do_objectID === do_objectID);
+  }
+
   getRawPage(id): Page {
     return this.filesystem.getPage(id);
   }
@@ -86,4 +97,6 @@ export class NewProjectService {
   setFilesystem(filesystem: Filesystem) {
     this.filesystem = filesystem;
   }
+
+
 }

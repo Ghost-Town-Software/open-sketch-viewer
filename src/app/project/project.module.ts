@@ -10,13 +10,17 @@ import {ArtboardListResolver} from './artboard-list/artboard-list.resolver';
 import {ArtboardListComponent} from './artboard-list/artboard-list.component';
 import {ArtboardComponent} from './artboard/artboard.component';
 import {ArtboardResolver} from './artboard/artboard.resolver';
+import {StructurePanelComponent} from './structure-panel/structure-panel.component';
+import {AttributesPanelComponent} from './attributes-panel/attributes-panel.component';
 
 @NgModule({
   declarations: [
     ProjectComponent,
     PageListComponent,
     ArtboardListComponent,
-    ArtboardComponent
+    ArtboardComponent,
+    StructurePanelComponent,
+    AttributesPanelComponent
   ],
   providers: [
     ProjectResolver,

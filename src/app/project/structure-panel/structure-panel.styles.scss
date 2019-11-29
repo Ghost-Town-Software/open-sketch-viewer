@@ -1,0 +1,58 @@
+@import '../../../assets/styles/variables';
+
+@for $i from 0 through 10 {
+  .depth-#{$i} {
+    .layer-header {
+      padding-left: $i * 20px;
+    }
+  }
+}
+
+.layers {
+
+}
+
+.layer {
+  position: relative;
+  cursor: pointer;
+
+  &.even {
+    background: $gray-200;
+  }
+
+  &.odd {
+    background: $gray-100;
+  }
+}
+
+.layer-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 15px;
+
+  &:hover {
+    background: $gray-300;
+  }
+
+  &.active {
+    font-weight: bold;
+  }
+
+  .layer-icon {
+    min-width: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.layer-children {
+  overflow: hidden;
+
+  &.collapsed {
+    height: 0;
+  }
+}
