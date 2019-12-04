@@ -1,5 +1,5 @@
 import {join} from 'path';
-import {readFileSync, existsSync, mkdirSync} from 'fs';
+import {existsSync, mkdirSync, readFileSync} from 'fs';
 import {Document} from './document.model';
 import {Page} from '../sketch/models/page.model';
 
@@ -10,11 +10,11 @@ export class Filesystem {
     this.root = root;
   }
 
-  getPath(path): string {
+  getPath(path: string): string {
     return join(this.root, path);
   }
 
-  getText(id): string {
+  getText(id: string): string {
     const destination = join(this.root, 'text');
     if(!existsSync(destination)) {
       mkdirSync(destination);
@@ -46,7 +46,7 @@ export class Filesystem {
     return pages;
   }
 
-  getPage(ref): Page {
+  getPage(ref: string): Page {
     if(ref.indexOf('pages/') === -1) {
       ref = `pages/${ref}`;
     }

@@ -5,14 +5,14 @@ export class Color {
   green: number;
   red: number;
 
-  constructor({alpha, blue, green, red}) {
-    this.alpha = alpha;
-    this.blue = blue;
-    this.green = green;
-    this.red = red;
+  constructor(payload: Color) {
+    this.alpha = payload.alpha;
+    this.blue = payload.blue;
+    this.green = payload.green;
+    this.red = payload.red;
   }
 
-  public value() {
+  public value(): string {
     if(this.alpha === 1) {
       return this.hex();
     }
@@ -20,7 +20,7 @@ export class Color {
     return this.rgba();
   }
 
-  public rgba() {
+  public rgba(): string {
     const red = Math.floor(this.red * 255);
     const green = Math.floor(this.green * 255);
     const blue = Math.floor(this.blue * 255);
@@ -33,7 +33,7 @@ export class Color {
     return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
   }
 
-  public hex() {
+  public hex(): string {
     const red = this.fixHex(Math.floor(this.red * 255).toString(16));
     const green = this.fixHex(Math.floor(this.green * 255).toString(16));
     const blue = this.fixHex(Math.floor(this.blue * 255).toString(16));
@@ -41,7 +41,7 @@ export class Color {
     return `#${red}${green}${blue}`;
   }
 
-  private fixHex(hex) {
+  private fixHex(hex: string): string {
     if (hex.length < 2) {
       return '0' + hex;
     }

@@ -1,5 +1,6 @@
 import {GraphicsContextSettings} from './graphical-control-settings.model';
 import {Color} from './color.model';
+import {ShadowStyle} from '../../../model/konva.model';
 
 export class Shadow {
   readonly _class: string = 'shadow';
@@ -11,19 +12,19 @@ export class Shadow {
   color: Color;
   contextSettings: GraphicsContextSettings;
 
-  constructor({isEnabled, blurRadius, offsetX, offsetY, spread, color, contextSettings}) {
-    this.isEnabled = !!isEnabled;
-    this.blurRadius = blurRadius;
-    this.offsetX = offsetX;
-    this.offsetY = offsetY;
-    this.spread = spread;
-    this.color = new Color(color);
-    this.contextSettings = new GraphicsContextSettings(contextSettings || {});
+  constructor(payload: Shadow) {
+    this.isEnabled = Boolean(payload.isEnabled);
+    this.blurRadius = payload.blurRadius;
+    this.offsetX = payload.offsetX;
+    this.offsetY = payload.offsetY;
+    this.spread = payload.spread;
+    this.color = new Color(payload.color);
+    this.contextSettings = new GraphicsContextSettings(payload.contextSettings);
   }
 
-  public value() {
+  public value(): ShadowStyle {
     if (!this.isEnabled) {
-      return {};
+      return null;
     }
 
     return {

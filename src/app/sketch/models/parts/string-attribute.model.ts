@@ -6,9 +6,9 @@ export class StringAttribute {
   length: number;
   attributes: TextAttributes;
 
-  constructor({location, length, attributes}) {
-    this.location = location;
-    this.length = length;
-    this.attributes = new TextAttributes(attributes);
+  constructor(payload: StringAttribute) {
+    this.location = payload.location;
+    this.length = payload.length;
+    this.attributes = new TextAttributes(payload.attributes);
   }
 }

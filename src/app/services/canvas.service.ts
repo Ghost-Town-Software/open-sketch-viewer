@@ -2,9 +2,10 @@ import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import Konva from 'konva';
 import {fromEvent, Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {ModelFactory} from '../sketch/models/model-factory';
-import {BaseComponent} from '../sketch/models/base-component.model';
 import {LayerService} from './layer.service';
+import {Stage} from 'konva/types/Stage';
+import {Artboard} from '../sketch/models/artboard.model';
+import {Layer} from 'konva/types/Layer';
 
 const SCALE_FACTOR = 1.1;
 
@@ -13,8 +14,8 @@ const SCALE_FACTOR = 1.1;
 })
 export class CanvasService {
   private htmlRenderer: Renderer2;
-  private stage;
-  private artboard;
+  private stage: Stage;
+  private artboard: Artboard;
 
   private spacePressed: boolean;
 
@@ -28,12 +29,12 @@ export class CanvasService {
     return this.artboard.layers.find(layer => layer.do_objectID === layerId);
   }
 
-  public createArtboard(container, artboard) {
+  public createArtboard(container: Element, artboard: Artboard) {
     this.artboard = artboard;
     this.stage = new Konva.Stage({
-      container,
-      width: container.parentNode.clientWidth,
-      height: container.parentNode.clientHeight,
+      container: container as any,
+      width: (container.parentNode as Element).clientWidth,
+      height: (container.parentNode as Element).clientHeight,
     });
 
     const {width, height} = artboard.frame;
@@ -53,7 +54,7 @@ export class CanvasService {
   }
 
   public render() {
-    const layer = this.stage.findOne('#content');
+    const layer: Layer = this.stage.findOne('#content');
 
     for (const model of this.artboard.layers) {
       try {
@@ -107,7 +108,7 @@ export class CanvasService {
   }
 
   public getCurrentZoom() {
-    const artboard = this.stage.findOne('#artboard');
+    const artboard: Layer = this.stage.findOne('#artboard');
     const box = artboard.getClientRect({relativeTo: this.stage});
     const stageSize = this.stage.getSize();
     const scaleX = stageSize.width / box.width;
@@ -116,12 +117,12 @@ export class CanvasService {
   }
 
   public draw() {
-    const layer = this.stage.findOne('#content');
+    const layer: Layer = this.stage.findOne('#content');
     layer.batchDraw();
   }
 
   public center() {
-    const layer = this.stage.findOne('#content');
+    const layer: Layer = this.stage.findOne('#content');
     const artboard = this.stage.findOne('#artboard');
     const box = artboard.getClientRect({skipTransform: false});
 
@@ -135,7 +136,7 @@ export class CanvasService {
   }
 
   private clipArtboard() {
-    const layer = this.stage.findOne('#content');
+    const layer: Layer = this.stage.findOne('#content');
 
     layer.add(new Konva.Rect({
       x: 0,
@@ -149,10 +150,14 @@ export class CanvasService {
   }
 
   private bindMouse() {
-    const layer = this.stage.findOne('#content');
+    const layer: Layer = this.stage.findOne('#content');
 
     const mousedown = fromEvent(document, 'mousedown');
-    mousedown.pipe(takeUntil(this.destroy$)).subscribe((event: MouseEvent) => {
+    mousedown.pipe(takeUntil(this.destroy$)).subscribe((event: Event) => {
+      if(!(event instanceof MouseEvent)) {
+        return;
+      }
+
       const target: any = event.composedPath()[0];
       if (target.tagName !== 'CANVAS' || event.button !== 0) {
         return;
@@ -164,14 +169,18 @@ export class CanvasService {
     });
 
     const mouseup = fromEvent(document, 'mouseup');
-    mouseup.pipe(takeUntil(this.destroy$)).subscribe((event: MouseEvent) => {
+    mouseup.pipe(takeUntil(this.destroy$)).subscribe(() => {
       layer.stopDrag();
     });
   }
 
   private bindKeyboard() {
     const keyup = fromEvent(document, 'keyup');
-    keyup.pipe(takeUntil(this.destroy$)).subscribe((event: KeyboardEvent) => {
+    keyup.pipe(takeUntil(this.destroy$)).subscribe((event: Event) => {
+      if(!(event instanceof KeyboardEvent)) {
+        return;
+      }
+
       this.spacePressed = false;
 
       if (event.key === '+') {
@@ -184,7 +193,11 @@ export class CanvasService {
     });
 
     const keydown = fromEvent(document, 'keydown');
-    keydown.pipe(takeUntil(this.destroy$)).subscribe((event: KeyboardEvent) => {
+    keydown.pipe(takeUntil(this.destroy$)).subscribe((event: Event) => {
+      if(!(event instanceof KeyboardEvent)) {
+        return;
+      }
+
       if (event.key === ' ') {
         this.spacePressed = true;
       }
@@ -193,12 +206,13 @@ export class CanvasService {
 
   private bindResize() {
     const resize = fromEvent(window, 'resize');
-    const canvas = this.stage.container();
+    const canvas: Element = this.stage.container();
+    const parent: Element = canvas.parentNode as Element;
 
     resize.pipe(takeUntil(this.destroy$)).subscribe(event => {
       this.htmlRenderer.setStyle(canvas, 'display', 'none');
-      this.stage.width(canvas.parentNode.clientWidth);
-      this.stage.height(canvas.parentNode.clientHeight);
+      this.stage.width(parent.clientWidth);
+      this.stage.height(parent.clientHeight);
       this.htmlRenderer.setStyle(canvas, 'display', 'block');
 
       this.stage.batchDraw();
@@ -206,8 +220,8 @@ export class CanvasService {
   }
 
   private bindWheel() {
-    const layer = this.stage.findOne('#content');
-    const artboard = this.stage.findOne('#artboard');
+    const layer: Layer = this.stage.findOne('#content');
+    const artboard: Layer = this.stage.findOne('#artboard');
 
     this.stage.on('wheel', (e) => {
       e.evt.preventDefault();
@@ -235,7 +249,7 @@ export class CanvasService {
     });
   }
 
-  private createContentLayer(width, height) {
+  private createContentLayer(width: number, height: number) {
     const layer = new Konva.Layer({
       id: 'content',
     });
@@ -253,7 +267,7 @@ export class CanvasService {
   }
 
 
-  private createBackgroundLayer(width, height) {
+  private createBackgroundLayer(width: number, height: number) {
     const background = new Konva.Layer();
     background.add(new Konva.Rect({
       id: 'background',
@@ -267,8 +281,8 @@ export class CanvasService {
     return background;
   }
 
-  private zoom(direction) {
-    const layer = this.stage.findOne('#content');
+  private zoom(direction: number) {
+    const layer: Layer = this.stage.findOne('#content');
     let scale = layer.scaleX();
 
     if (direction > 0) {
@@ -297,12 +311,8 @@ export class CanvasService {
       scale = scaleValue;
     }
 
-    console.log('set scale', {x: scale, y: scale});
     layer.scale({x: scale, y: scale});
-    console.log('draw it');
     layer.batchDraw();
-
-    console.log('zooomed', Math.floor(scale * 100));
 
     return Math.floor(scale * 100);
   }

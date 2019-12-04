@@ -32,7 +32,11 @@ export class ElectronService {
     }
   }
 
-  userData() {
+  setWindowSize(width: number, height: number) {
+    this.ipcRenderer.send('window-size', {width, height});
+  }
+
+  userData(): string {
     return this.remote.app.getPath('userData');
   }
 }

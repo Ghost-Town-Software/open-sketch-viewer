@@ -26,7 +26,7 @@ export class AppService {
     this._projects$ = new BehaviorSubject<Project[]>(this.config.projects);
   }
 
-  createProject(destination) {
+  createProject(destination: string) {
     const project: Project = {
       id: shortid.generate(),
       path: destination,

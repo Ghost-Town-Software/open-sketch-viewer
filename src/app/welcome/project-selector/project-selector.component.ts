@@ -8,13 +8,12 @@ import {Project} from '../../model/config.model';
   styleUrls: ['./project-selector.styles.scss']
 })
 export class ProjectSelectorComponent implements OnDestroy {
-  @Input() projects: Observable<Project[]>;
+  @Input('projects') projects: Observable<Project[]>;
   @Output('delete') delete$: EventEmitter<Project> = new EventEmitter<Project>();
   @Output('load') load$: EventEmitter<Project> = new EventEmitter<Project>();
 
   ngOnDestroy(): void {
     this.delete$.complete();
-    this.delete$ = null;
   }
 
   load(project: Project) {

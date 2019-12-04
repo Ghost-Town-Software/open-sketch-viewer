@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, HostListener, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {tap} from 'rxjs/operators';
-import {CanvasService} from "../../services/canvas.service";
+import {CanvasService} from '../../services/canvas.service';
 
 @Component({
   selector: 'artboard',
@@ -9,11 +9,13 @@ import {CanvasService} from "../../services/canvas.service";
   styleUrls: ['./artboard.styles.scss']
 })
 export class ArtboardComponent implements OnInit, AfterViewInit {
-  @ViewChild('workspace', {static: true}) workspace;
+  @ViewChild('workspace', {static: true}) workspace: ElementRef;
 
   artboard: any;
 
-  public constructor(private activatedRoute: ActivatedRoute, private renderer: Renderer2, private canvas: CanvasService) {
+  public constructor(private activatedRoute: ActivatedRoute,
+                     private renderer: Renderer2,
+                     private canvas: CanvasService) {
   }
 
   ngOnInit(): void {

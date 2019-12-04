@@ -7,6 +7,13 @@ import {Border} from './border.model';
 import {Shadow} from './shadow.model';
 import {TextStyle} from './text-style.model';
 import {Rect} from '../parts/rect.model';
+import {
+  BorderStyle,
+  FillStyle,
+  GradientStyle, GraphicContextStyle,
+  KonvaStyle, ShadowStyle,
+  TextStyle as KonvaTextStyle
+} from '../../../model/konva.model';
 
 export class Style {
   readonly _class: string = 'style';
@@ -26,36 +33,33 @@ export class Style {
   textStyle: TextStyle;
   frame: Rect;
 
-  constructor({endMarketType, miterLimit, startMarkerType, windingRule,
-                blur, borderOptions, borders = [], colorControls, contextSettings,
-                fills = [], innerShadows = [], shadows = [], textStyle},
-              frame) {
+  constructor(payload: Style, frame: Rect) {
 
-    this.endMarketType = endMarketType;
-    this.miterLimit = miterLimit;
-    this.startMarkerType = startMarkerType;
-    this.windingRule = windingRule;
-    this.blur = new Blur(blur || {});
-    this.borderOptions = new BorderOptions(borderOptions || {});
-    this.borders = borders.map(border => new Border(border, frame));
-    this.colorControls = new ColorControls(colorControls || {});
-    this.contextSettings = new GraphicsContextSettings(contextSettings || {});
-    this.fills = fills.map(fill => new Fill(fill, frame));
-    this.shadows = shadows.map(shadow => new Shadow(shadow));
+    this.endMarketType = payload.endMarketType;
+    this.miterLimit = payload.miterLimit;
+    this.startMarkerType = payload.startMarkerType;
+    this.windingRule = payload.windingRule;
+    this.blur = new Blur(payload.blur);
+    this.borderOptions = new BorderOptions(payload.borderOptions);
+    this.borders = payload.borders.map(border => new Border(border, frame));
+    this.colorControls = new ColorControls(payload.colorControls);
+    this.contextSettings = new GraphicsContextSettings(payload.contextSettings);
+    this.fills = payload.fills.map(fill => new Fill(fill, frame));
+    this.shadows = payload.shadows.map(shadow => new Shadow(shadow));
     this.frame = frame;
 
-    if (textStyle) {
-      this.textStyle = new TextStyle(textStyle);
+    if (payload.textStyle) {
+      this.textStyle = new TextStyle(payload.textStyle);
     }
 
-    this.innerShadows = innerShadows;
+    this.innerShadows = payload.innerShadows;
   }
 
   public thickness() {
     return this.borders.length > 0 ? this.borders[0].thickness : 0;
   }
 
-  public value() {
+  public value(): KonvaStyle {
     if (this.fills.length > 2) {
       console.warn('Element has more than 1 fill', this.fills);
     }
@@ -68,14 +72,18 @@ export class Style {
       console.warn('Element has more than 1 shadow', this.shadows);
     }
 
-    const textStyle = this.textStyle ? this.textStyle.value() : {};
+    const textStyle: KonvaTextStyle = this.textStyle ? this.textStyle.value() : null;
+    const fills: FillStyle | GradientStyle = this.fills.length > 0 ? this.fills[0].value() : null;
+    const borders: BorderStyle = this.borders.length > 0 ? this.borders[0].value() : null;
+    const shadows: ShadowStyle = this.shadows.length > 0 ? this.shadows[0].value() : null;
+    const context: GraphicContextStyle = this.contextSettings.value();
 
     return {
-      ...(this.fills.length > 0 ? this.fills[0].value() : {}),
-      ...(this.borders.length > 0 ? this.borders[0].value() : {}),
-      ...(this.shadows.length > 0 ? this.shadows[0].value() : {}),
-      ...this.contextSettings.value(),
-      ...textStyle
+      ...textStyle,
+      ...fills,
+      ...borders,
+      ...shadows,
+      ...context
     };
   }
 

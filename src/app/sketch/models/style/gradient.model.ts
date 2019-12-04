@@ -18,16 +18,16 @@ export class Gradient {
 
   frame: Rect;
 
-  constructor({elipseLength, from, gradientType, to, stops = [], noiseIndex, noiseIntensity, patternFillType, patternTileScale}, frame) {
-    this.elipseLength = elipseLength;
-    this.gradientType = gradientType;
-    this.stops = stops.map(stop => new GradientStop(stop));
-    this.noiseIndex = noiseIndex;
-    this.noiseIntensity = noiseIntensity;
-    this.patternFillType = patternFillType;
-    this.patternTileScale = patternTileScale;
-    this.to = this.toPoint(to, frame);
-    this.from = this.toPoint(from, frame);
+  constructor(payload: Gradient, frame: Rect) {
+    this.elipseLength = payload.elipseLength;
+    this.gradientType = payload.gradientType;
+    this.stops = payload.stops.map(stop => new GradientStop(stop));
+    this.noiseIndex = payload.noiseIndex;
+    this.noiseIntensity = payload.noiseIntensity;
+    this.patternFillType = payload.patternFillType;
+    this.patternTileScale = payload.patternTileScale;
+    this.to = this.toPoint(String(payload.to), frame);
+    this.from = this.toPoint(String(payload.from), frame);
     this.frame = frame;
   }
 
@@ -44,7 +44,7 @@ export class Gradient {
     console.warn('Gradient type unsupported', this.gradientType);
   }
 
-  private toPoint(p, frame) {
+  private toPoint(p: string, frame: Rect): Point {
     const point = PointUtil.toPoint(p);
 
     if(frame && point) {
@@ -57,7 +57,7 @@ export class Gradient {
     return point;
   }
 
-  css() {
+  css(): any {
     return null;
   }
 }

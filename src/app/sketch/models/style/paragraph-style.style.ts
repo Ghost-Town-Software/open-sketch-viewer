@@ -5,14 +5,14 @@ export class ParagraphStyle {
   minimumLineHeight: number;
   allowsDefaultTighteningForTruncation: number;
 
-  constructor({alignment, maximumLineHeight, minimumLineHeight, allowsDefaultTighteningForTruncation}) {
-    this.alignment = alignment;
-    this.maximumLineHeight = maximumLineHeight;
-    this.minimumLineHeight = minimumLineHeight;
-    this.allowsDefaultTighteningForTruncation = allowsDefaultTighteningForTruncation;
+  constructor(payload: ParagraphStyle) {
+    this.alignment = payload.alignment;
+    this.maximumLineHeight = payload.maximumLineHeight;
+    this.minimumLineHeight = payload.minimumLineHeight;
+    this.allowsDefaultTighteningForTruncation = payload.allowsDefaultTighteningForTruncation;
   }
 
-  getAlignment() {
+  getAlignment(): string {
     const alignments = ['left', 'right', 'center', 'start', 'end'];
 
     return alignments[this.alignment];

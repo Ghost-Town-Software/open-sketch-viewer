@@ -3,7 +3,7 @@ export class Image {
   readonly _ref_class: string = 'MSImageData';
   _ref: string;
 
-  constructor({_ref}) {
-    this._ref = _ref;
+  constructor(payload: Image) {
+    this._ref = payload._ref;
   }
 }

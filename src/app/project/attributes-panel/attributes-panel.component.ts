@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CanvasService} from '../../services/canvas.service';
 import {PreviewService} from '../../services/preview.service';
 import {LayerService} from '../../services/layer.service';
@@ -11,19 +11,16 @@ import {NewProjectService} from '../project.service';
   styleUrls: ['./attributes-panel.styles.scss']
 })
 export class AttributesPanelComponent implements OnInit, AfterViewInit {
-  @ViewChild('preview', {static: true}) previewEl;
+  @ViewChild('preview', {static: true}) previewEl: ElementRef;
   styles: string;
   attributes: string;
-
   currentZoom: number;
-
   activeLayer: BaseComponent;
 
   constructor(private projectService: NewProjectService,
               private canvas: CanvasService,
               private preview: PreviewService,
               private layerService: LayerService) {
-
   }
 
   ngAfterViewInit(): void {

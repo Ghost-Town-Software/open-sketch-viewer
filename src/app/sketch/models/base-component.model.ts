@@ -3,6 +3,10 @@ import {Rect} from './parts/rect.model';
 import {Group} from 'konva/types/Group';
 import {LayerService} from '../../services/layer.service';
 import {getService} from '../../injector.static';
+import {Container, ContainerConfig} from 'konva/types/Container';
+import {Shape, ShapeConfig} from 'konva/types/Shape';
+import {Node, NodeConfig} from 'konva/types/Node';
+import {KonvaGroup, KonvaShape} from '../../model/konva.model';
 
 export abstract class BaseComponent {
   readonly _class: string = 'component';
@@ -11,27 +15,28 @@ export abstract class BaseComponent {
   do_objectID: string;
   name: string;
   frame: Rect;
-  style: Style;
+  style?: Style;
   layers: BaseComponent[];
-  canvas: Group;
+  canvas: KonvaGroup;
 
   protected layerService: LayerService;
 
-  protected constructor({do_objectID, name, isFlippedHorizontal, isFlippedVertical, frame, style, layers}) {
-    this.do_objectID = do_objectID;
-    this.name = name;
-    this.isFlippedHorizontal = isFlippedHorizontal;
-    this.isFlippedVertical = isFlippedVertical;
-    this.frame = new Rect(frame);
-    this.layers = layers;
-    this.style = new Style(style || {}, this.frame);
+  protected constructor(payload: BaseComponent) {
+    this.do_objectID = payload.do_objectID;
+    this.name = payload.name;
+    this.isFlippedHorizontal = payload.isFlippedHorizontal;
+    this.isFlippedVertical = payload.isFlippedVertical;
+    this.frame = new Rect(payload.frame);
+    this.layers = payload.layers;
+    this.style = new Style(payload.style, this.frame);
     this.layerService = getService(LayerService);
   }
 
-  abstract render();
+  abstract render(): KonvaGroup | KonvaShape;
 
-  bindEvents(canvas) {
-    canvas.on('click', (e: MouseEvent) => {
+  bindEvents(canvas: Node<NodeConfig>): void {
+    // TODO add canvas type
+    canvas.on('click', () => {
       this.layerService.attributeLayer$.next(this.do_objectID);
     });
   }
@@ -40,7 +45,7 @@ export abstract class BaseComponent {
     return this.style.css();
   }
 
-  flip(node) {
+  flip(node: KonvaGroup | KonvaShape): void {
     if(this.isFlippedVertical) {
       node.transformsEnabled('all');
 

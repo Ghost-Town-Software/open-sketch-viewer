@@ -2,7 +2,7 @@ import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 
 export class Group extends BaseComponent {
-  constructor(payload) {
+  constructor(payload: Group) {
     super(payload);
   }
 

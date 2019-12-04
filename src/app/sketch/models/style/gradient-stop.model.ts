@@ -5,9 +5,9 @@ export class GradientStop {
   position: number;
   color: Color;
 
-  constructor({position, color}) {
-    this.position = position;
-    this.color = new Color(color);
+  constructor(payload: GradientStop) {
+    this.position = payload.position;
+    this.color = new Color(payload.color);
   }
 
   value() {

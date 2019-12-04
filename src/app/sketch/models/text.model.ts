@@ -4,6 +4,7 @@ import {AttributedString} from './parts/attributed-string.model';
 import {environment} from '../../../environments/environment';
 import {getService} from '../../injector.static';
 import {NewProjectService} from '../../project/project.service';
+import {Image} from 'konva/types/shapes/Image';
 
 export class Text extends BaseComponent {
   readonly _class: string = 'text';
@@ -13,11 +14,10 @@ export class Text extends BaseComponent {
   glyphBounds: string;
   lineSpacingBehaviour: number;
   textBehaviour: number;
-  editor;
 
   private project: NewProjectService;
 
-  constructor(payload) {
+  constructor(payload: Text) {
     super(payload);
 
     this.attributedString = new AttributedString(payload.attributedString);
@@ -68,7 +68,7 @@ export class Text extends BaseComponent {
 
     const picture = this.project.getTextPath(this.do_objectID);
 
-    Konva.Image.fromURL(picture, (image) => {
+    Konva.Image.fromURL(picture, (image: Image) => {
       image.setAttrs({
         width: this.frame.width,
         height: this.frame.height,

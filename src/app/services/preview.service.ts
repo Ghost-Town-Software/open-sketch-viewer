@@ -7,7 +7,7 @@ import {BaseComponent} from '../sketch/models/base-component.model';
   providedIn: 'root'
 })
 export class PreviewService {
-  private stage;
+  private stage: any;
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -72,11 +72,13 @@ export class PreviewService {
     }
   }
 
-  public createPreview(container) {
+  public createPreview(container: Element) {
+    const parent: Element = container.parentNode as Element;
+
     this.stage = new Konva.Stage({
-      container,
-      width: container.parentNode.clientWidth,
-      height: container.parentNode.clientHeight,
+      container: container as any,
+      width: parent.clientWidth,
+      height: parent.clientHeight,
     });
 
     this.stage.add(new Konva.Layer({

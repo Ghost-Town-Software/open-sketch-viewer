@@ -10,13 +10,12 @@ export class Blur {
   saturation: number;
   type: number;
 
-
-  constructor({isEnabled, center, motionAngle, radius, saturation, type}) {
-    this.isEnabled = !!isEnabled;
-    this.center = PointUtil.toPoint(center);
-    this.motionAngle = motionAngle;
-    this.radius = radius;
-    this.saturation = saturation;
-    this.type = type;
+  constructor(payload: Blur) {
+    this.isEnabled = Boolean(payload.isEnabled);
+    this.center = PointUtil.toPoint(String(payload.center));
+    this.motionAngle = payload.motionAngle;
+    this.radius = payload.radius;
+    this.saturation = payload.saturation;
+    this.type = payload.type;
   }
 }

@@ -12,7 +12,7 @@ import {Artboard} from './artboard.model';
 
 export class ModelFactory {
 
-  public static create(component) {
+  public static create(component: any) {
     if(component && component.layers) {
       component.layers = component.layers.map(ModelFactory.create);
     }

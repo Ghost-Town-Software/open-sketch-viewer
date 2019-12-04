@@ -1,4 +1,6 @@
-const WEIGHTS = {
+import {Font} from '../../model/font.model';
+
+const WEIGHTS: {[key: string]: number} = {
   black: 900,
   bold: 700,
   medium: 500,
@@ -8,7 +10,7 @@ const WEIGHTS = {
 };
 
 export class FontUtil {
-  static toFont(str) {
+  static toFont(str: string): Font {
     const parts = str.split('-');
     const family = parts[0];
 
@@ -19,7 +21,7 @@ export class FontUtil {
       };
     }
 
-    let weight = parts[1].toLowerCase();
+    let weight: number = Number(parts[1].toLowerCase());
 
     if (WEIGHTS.hasOwnProperty(weight)) {
       weight = WEIGHTS[weight];

@@ -1,7 +1,7 @@
 import {Point} from '../../model/point.model';
 
 export class PointUtil {
-  public static toPoint(str): Point {
+  public static toPoint(str: string): Point {
     if(!str) {
       return null;
     }

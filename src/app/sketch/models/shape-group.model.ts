@@ -1,16 +1,17 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 import {environment} from '../../../environments/environment';
+import {KonvaStyle} from '../../model/konva.model';
 
 export class ShapeGroup extends BaseComponent {
   readonly _class: string = 'shapeGroup';
 
-  constructor(payload) {
+  constructor(payload: ShapeGroup) {
     super(payload);
   }
 
   render() {
-    const styles = this.style.value();
+    const styles: KonvaStyle = this.style.value();
     this.canvas = new Konva.Group({
       ...this.frame,
       transformsEnabled: 'position',

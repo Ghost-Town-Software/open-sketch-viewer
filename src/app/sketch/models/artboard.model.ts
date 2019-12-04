@@ -4,7 +4,7 @@ import Konva from 'konva';
 export class Artboard extends BaseComponent {
   readonly _class: string = 'artboard';
 
-  constructor(payload) {
+  constructor(payload: Artboard) {
     super(payload);
   }
 

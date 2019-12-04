@@ -2,6 +2,8 @@ import {GraphicsContextSettings} from './graphical-control-settings.model';
 import {Color} from './color.model';
 import {Rect} from '../parts/rect.model';
 import {Gradient} from './gradient.model';
+import {FillStyle, GradientStyle} from '../../../model/konva.model';
+import {GradientStop} from './gradient-stop.model';
 
 export class Fill {
   readonly _class: string = 'fill';
@@ -14,17 +16,17 @@ export class Fill {
   gradient: Gradient;
   frame: Rect;
 
-  constructor({isEnabled, fillType, color, contextSettings, gradient}, frame) {
-    this.isEnabled = !!isEnabled;
-    this.fillType = fillType;
-    this.color = new Color(color || {});
-    this.contextSettings = new GraphicsContextSettings(contextSettings || {});
-    this.gradient = new Gradient(gradient || {}, frame);
+  constructor(payload: Fill, frame: Rect) {
+    this.isEnabled = Boolean(payload.isEnabled);
+    this.fillType = payload.fillType;
+    this.color = new Color(payload.color);
+    this.contextSettings = new GraphicsContextSettings(payload.contextSettings);
+    this.gradient = new Gradient(payload.gradient, frame);
   }
 
-  public value() {
+  public value(): FillStyle | GradientStyle {
     if (!this.isEnabled) {
-      return {};
+      return null;
     }
 
     if(this.fillType === 0) {

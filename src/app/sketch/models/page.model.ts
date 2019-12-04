@@ -5,7 +5,7 @@ import {environment} from '../../../environments/environment';
 export class Page extends BaseComponent {
   readonly _class: string = 'page';
 
-  constructor(payload) {
+  constructor(payload: Page) {
     super(payload);
   }
 

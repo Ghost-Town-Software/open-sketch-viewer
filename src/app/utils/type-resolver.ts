@@ -1,7 +1,7 @@
 import {FileType} from '../enums/file.type';
 
 export class TypeResolver {
-  private static readonly extensionMap = {
+  private static readonly extensionMap: {[key: string]: FileType} = {
     jpg: FileType.IMAGE,
     jpeg: FileType.IMAGE,
     png: FileType.IMAGE,
@@ -9,7 +9,7 @@ export class TypeResolver {
     json: FileType.JSON,
   };
 
-  public static resolveType(filename) {
+  public static resolveType(filename: string): FileType {
     const extension = filename.split('.').pop();
 
     if (extension in TypeResolver.extensionMap) {

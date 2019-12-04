@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
-import {AsyncSubject, BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
+import {Stage} from 'konva/types/Stage';
+import {Layer} from 'konva/types/Layer';
+import {Point} from '../model/point.model';
+import {KonvaGroup, KonvaShape} from '../model/konva.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,39 +12,35 @@ export class LayerService {
   workspaceLayer$: BehaviorSubject<string> = new BehaviorSubject(null);
   attributeLayer$: BehaviorSubject<string> = new BehaviorSubject(null);
 
-  bindEvents(stage) {
+  bindEvents(stage: Stage) {
     this.workspaceLayer$.subscribe(do_objectID => {
-      console.log('received event workspaceLayer$ ', do_objectID);
       if(!do_objectID) {
         return;
       }
 
-      const content = stage.findOne('#content');
-      const layer = content.findOne('#' + do_objectID);
+      const content: Layer = stage.findOne('#content');
+      const layer: KonvaGroup | KonvaShape = content.findOne('#' + do_objectID);
 
       if(!layer) {
         return;
       }
 
       this.centerElement(stage, layer);
-
     });
   }
 
-  getElementPosition(content, layer) {
+  getElementPosition(content: KonvaGroup | KonvaShape, layer: KonvaGroup | KonvaShape): Point {
     const contentPos = content.getAbsolutePosition();
     const pos = layer.getAbsolutePosition();
 
     pos.x -= contentPos.x;
     pos.y -= contentPos.y;
 
-    console.log('element position', pos);
-
     return { x: pos.x, y: pos.y };
   }
 
-  centerElement(stage, layer) {
-    const content = stage.findOne('#content');
+  centerElement(stage: Stage, layer: KonvaGroup | KonvaShape) {
+    const content: Layer = stage.findOne('#content');
 
     const xPad = 100;
     const yPad = 100;

@@ -1,18 +1,21 @@
 import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
+import {Container} from 'konva/types/Container';
+import {Shape} from 'konva/types/Shape';
+import {Group} from 'konva/types/Group';
 
 export class SymbolMaster extends BaseComponent {
   readonly _class: string = 'symbolMaster';
 
   symbolID: string;
 
-  constructor(payload) {
+  constructor(payload: SymbolMaster) {
     super(payload);
 
     this.symbolID = payload.symbolID;
   }
 
-  render() {
+  render(): Group {
     this.canvas = new Konva.Group({
       ...this.frame,
       ...this.style.value(),

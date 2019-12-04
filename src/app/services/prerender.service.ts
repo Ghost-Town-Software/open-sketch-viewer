@@ -9,6 +9,8 @@ import {FontUtil} from '../sketch/utils/font.util';
 import * as fs from 'fs';
 import * as rimraf from 'rimraf';
 import {join} from 'path';
+import {Font} from '../model/font.model';
+import {BaseComponent} from '../sketch/models/base-component.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +26,9 @@ export class PrerenderService {
     const filesystem = new Filesystem(project.path);
     rimraf.sync(join(project.path, 'text'));
 
-    const texts = this.findAllTextModels(filesystem);
+    const texts: Text[] = this.findAllTextModels(filesystem);
 
-    this.electron.ipcRenderer.once('font-loaded', (event, success) => {
+    this.electron.ipcRenderer.once('font-loaded', () => {
       this.processing(texts, filesystem);
     });
 
@@ -80,10 +82,10 @@ export class PrerenderService {
     });
   }
 
-  private findAllTextModels(fs: Filesystem) {
+  private findAllTextModels(fs: Filesystem): Text[] {
     const pages = fs.getPages();
 
-    let texts = [];
+    let texts: Text[] = [];
 
     for (const page of pages) {
       findRecursively(page, texts);
@@ -91,7 +93,7 @@ export class PrerenderService {
 
     return texts;
 
-    function findRecursively(item, texts = []) {
+    function findRecursively(item: BaseComponent, texts: BaseComponent[] = []) {
       if (item._class === 'text') {
         texts.push(ModelFactory.create(item));
         return;
@@ -105,7 +107,7 @@ export class PrerenderService {
     }
   }
 
-  private getHTML(filesystem) {
+  private getHTML(filesystem: Filesystem) {
     return `<!doctype html>
 <html lang="pl">
 <head>
@@ -145,11 +147,11 @@ export class PrerenderService {
   private getFontsScript(fs: Filesystem) {
     const meta = fs.getMeta();
     const fonts = meta.fonts;
-    const toLoad = {};
+    const toLoad: {[key: string]: number[]} = {};
 
-    fonts.map((font) => {
+    fonts.map((font: string) => {
       return FontUtil.toFont(font);
-    }).forEach((font) => {
+    }).forEach((font: Font) => {
       if (!toLoad.hasOwnProperty(font.family)) {
         toLoad[font.family] = [];
       }

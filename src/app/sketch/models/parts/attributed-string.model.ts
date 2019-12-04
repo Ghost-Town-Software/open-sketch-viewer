@@ -5,8 +5,8 @@ export class AttributedString {
   string: string;
   attributes: StringAttribute[];
 
-  constructor({string, attributes}) {
-    this.string = string.replace('\u{2028}', '');
-    this.attributes = attributes.map(attribute => new StringAttribute(attribute));
+  constructor(payload: AttributedString) {
+    this.string = payload.string.replace('\u{2028}', '');
+    this.attributes = payload.attributes.map(attribute => new StringAttribute(attribute));
   }
 }

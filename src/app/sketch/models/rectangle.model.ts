@@ -8,7 +8,7 @@ export class Rectangle extends BaseComponent {
   pointRadiusBehaviour: number;
   points: CurvePoint[];
 
-  constructor(payload) {
+  constructor(payload: Rectangle) {
     super(payload);
 
     this.points = payload.points.map(point => new CurvePoint(point));

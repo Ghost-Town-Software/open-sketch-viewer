@@ -11,13 +11,13 @@ export class CurvePoint {
   hasCurveTo: boolean;
   point: Point;
 
-  constructor({cornerRadius, curveFrom, curveMode, curveTo, hasCurveFrom, hasCurveTo, point}) {
-    this.cornerRadius = cornerRadius;
-    this.curveFrom = PointUtil.toPoint(curveFrom);
-    this.curveMode = curveMode;
-    this.curveTo = PointUtil.toPoint(curveTo);
-    this.hasCurveFrom = hasCurveFrom;
-    this.hasCurveTo = hasCurveTo;
-    this.point = PointUtil.toPoint(point);
+  constructor(payload: CurvePoint) {
+    this.cornerRadius = payload.cornerRadius;
+    this.curveFrom = PointUtil.toPoint(String(payload.curveFrom));
+    this.curveMode = payload.curveMode;
+    this.curveTo = PointUtil.toPoint(String(payload.curveTo));
+    this.hasCurveFrom = payload.hasCurveFrom;
+    this.hasCurveTo = payload.hasCurveTo;
+    this.point = PointUtil.toPoint(String(payload.point));
   }
 }

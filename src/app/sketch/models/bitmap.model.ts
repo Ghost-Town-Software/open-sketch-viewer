@@ -2,6 +2,7 @@ import {BaseComponent} from './base-component.model';
 import Konva from 'konva';
 import {getService} from '../../injector.static';
 import {Image} from './parts/image.model';
+import {Image as KonvaImage} from 'konva/types/shapes/Image';
 import {environment} from '../../../environments/environment';
 import {NewProjectService} from '../../project/project.service';
 
@@ -11,7 +12,7 @@ export class Bitmap extends BaseComponent {
   clippingMask: string;
   fillReplacesImage: boolean;
 
-  constructor(payload) {
+  constructor(payload: Bitmap) {
     super(payload);
 
     this.project = getService(NewProjectService);
@@ -29,7 +30,7 @@ export class Bitmap extends BaseComponent {
 
     const picture = this.project.getPath(this.image._ref);
 
-    Konva.Image.fromURL(picture, (image) => {
+    Konva.Image.fromURL(picture, (image: KonvaImage) => {
       image.setAttrs({
         width: this.frame.width,
         height: this.frame.height,

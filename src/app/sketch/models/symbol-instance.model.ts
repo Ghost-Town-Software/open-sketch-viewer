@@ -10,7 +10,7 @@ export class SymbolInstance extends BaseComponent {
   symbolID: string;
   project: NewProjectService;
 
-  constructor(payload) {
+  constructor(payload: SymbolInstance) {
     super(payload);
 
     this.symbolID = payload.symbolID;

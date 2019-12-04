@@ -11,7 +11,7 @@ export class Oval extends BaseComponent {
   isClosed: boolean;
   renderer: CurvePointRenderer;
 
-  constructor(payload) {
+  constructor(payload: Oval) {
     super(payload);
 
     this.points = payload.points.map(point => new CurvePoint(point));

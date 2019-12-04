@@ -5,10 +5,10 @@ export class BorderOptions {
   lineCapStyle: number;
   lineJoinStyle: number;
 
-  constructor({isEnabled, dashPattern, lineCapStyle, lineJoinStyle}) {
-    this.isEnabled = !!isEnabled;
-    this.dashPattern = dashPattern;
-    this.lineCapStyle = lineCapStyle;
-    this.lineJoinStyle = lineJoinStyle;
+  constructor(payload: BorderOptions) {
+    this.isEnabled = Boolean(payload.isEnabled);
+    this.dashPattern = payload.dashPattern;
+    this.lineCapStyle = payload.lineCapStyle;
+    this.lineJoinStyle = payload.lineJoinStyle;
   }
 }

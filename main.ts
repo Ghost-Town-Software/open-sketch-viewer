@@ -1,19 +1,28 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import {app, BrowserWindow, screen, ipcMain} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win: BrowserWindow = null;
+let win: BrowserWindow | null = null;
 const args = process.argv.slice(1),
-    serve = args.some(val => val === '--serve');
+  serve = args.some(val => val === '--serve');
 
 function createWindow(): BrowserWindow {
   const electronScreen = screen;
-  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  const windowSize = electronScreen.getPrimaryDisplay().workAreaSize;
+  const size = Object.assign({}, windowSize);
+
+  if (serve) {
+    size.width = 1200;
+    size.height = 600;
+  } else {
+    size.width = 800;
+    size.height = 600;
+  }
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
-    y: 0,
+    x: (windowSize.width - size.width) / 2,
+    y: (windowSize.height - size.height) / 2,
     width: size.width,
     height: size.height,
     webPreferences: {
@@ -57,6 +66,15 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', createWindow);
+
+  ipcMain.on('window-size', (event, size) => {
+    const windowSize = screen.getPrimaryDisplay().workAreaSize;
+    const y = (windowSize.height - size.height) / 2;
+    const x = (windowSize.width - size.width) / 2;
+
+    win.setSize(size.width, size.height);
+    win.setPosition(x < 0 ? 0 : x, y < 0 ? 0 : y);
+  });
 
   ipcMain.on('font-loaded', (event, args) => {
     win.webContents.send('font-loaded', args);

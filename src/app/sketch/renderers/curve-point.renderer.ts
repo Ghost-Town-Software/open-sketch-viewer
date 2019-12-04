@@ -1,14 +1,16 @@
 import {CurvePoint} from '../models/parts/curve-point.model';
 import {Rect} from '../models/parts/rect.model';
+import {Shape} from 'konva/types/Shape';
+import {Context} from 'konva/types/Context';
 
 export class CurvePointRenderer {
-  constructor(private points: CurvePoint[], private frame: Rect, private isClosedPath) {
+  constructor(private points: CurvePoint[], private frame: Rect, private isClosedPath: boolean) {
     if (!this.points || !this.points.length) {
       console.warn('No points found', this.points);
     }
   }
 
-  public render(context, shape) {
+  public render(context: Context, shape: Shape): void {
     for (let i = 0; i < this.points.length; i++) {
       const current = this.points[i];
       const nextPath = i + 1 < this.points.length ? this.points[i + 1] : this.points[0];
@@ -40,11 +42,11 @@ export class CurvePointRenderer {
     context.fillStrokeShape(shape);
   }
 
-  private getRelativeWidth(percent) {
+  private getRelativeWidth(percent: number): number {
     return (percent * this.frame.width);
   }
 
-  private getRelativeHeight(percent) {
+  private getRelativeHeight(percent: number): number {
     return (percent * this.frame.height);
   }
 }

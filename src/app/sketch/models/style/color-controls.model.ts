@@ -6,11 +6,11 @@ export class ColorControls {
   hue: number;
   saturation: number;
 
-  constructor({isEnabled, brightness, contrast, hue, saturation}) {
-    this.isEnabled = !!isEnabled;
-    this.brightness = brightness;
-    this.contrast = contrast;
-    this.hue = hue;
-    this.saturation = saturation;
+  constructor(payload: ColorControls) {
+    this.isEnabled = Boolean(payload.isEnabled);
+    this.brightness = payload.brightness;
+    this.contrast = payload.contrast;
+    this.hue = payload.hue;
+    this.saturation = payload.saturation;
   }
 }

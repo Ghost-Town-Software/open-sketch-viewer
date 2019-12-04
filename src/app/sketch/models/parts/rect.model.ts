@@ -6,12 +6,12 @@ export class Rect {
   x: number;
   y: number;
 
-  constructor({constrainProportions, height, width, x, y}) {
-    this.constrainProportions = constrainProportions;
-    this.height = (height);
-    this.width = (width);
-    this.x = (x);
-    this.y = (y);
+  constructor(payload: Rect) {
+    this.constrainProportions = payload.constrainProportions;
+    this.height = payload.height;
+    this.width = payload.width;
+    this.x = payload.x;
+    this.y = payload.y;
   }
 
   round() {

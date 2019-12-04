@@ -3,7 +3,7 @@ import {BsModalService} from 'ngx-bootstrap';
 import {ProjectCreatorComponent} from '../shared/project-creator/project-creator.component';
 import * as fs from 'fs';
 import * as path from 'path';
-import yauzl from 'yauzl';
+import * as yauzl from 'yauzl';
 import {AppService} from '../services/app.service';
 import {Observable} from 'rxjs';
 
@@ -18,9 +18,9 @@ export class ProjectCreatorService {
 
   }
 
-  extract(file: File, destination) {
+  extract(file: File, destination: string) {
     return new Observable(subscriber => {
-      yauzl.open(file.path, {lazyEntries: true}, (err, zip) => {
+      yauzl.open(file.path, {lazyEntries: true}, (err: any, zip) => {
         if (err) throw err;
 
         zip.readEntry();
@@ -60,7 +60,7 @@ export class ProjectCreatorService {
     });
   }
 
-  isValidFile(file: File) {
+  isValidFile(file: File): boolean {
     if(!file) {
       return false;
     }
@@ -68,7 +68,7 @@ export class ProjectCreatorService {
     return file.name.endsWith('.sketch');
   }
 
-  showCreator(file: File) {
+  showCreator(file: File): void {
     this.file = file;
 
     const modal = this.modalService.show(ProjectCreatorComponent, {
@@ -80,7 +80,7 @@ export class ProjectCreatorService {
       keyboard: false,
     });
 
-    modal.content.create$.subscribe(path => {
+    modal.content.create$.subscribe((path: string) => {
       this.extract(file, path).subscribe(() => {
         this.app.createProject(path);
       });

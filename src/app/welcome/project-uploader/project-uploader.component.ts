@@ -13,21 +13,21 @@ export class ProjectUploaderComponent {
 
   }
 
-  @HostListener('dragover', ['$event']) private onDragOver(evt) {
+  @HostListener('dragover', ['$event']) private onDragOver(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
 
     this.class = 'dragover';
   }
 
-  @HostListener('dragleave', ['$event']) private onDragLeave(evt) {
+  @HostListener('dragleave', ['$event']) private onDragLeave(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
 
     this.class = null;
   }
 
-  @HostListener('drop', ['$event']) private onDrop(evt) {
+  @HostListener('drop', ['$event']) private onDrop(evt: DragEvent): void {
     evt.preventDefault();
     evt.stopPropagation();
 

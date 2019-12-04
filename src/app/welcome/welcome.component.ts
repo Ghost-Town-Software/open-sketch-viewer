@@ -3,9 +3,9 @@ import {AppService} from '../services/app.service';
 import {Observable} from 'rxjs';
 import {ProjectRemoveComponent} from '../shared/project-delete/project-remove.component';
 import {BsModalService} from 'ngx-bootstrap';
-import * as rimraf from 'rimraf';
 import {Router} from '@angular/router';
 import {Project} from '../model/config.model';
+import * as rimraf from 'rimraf';
 
 @Component({
   selector: 'welcome',
@@ -20,7 +20,6 @@ export class WelcomeComponent {
   }
 
   load(project: Project) {
-    console.log('navigate', ['/project', project.id]);
     this.router.navigate(['/project', project.id]);
   }
 
@@ -31,7 +30,7 @@ export class WelcomeComponent {
       keyboard: false,
     });
 
-    modal.content.delete$.subscribe(deleteFiles => {
+    modal.content.delete$.subscribe((deleteFiles: boolean) => {
       if(deleteFiles) {
         rimraf.sync(project.path);
       }
