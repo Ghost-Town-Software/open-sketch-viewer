@@ -99,7 +99,7 @@
     "jszip": "3.2.2",
     "konva": "4.0.18",
     "lodash": "4.17.15",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "ngx-bootstrap": "5.2.0",
     "rimraf": "3.0.0",
     "shortid": "2.2.15",
